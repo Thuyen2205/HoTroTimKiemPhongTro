@@ -64,7 +64,16 @@
                                 <th>Khu vực:</th>
                                 <td>${m.phamViCanTim}</td>
                             </tr>
+                            <tr>
 
+                                <th></th>
+                                <td>   
+                                    <c:url value="/thtin_bviet" var="bvietAction">
+                                        <c:param name="baivietId" value="${m.id}" />  
+                                    </c:url>
+                                    <a href="${bvietAction}" class="bt-docthem" style="vertical-align:middle"> <span>Đọc thêm </span></a>
+                                </td>
+                            </tr>
                         </table>
                     </div>
                 </div>

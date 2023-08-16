@@ -4,8 +4,10 @@
  */
 package com.ntt.service.impl;
 
+import com.ntt.pojo.NguoiDung;
 import com.ntt.repository.NguoiDungRepository;
 import com.ntt.service.NguoiDungService;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +21,11 @@ public class NguoiDungServiceImpl implements NguoiDungService{
 
     @Autowired
     private NguoiDungRepository ngdungRepo;
+
+    @Override
+    public List<NguoiDung> getTTNgDung(String tenNguoiDangNhap) {
+        return this.ngdungRepo.getTTNguoiDung(tenNguoiDangNhap);
+    }
    
     
 }

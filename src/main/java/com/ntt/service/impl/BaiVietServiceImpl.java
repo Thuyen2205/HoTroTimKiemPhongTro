@@ -95,4 +95,9 @@ public class BaiVietServiceImpl implements BaiVietService {
         return this.baivietRepo.getBaiVietByType(loaiBViet);
     }
 
+    @Override
+    public List<Object> getBaiVietByIdNgDung(NguoiDung idNgDung) {
+        return this.baivietRepo.getBaiVietByIdNgDung(idNgDung);
+    }
+
 }

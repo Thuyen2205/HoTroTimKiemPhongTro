@@ -5,6 +5,7 @@
 package com.ntt.pojo;
 
 import java.io.Serializable;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Set;
 import javax.persistence.Basic;
@@ -94,7 +95,8 @@ public class BaiViet implements Serializable {
     private MultipartFile file;
     @Transient
     private String tenNguoiDangBai;
-
+    
+    
     public BaiViet() {
     }
 
@@ -268,5 +270,9 @@ public class BaiViet implements Serializable {
     public void setTenNguoiDangBai(String tenNguoiDangBai) {
         this.tenNguoiDangBai = tenNguoiDangBai;
     }
+
+   
+
+   
 
 }

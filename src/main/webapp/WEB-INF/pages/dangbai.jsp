@@ -7,118 +7,174 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-
+<link href="<c:url value="/css/style.css" />" rel="stylesheet" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
 <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 <html>
-    <h1 class="text-center text-danger">Đăng bài </h1>
-    <c:url value="/dangbai" var="action"/>
-    <div>
 
-        <form:form method="post" action="${action}" var="p" modelAttribute="baiviet" enctype="multipart/form-data" >
+    <section class="body-dangbai">
+        <h1 class="text-center text-danger">Đăng bài </h1>
+        <c:url value="/dangbai" var="action"/>
+
+        <div class="dangbai">
+
+            <!-- PHẦN ĐĂNG BÀI -->
+
+            <div class="dangbai-col1">
+                <form:form method="post" action="${action}" var="p" modelAttribute="baiviet" enctype="multipart/form-data" >
+                    <div class="catngang">
+                        <h4 style="color: white; padding: 10px;">THÔNG TIN CƠ BẢN</h4>
+                    </div>
+                    <div class="dangbai-tincodinh">
+                        <c:if test="${nguoidung.idLoaiTaiKhoan.id==2}">
+                            <p>Danh mục tin đăng: Tin cho thuê</p>
+                            <form:input type="hidden" id="file" path="loaiBaiViet" value="1" readonly="true"  cssClass="form -control"/>
+                        </c:if>
+
+                        <c:if test="${nguoidung.idLoaiTaiKhoan.id==3}">
+                            <p>Danh mục tin đăng: Tin tìm trọ</p>
+                            <form:input type="hidden" id="file" path="loaiBaiViet" value="2" readonly="true"  cssClass="form -control"/>
+                        </c:if>
+
+                        <p>Người đăng tin:                 
+                            <form:input type="text" id="file" path="tenNguoiDangBai" value="${pageContext.request.userPrincipal.name}"  readonly="true"  cssClass="form -control"/>
+                        </p>
+                    </div>
+
+
+                    <div class="dangbai-tinnhaplieu">
+                        <div class="input-bigsize">
+                            <p>Tiêu đề bài đăng </p>
+                            <form:input type="text"  path="tenBaiViet" placeholder="Tiêu đề bài đăng"/>
+                        </div>
+
+                        <div class="input-bigsize">
+                            <p>Ngày đăng: </p>
+                            <form:input type="text"  path="ngayDang"  placeholder="Format yyyy/mm/dd (VD: 2023-05-22)" disabled="true"/>
+                        </div>
+
+                        <!--BÀI CỦA CHỦ TRỌ-->
+                        <c:if test="${nguoidung.idLoaiTaiKhoan.id==2}">
+                            <div class="input-smallsize">
+                                <div class="input-smallsize1">                            
+                                    <p>Khu vực(quận/huyện/thành phố) </p>
+                                    <form:input type="text"  path="phamViCanTim" placeholder="Nhập khu vực (VD: Gò Vấp)"/>
+                                </div>
+
+                                <div class="input-smallsize1">
+                                    <p>Giá cho thuê </p>
+                                    <form:input type="text"  path="giaThue" placeholder="Nhập giá cho thuê (VD: 3000000)"  /> 
+
+                                </div>
+                            </div>
+                            <div class="input-smallsize">
+                                <div class="input-smallsize2">
+                                    <p>Số lượng người </p>
+                                    <form:input type="text"  path="soNguoi" placeholder="Nhập số người (VD: 3)" /> 
+                                </div>
+
+                                <div class="input-smallsize2">
+                                    <p>Diện tích phòng (m2) </p>
+                                    <form:input type="text"  path="dienTich" placeholder="Nhập diện tích (VD: 30)"/>
+                                </div>
+
+                            </div>
+
+
+                            <div class="input-bigsize">                            
+                                <p>Địa chỉ chi tiết: </p>
+                                <form:input type="text"  path="diaChiCt"/>
+                            </div>
+
+                            <script>
+                                function chooseFile(fileInput) {
+                                    if (fileInput.files && fileInput.files[0]) {
+                                        var reader = new FileReader();
+
+                                        reader.onload = function (e) {
+                                            $('#image').attr('src', e.target.result);
+                                        }
+                                        reader.readAsDataURL(fileInput.files[0]);
+                                    }
+                                }
+
+
+                            </script>
+                            <div>
+                                <p for="file">Hình ảnh phòng trọ: </p>
+                                <img src =""  id="image" width="200" height="200"/>
+
+                                <form:input path="file" type="file" id="imageFile" onchange="chooseFile(this)" accept="image/jpg, image/jpeg, image/png"/>
+
+
+                            </div> 
+
+                        </c:if>
+
+                        <!--BÀI CỦA KHÁCH HÀNG-->
+                        <c:if test="${nguoidung.idLoaiTaiKhoan.id==3}">
+                            <div>                            
+                                <p>Phạm vi cần tìm: </p>
+                                <form:input type="text"  path="phamViCanTim"/>
+                            </div>
+                        </c:if>
+                        <div class="input-bigsize">
+                            <p>Mô tả chi tiết </p>     
+                            <form:input  type="text"  path="noiDung" placeholder="Mô tả chi tiết"/>
+
+                        </div>
+                    </div>    
 
 
 
 
-            <div>
-                <label for="file">Người Đăng Bài:  </label>
-                <form:input type="text" id="file" path="tenNguoiDangBai" value="${pageContext.request.userPrincipal.name}"  readonly="true"  cssClass="form -control"/>
 
-                <br></br>
+
+
+
+
+
+
+
+                    <br></br>
+                    <div class="form-group">
+                        <input type="submit" value="Them Bai Viet" class="btn btn-danger"/>
+                    </div>
+                </form:form>
             </div>
-            <c:if test="${nguoidung.idLoaiTaiKhoan.id==2}">
-                <div>
-                    <label for="file">Ảnh nhà trọ: </label>
-                    <br></br>
-                    <form:input type="file" id="file" path="file" cssClass="form -control"/>
-                </div>    
-                <div>
-                    <label for="file">Gia thue</label>
-                    <br></br>
-                    <form:input type="text"  path="giaThue" cssClass="form -control"/>
+
+            <!-- PHẦN HƯỚNG DẪN -->
+            <div class="dangbai-col2">
+                <div class="catngang">
+                    <h4 style="color: white; padding: 10px;">HƯỚNG DẪN</h4>
                 </div>
+                <div class="">
 
-                <div>
-                    <label for="file">So nguoi</label>
-                    <br></br>
-                    <form:input type="text"  path="soNguoi" cssClass="form -control"/>
+                    <pre>Để đăng tin bán nhà trên mạng hay cách đăng tin cho thuê nhà, nội dung tin của bạn cần đầy đủ nội dung sau:
+
+- Tiêu đề.
+
+- Nội dung
+
+- Thông tin liên hệ
+
+- Hình ảnh
+
+Làm thế nào để đăng tin thuê nhà nội dung tốt nhất? Bạn cần chỉ rõ những ưu điểm vị trí của ngôi nhà, gần những tiện ích công cộng nào (trường học, trung tâm thương mại, bệnh viện, công viên, tuyến đường lớn, …).
+
+Cung cấp đầy đủ thông số nhà như diện tích thực, diện tích xây dựng, hướng nhà, mặt tiền, cách đường cái bao nhiêu m, số tầng, số phòng, giá bán (bao gồm phí sang tên hay không).
+
+Đồng thời thông tin giấy tờ pháp lý có sổ đỏ, sổ hồng, …
+                    </pre>
                 </div>
-                <div>
-                <label for="file">Dien Tich</label>
-                <br></br>
-                <form:input type="text"  path="dienTich" cssClass="form -control"/>
-            </div>
-
-            <div>
-                <label for="file">Dia Chi Chi Tiet</label>
-                <br></br>
-                <form:input type="text"  path="diaChiCt" cssClass="form -control"/>
             </div>
 
 
-
-
-            </c:if>
-            <c:if test="${nguoidung.idLoaiTaiKhoan.id==3}">
-                <div>
-                    <label for="file">Pham vi can tim</label>
-                    <br></br>
-                    <form:input type="text"  path="phamViCanTim" cssClass="form -control"/>
-                </div>
-
-
-            </c:if>
-
-            <div>
-                <label for="file">Tên bài viết </label>
-                <br></br>
-                <form:input type="text"  path="tenBaiViet" cssClass="form -control" />
-            </div>
-
-            <br></br>
-
-            <div>
-                <label for="file">Noi dung</label>
-                <br></br>
-                <form:input type="text"  path="noiDung" cssClass="form -control"/>
-            </div>
+        </div>
 
 
 
+    </section>
 
-
-            
-            <br></br>
-            <div >
-                <%--<form:select class="role" name="role" id="role" path="loaiBaiViet">--%>
-                <%--<c:forEach items="${baiviet_role}" var="c" >--%>
-                    <!--<option value="${c.id}" selected>${c.tenLoaiBaiViet}</option>-->
-                <%--</c:forEach>--%>
-                <%--</form:select>--%>
-            </div>
-
-            <c:if test="${nguoidung.idLoaiTaiKhoan.id==2}">
-                <div>
-
-                    Tin cho thue
-                    <form:input type="text" id="file" path="loaiBaiViet" value="1" readonly="true"  cssClass="form -control"/>
-
-                </div>    
-
-            </c:if>
-            <c:if test="${nguoidung.idLoaiTaiKhoan.id==3}">
-                <div>
-                    Tin tìm tro
-                    <form:input type="text" id="file" path="loaiBaiViet" value="2" readonly="true"  cssClass="form -control"/>
-
-                </div>    
-
-            </c:if>
-
-            <br></br>
-            <div class="form-group">
-                <input type="submit" value="Them Bai Viet" class="btn btn-danger"/>
-            </div>
-        </form:form>
-    </div>
 
 </html>

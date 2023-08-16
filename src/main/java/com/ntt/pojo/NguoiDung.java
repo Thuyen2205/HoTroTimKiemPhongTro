@@ -85,7 +85,9 @@ public class NguoiDung implements Serializable {
 
     @Transient
     private String xacNhanMatKhau;
-
+    @Transient
+    private String tenNguoiDangNhap;
+    
     public NguoiDung() {
     }
 
@@ -243,6 +245,20 @@ public class NguoiDung implements Serializable {
      */
     public void setXacNhanMatKhau(String xacNhanMatKhau) {
         this.xacNhanMatKhau = xacNhanMatKhau;
+    }
+
+    /**
+     * @return the tenNguoiDangNhap
+     */
+    public String getTenNguoiDangNhap() {
+        return tenNguoiDangNhap;
+    }
+
+    /**
+     * @param tenNguoiDangNhap the tenNguoiDangNhap to set
+     */
+    public void setTenNguoiDangNhap(String tenNguoiDangNhap) {
+        this.tenNguoiDangNhap = tenNguoiDangNhap;
     }
 
 }

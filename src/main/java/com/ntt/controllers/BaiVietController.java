@@ -58,8 +58,10 @@ public class BaiVietController {
     @RequestMapping("/thtin_bviet")
     public String bvietThTin(Model model, @RequestParam Map<String, String> params,Authentication authen) {
         int id = Integer.parseInt(params.get("baivietId").toString());
+        if (authen != null) {
+            model.addAttribute("taikhoan", this.taikhoan.getTaiKhoan(authen.getName()).get(0));
+        }
         model.addAttribute("BaiViet", this.baivietService.getBaiVietById(id));
-        model.addAttribute("taikhoan",this.taikhoan.getTaiKhoan(authen.getName()).get(0));
         return "thtin_bviet";
     }
 

@@ -5,6 +5,7 @@
 package com.ntt.repository;
 
 import com.ntt.pojo.BaiViet;
+import com.ntt.pojo.NguoiDung;
 import java.util.List;
 
 /**
@@ -19,6 +20,7 @@ public interface BaiVietRepository {
     //Lấy bài viết theo id bài viết
     Object getBaiVietById(int id);
     //Lấy bài viết theo id người dùng
-    Object getBaiVietByIdNgDung(int idNgDung);
-
+    List<Object> getBaiVietByIdNgDung(NguoiDung idNgDung);
+    
+    
 }

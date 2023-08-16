@@ -8,6 +8,7 @@ import com.ntt.pojo.BaiViet;
 import com.ntt.pojo.NguoiDung;
 
 import com.ntt.repository.BaiVietRepository;
+import com.ntt.repository.TaiKhoanRepository;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Query;
@@ -32,6 +33,8 @@ public class BaiVietRepositoryImpl implements BaiVietRepository {
 
     @Autowired
     private LocalSessionFactoryBean factory;
+    @Autowired
+    private TaiKhoanRepository taikhoan;
 
     @Override
     public List<BaiViet> getBaiViet() {
@@ -97,8 +100,13 @@ public class BaiVietRepositoryImpl implements BaiVietRepository {
     }
 
     @Override
-    public Object getBaiVietByIdNgDung(int idNgDung) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public List<Object> getBaiVietByIdNgDung(NguoiDung idNguoiDung) {
+        Session s = this.factory.getObject().getCurrentSession();
+        org.hibernate.query.Query q = s.createQuery("FROM BaiViet WHERE idNguoiDung= :idNguoiDung");
+        q.setParameter("idNguoiDung", idNguoiDung);
+        return q.getResultList();
     }
+
+    
 
 }

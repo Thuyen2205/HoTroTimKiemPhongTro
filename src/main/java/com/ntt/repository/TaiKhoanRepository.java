@@ -16,5 +16,5 @@ public interface TaiKhoanRepository {
     boolean addTaiKhoan(NguoiDung nguoidung);
     List<NguoiDung> getTaiKhoan(String username);
     LoaiTaiKhoan getLoaiTaiKhoan (String tenLoaiTaiKhoan);
-    
+    NguoiDung getTaiKhoanbyTenTK(String tenTK);
 }

@@ -4,10 +4,14 @@
  */
 package com.ntt.service;
 
+import com.ntt.pojo.NguoiDung;
+import java.util.List;
+
 /**
  *
  * @author Admins
  */
 public interface NguoiDungService {
-    
+        List<NguoiDung> getTTNgDung(String tenNguoiDangNhap);
+
 }

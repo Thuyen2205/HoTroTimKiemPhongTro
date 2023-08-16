@@ -77,4 +77,9 @@ public class TaiKhoanServiceImpl implements TaiKhoanService{
     public LoaiTaiKhoan getLoaiTaiKhoan(String tenLoaiTaiKhoan) {
       return this.taikhoanRepository.getLoaiTaiKhoan(tenLoaiTaiKhoan);
     }
+
+    @Override
+    public NguoiDung getTaiKhoanbyTenTK(String tenTK) {
+        return this.taikhoanRepository.getTaiKhoanbyTenTK(tenTK);
+    }
 }

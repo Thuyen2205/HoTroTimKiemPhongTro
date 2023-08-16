@@ -12,4 +12,5 @@ import java.util.List;
  * @author Admins
  */
 public interface NguoiDungRepository {
+    List<NguoiDung> getTTNguoiDung(String tenNguoiDangNhap);
 }

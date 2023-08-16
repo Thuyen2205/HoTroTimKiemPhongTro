@@ -30,8 +30,6 @@ Author     : ThanhThuyen
 
                 <c:if test="${pageContext.request.userPrincipal.name != null}">
 
-
-
                     <li class="nav-item">
                         <a class="nav-link" href="<c:url value ="/" />"> ${pageContext.request.userPrincipal.name} </a>                       
                     </li>

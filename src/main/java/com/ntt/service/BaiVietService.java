@@ -5,6 +5,7 @@
 package com.ntt.service;
 
 import com.ntt.pojo.BaiViet;
+import com.ntt.pojo.NguoiDung;
 import java.util.List;
 
 /**
@@ -21,5 +22,6 @@ public interface BaiVietService  {
     
     Object getBaiVietById(int id);
     List<Object> getBaiVietByType(String loaiBViet);
+    List<Object> getBaiVietByIdNgDung(NguoiDung idNgDung);
 }
 

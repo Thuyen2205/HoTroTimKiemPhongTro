@@ -19,5 +19,5 @@ public interface TaiKhoanService extends UserDetailsService {
 
     List<NguoiDung> getTaiKhoan(String username);
     LoaiTaiKhoan getLoaiTaiKhoan(String tenLoaiTaiKhoan);
-
+    NguoiDung getTaiKhoanbyTenTK(String tenTK);
 }
