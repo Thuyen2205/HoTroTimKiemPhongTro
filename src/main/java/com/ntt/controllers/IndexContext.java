@@ -29,13 +29,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class IndexContext {
 
     @Autowired
-    private BaiVietService baiviet;
-    @Autowired
     private TaiKhoanService taikhoan;
     @Autowired
     private BaiVietService baivietService;
-    @Autowired
-    private LoaiBaiVietService loaiBaiViet;
 
     @RequestMapping("/")
     @Transactional

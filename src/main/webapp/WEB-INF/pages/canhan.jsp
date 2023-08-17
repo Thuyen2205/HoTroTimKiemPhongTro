@@ -21,8 +21,11 @@
                     <div class="thongtincanhan">
                         <center>
                             <img src="${taikhoan.avatar}" class="rounded-circle" style="width: 150px;" alt="${pageContext.request.userPrincipal.name}" />
+                            <p><c:if test="${taikhoan.idLoaiTaiKhoan.id == 2}">CHỦ TRỌ</c:if></p>
+                            <p><c:if test="${taikhoan.idLoaiTaiKhoan.id == 3}">KHÁCH HÀNG</c:if></p>
                             <p>${taikhoan.tenNguoiDung}</p>
                             <p>${taikhoan.sdt}</p>
+
                             <div class="canhanhoa">
                                 <a href="#">Cập nhật</a>
                                 <a href="#">Đổi mật khẩu</a>
@@ -65,10 +68,16 @@
                                         <tr>
                                             <th></th>
                                             <td>   
-                                                <c:url value="/thtin_bviet" var="bvietAction">
+                                                <c:url value="/capnhat" var="bvietAction">
                                                     <c:param name="baivietId" value="${p.id}" />  
                                                 </c:url>
-                                                <a href="${bvietAction}" style="vertical-align:middle"> Cập nhật</a>
+                                                <a href="${bvietAction}" class="btn btn-success" style="vertical-align:middle"> Cập nhật</a>
+                                            </td>
+                                            <td>   
+                                                <c:url value="/capnhat1" var="api">
+                                                    <c:param name="baivietId" value="${p.id}" />  
+                                                </c:url>
+                                                <button  onclick="deleteBViet('${api}')" class="btn btn-danger">Xóa</button>
                                             </td>
                                         </tr>
                                     </table>
@@ -81,3 +90,4 @@
         </section>
     </form:form>
 </html>
+<script src="<c:url value="/js/main.js" />"></script>

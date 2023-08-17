@@ -154,6 +154,7 @@ body{
 .dangbai-col2{
     width: 35%;
     background-color: white;
+    height: 100%;
 }
 .dangbai-tincodinh{
     padding-top:20px;
@@ -182,6 +183,9 @@ input{
 .input-bigsize input{
     width: 100%;
 }
+.input-bigsize textarea{
+    width: 100%;
+}
 .input-smallsize {
     display: inline-block;
 }
@@ -197,6 +201,7 @@ input{
 .body-trangcanhan{
     background-color: #F5F5F5;
     padding: 30px 100px;
+    width: 100%;
 }
 .trangcanhan{
     display: flex;

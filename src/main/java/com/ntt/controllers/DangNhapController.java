@@ -46,9 +46,9 @@ public class DangNhapController {
         return "dangnhap";
     }
 
-    @RequestMapping("/chutro")
+    @RequestMapping("/canhan")
 //    @Transactional
-    public String dangNhapChuTro(Model model, Authentication authen) {
+    public String dangNhapCaNhan(Model model, Authentication authen) {
         model.addAttribute("taikhoan", new NguoiDung());
         if (authen != null) {
             UserDetails user = this.taikhoan.loadUserByUsername(authen.getName());
@@ -56,12 +56,9 @@ public class DangNhapController {
             model.addAttribute("taikhoan", u);
             model.addAttribute("baiviet", this.baiviet.getBaiVietByIdNgDung(u));
         }
-        
-
-        return "chutro";
+        return "canhan";
     }
 
-    @PostMapping
 
     @RequestMapping("/admin")
     public String dangNhapAdmin(Model model, Authentication authen) {

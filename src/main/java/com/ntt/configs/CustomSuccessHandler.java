@@ -30,7 +30,7 @@ public class CustomSuccessHandler implements AuthenticationSuccessHandler{
         for(GrantedAuthority authority:authorities){
             if(authority.getAuthority().equals("ROLE_CHUTRO"))
             {
-                redirectStrategy.sendRedirect(hsr, hsr1, "/chutro");
+                redirectStrategy.sendRedirect(hsr, hsr1, "/canhan");
                 return ;
             } else if(authority.getAuthority().equals("ROLE_ADMIN"))
             {

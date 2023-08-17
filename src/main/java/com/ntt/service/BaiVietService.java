@@ -19,7 +19,8 @@ public interface BaiVietService  {
     List<BaiViet> getBaiViet(String tenBaiViet);
     BaiViet loadBaiViet(String tenBaiViet);
     boolean addBaiViet(BaiViet baiviet);
-    
+    boolean updateBaiViet(BaiViet baiviet);
+    boolean deleteBaiViet(int id);
     Object getBaiVietById(int id);
     List<Object> getBaiVietByType(String loaiBViet);
     List<Object> getBaiVietByIdNgDung(NguoiDung idNgDung);

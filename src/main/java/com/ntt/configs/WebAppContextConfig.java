@@ -1,4 +1,4 @@
-    /*
+/*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
@@ -53,6 +53,8 @@ public class WebAppContextConfig implements WebMvcConfigurer {
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/css/**").addResourceLocations("/resource/css/");
         registry.addResourceHandler("/img/**").addResourceLocations("/resource/img/");
+        registry.addResourceHandler("/js/**").addResourceLocations("/resource/js/");
+
     }
 
     @Bean
@@ -72,14 +74,14 @@ public class WebAppContextConfig implements WebMvcConfigurer {
                 "api_key", "515925565185764",
                 "api_secret", "htAoHniRW5N34DQkcBo2Jh_5-XM",
                 "secure", true));
-        
+
         return c;
     }
-    
+
     @Override
-    public void addFormatters(FormatterRegistry registry){
+    public void addFormatters(FormatterRegistry registry) {
         registry.addFormatter(new LoaiTaiKhoanFormatter());
         registry.addFormatter(new LoaiBaiVietFormatter());
-    
+
     }
 }

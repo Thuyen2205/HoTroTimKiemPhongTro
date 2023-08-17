@@ -55,7 +55,7 @@ public class BaiViet implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @Size(max = 45)
+    @Size(max = 245)
     @Column(name = "ten_bai_viet")
     private String tenBaiViet;
     @Size(max = 500)

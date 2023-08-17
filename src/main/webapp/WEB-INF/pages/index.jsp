@@ -10,6 +10,8 @@
 <!DOCTYPE html>
 <html>
     <body>
+                    <h1>TRANG CHỦ</h1>
+
         <!<!-- TIN CHO THUE TRO -->
         <div class="bangtin">
             <c:forEach items="${baiviet_1}" var="t" >

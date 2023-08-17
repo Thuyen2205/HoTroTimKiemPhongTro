@@ -1,60 +1,52 @@
 <%-- 
-    Document   : DangBai
-    Created on : Aug 6, 2023, 8:58:16 PM
-    Author     : ThanhThuyen
+    Document   : thtin_bviet
+    Created on : Aug 12, 2023, 2:34:35 PM
+    Author     : Admins
 --%>
 
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <link href="<c:url value="/css/style.css" />" rel="stylesheet" />
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
-<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+<c:url value="/capnhat1" var="updateAction">
+</c:url>
 <html>
+    <h1>CAP NHAT</h1>
 
-    <section class="body-dangbai">
-        <h1 class="text-center text-danger">Đăng bài </h1>
-        <c:url value="/dangbai" var="action"/>
+    <section class="chitiettin" >
+        <div class="chitiettin-col1">
+            <div class="ct-anh">
+                <center>
+                    <img src="${BaiViet.hinhAnh}"" style="width:100%" > 
 
-        <div class="dangbai">
-
-            <!-- PHẦN ĐĂNG BÀI -->
-
-            <div class="dangbai-col1">
-                <form:form method="post" action="${action}" var="p" modelAttribute="baiviet" enctype="multipart/form-data" >
-                    <div class="catngang">
-                        <h4 style="color: white; padding: 10px;">THÔNG TIN CƠ BẢN</h4>
-                    </div>
-                    <div class="dangbai-tincodinh">
-                        <c:if test="${nguoidung.idLoaiTaiKhoan.id==2}">
-                            <p>Danh mục tin đăng: Tin cho thuê</p>
-                            <form:input type="hidden" path="loaiBaiViet" value="1" readonly="true"  cssClass="form -control"/>
-                        </c:if>
-
-                        <c:if test="${nguoidung.idLoaiTaiKhoan.id==3}">
-                            <p>Danh mục tin đăng: Tin tìm trọ</p>
-                            <form:input type="hidden" path="loaiBaiViet" value="2" readonly="true"  cssClass="form -control"/>
-                        </c:if>
-
-                        <p>Người đăng tin:                 
-                            <form:input type="text" path="tenNguoiDangBai" value="${pageContext.request.userPrincipal.name}"  readonly="true"  cssClass="form -control"/>
-                        </p>
-                    </div>
+                </center>
+            </div>
+            <div class="ndung-chitiet">
+                <form:form method="post" action="${updateAction}" var="p" modelAttribute="BaiViet" enctype="multipart/form-data" >
+                    <form:hidden path="id" />
+                    <form:hidden path="loaiBaiViet.id"/>
+                    <form:hidden path="idNguoiDung.id"/>
 
 
                     <div class="dangbai-tinnhaplieu">
                         <div class="input-bigsize">
+                            <p>Loại bài viết </p>
+                            ${BaiViet.loaiBaiViet.id}
+                        </div>
+                        
+                        <div class="input-bigsize">
                             <p>Tiêu đề bài đăng </p>
                             <form:input type="text" id="tenbv" name="tenbv" path="tenBaiViet" placeholder="Tiêu đề bài đăng"/>
                         </div>
-
                         <div class="input-bigsize">
                             <p>Ngày đăng: </p>
                             <form:input type="text" id="ngaydangbv" name="ngaydangbv" path="ngayDang"  placeholder="Format yyyy/mm/dd (VD: 2023-05-22)" disabled="true"/>
                         </div>
-
                         <!--BÀI CỦA CHỦ TRỌ-->
-                        <c:if test="${nguoidung.idLoaiTaiKhoan.id==2}">
+                        <c:if test="${BaiViet.idNguoiDung.idLoaiTaiKhoan.id==2}">
                             <div class="input-smallsize">
                                 <div class="input-smallsize1">                            
                                     <p>Khu vực(quận/huyện/thành phố) </p>
@@ -63,7 +55,7 @@
 
                                 <div class="input-smallsize1">
                                     <p>Giá cho thuê </p>
-                                    <form:input type="text" id="giathuebv" name="giathuebv" path="giaThue" placeholder="Nhập giá cho thuê (VD: 3000000)"  /> 
+                                    <form:input type="text" id="giathuebv" name="giathuebv" path="giaThue" placeholder="Nhập giá thuê (VD: 3000000)"  /> 
 
                                 </div>
                             </div>
@@ -108,7 +100,7 @@
                             </div> 
 
                         </c:if>
-
+                            
                         <!--BÀI CỦA KHÁCH HÀNG-->
                         <c:if test="${nguoidung.idLoaiTaiKhoan.id==3}">
                             <div>                            
@@ -117,49 +109,72 @@
                             </div>
                         </c:if>
                         <div class="input-bigsize">
-                            <p>Mô tả chi tiết </p>     
+                            <p>Mô tả chi tiết</p>     
                             <form:textarea  type="text" id="motabv" name="motabv"  path="noiDung" placeholder="Mô tả chi tiết"/>
-
                         </div>
-                    </div>    
 
-                    <br></br>
-                    <div class="form-group">
-                        <input type="submit" value="Đăng tải" class="btn btn-danger"/>
                     </div>
+                    <button class="btn btn-info " type="sumit">Cập nhật</button>
+
                 </form:form>
+
+                <h4 style="color: tomato; font-weight: bold">${BaiViet.tenBaiViet}</h4>
+                <c:if test="${BaiViet.loaiBaiViet.id==1}">
+                    <p>Địa chỉ: ${BaiViet.diaChiCt}</p>
+                    <div class="chitiet-3tt">
+                        <p>Giá: ${BaiViet.giaThue}</p>
+                        <p>Diện tích: ${BaiViet.dienTich}</p>
+                        <p> #${BaiViet.id}</p>
+                    </div>
+                </c:if>
+                <h4>Thông tin mô tả:</h4>
+                <p>${BaiViet.noiDung}</p>
+
+                <!--DAC DIEM TIN DANG-->
+                <h4>Đặc điểm tin đăng:</h4>
+                <div class="dacdiemtin">
+                    <table style="width:100%">
+                        <tr>
+                            <th>Mã tin:</th>
+                            <td>#${BaiViet.id}</td>
+                        </tr>
+                        <tr>
+                            <c:if test="${BaiViet.loaiBaiViet.id==1}">
+                                <th>Khu vực cho thuê trọ:</th>
+
+                            </c:if>
+                            <c:if test="${BaiViet.loaiBaiViet.id==2}">
+                                <th>Khu vực cần tìm trọ:</th>
+                                </c:if>
+                            <td>${BaiViet.phamViCanTim}</td>
+                        </tr>
+                        <tr>
+                            <th>Ngày đăng:</th>
+                            <td>${BaiViet.ngayDang}</td>
+                        </tr>
+                        <tr>
+                            <th>Ngày hết hạn:</th>
+                            <td>${BaiViet.ngayDang}</td>
+                        </tr>
+                    </table>
+                </div>
+
             </div>
+        </div>
 
-            <!-- PHẦN HƯỚNG DẪN -->
-            <div class="dangbai-col2">
-                <div class="catngang">
-                    <h4 style="color: white; padding: 10px;">HƯỚNG DẪN</h4>
-                </div>
-                <div class="">
+        <div class="chitiettin-col2">
+            <div class="ct-thtinngdung">
+                <center>
+                    <img src="${BaiViet.idNguoiDung.avatar}" class="rounded-circle" style="width: 150px;" alt="${pageContext.request.userPrincipal.name}" />
+                    <p>${BaiViet.idNguoiDung.tenNguoiDung}</p>
+                    <p>${BaiViet.idNguoiDung.sdt}</p>
+                </center>
+            </div>
+            <div class="ct-tinnoibat">
 
-                    <pre>Để đăng tin bán nhà trên mạng hay cách đăng tin cho thuê nhà, nội dung tin của bạn cần đầy đủ nội dung sau:
-
-- Tiêu đề.
-
-- Nội dung
-
-- Thông tin liên hệ
-
-- Hình ảnh
-
-Làm thế nào để đăng tin thuê nhà nội dung tốt nhất? Bạn cần chỉ rõ những ưu điểm vị trí của ngôi nhà, gần những tiện ích công cộng nào (trường học, trung tâm thương mại, bệnh viện, công viên, tuyến đường lớn, …).
-
-Cung cấp đầy đủ thông số nhà như diện tích thực, diện tích xây dựng, hướng nhà, mặt tiền, cách đường cái bao nhiêu m, số tầng, số phòng, giá bán (bao gồm phí sang tên hay không).
-
-Đồng thời thông tin giấy tờ pháp lý có sổ đỏ, sổ hồng, …
-                    </pre>
-                </div>
             </div>
         </div>
 
 
-
     </section>
-
-
 </html>

@@ -44,32 +44,18 @@ public class BaiVietRepositoryImpl implements BaiVietRepository {
     }
 
     @Override
-    public boolean addBaiViet(BaiViet baiviet) {
-        Session s = this.factory.getObject().getCurrentSession();
-        try {
-            s.save(baiviet);
-            return true;
-        } catch (HibernateException e) {
-            System.err.println(e.getMessage());
-        }
-        return false;
-
-    }
-
-    @Override
     public List<BaiViet> getBaiViet(String tenBaiViet) {
-        Session s= this.factory.getObject().getCurrentSession();
-        CriteriaBuilder builder= s.getCriteriaBuilder();
-        CriteriaQuery<NguoiDung> query= builder.createQuery(NguoiDung.class);
-        Root root=query.from(NguoiDung.class);
-        query= query.select(root);
-        
-        if(!tenBaiViet.isEmpty())
-        {
-            Predicate p =builder.equal(root.get("tenBaiViet").as(String.class), tenBaiViet.trim());
-            query =query.where(p);
+        Session s = this.factory.getObject().getCurrentSession();
+        CriteriaBuilder builder = s.getCriteriaBuilder();
+        CriteriaQuery<NguoiDung> query = builder.createQuery(NguoiDung.class);
+        Root root = query.from(NguoiDung.class);
+        query = query.select(root);
+
+        if (!tenBaiViet.isEmpty()) {
+            Predicate p = builder.equal(root.get("tenBaiViet").as(String.class), tenBaiViet.trim());
+            query = query.where(p);
         }
-        
+
         Query q = s.createQuery(query);
         return q.getResultList();
     }
@@ -107,6 +93,42 @@ public class BaiVietRepositoryImpl implements BaiVietRepository {
         return q.getResultList();
     }
 
-    
+    @Override
+    public boolean addBaiViet(BaiViet baiviet) {
+        Session s = this.factory.getObject().getCurrentSession();
+        try {
+            s.save(baiviet);
+            return true;
+        } catch (HibernateException e) {
+            System.err.println(e.getMessage());
+        }
+        return false;
+    }
+
+    @Override
+    public boolean updateBaiViet(BaiViet baiviet) {
+        Session s = this.factory.getObject().getCurrentSession();
+        try {
+            s.update(baiviet);
+            return true;
+        } catch (HibernateException e) {
+            System.err.println(e.getMessage());
+        }
+        return false;
+    }
+
+    @Override
+    public boolean deleteBaiViet(int id) {
+        Session s = this.factory.getObject().getCurrentSession();
+        Object p = this.getBaiVietById(id);
+        try {
+            s.delete(p);
+            return true;
+        } catch (HibernateException ex) {
+            ex.printStackTrace();
+            return false;
+        }
+        
+    }
 
 }

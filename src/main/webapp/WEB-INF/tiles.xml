@@ -22,10 +22,10 @@ Click nbfs://nbhost/SystemFileSystem/Templates/XML/XMLDocument.xml to edit this 
         <put-attribute name="content"
                        value="/WEB-INF/pages/index.jsp" />
     </definition>
-        <definition name="chutro" extends="baseLayout">
-        <put-attribute name="title" value="Trang chủ" />
+        <definition name="canhan" extends="baseLayout">
+        <put-attribute name="title" value="Trang cá nhân" />
         <put-attribute name="content"
-                       value="/WEB-INF/pages/chutro.jsp" />
+                       value="/WEB-INF/pages/canhan.jsp" />
     </definition>
     
     <definition name="admin" extends="baseLayout">
@@ -34,24 +34,26 @@ Click nbfs://nbhost/SystemFileSystem/Templates/XML/XMLDocument.xml to edit this 
                        value="/WEB-INF/pages/admin.jsp" />
     </definition>
     
-    
-    
-  
-    
     <definition name="dangnhap"
                 template="/WEB-INF/pages/dangnhap.jsp">
     </definition>
     
-
     <definition name="dangki"
                 template="/WEB-INF/pages/dangki.jsp">
     </definition>
     
     <definition name="dangbai" extends="baseLayout">
-        <put-attribute name="title" value="Trang chủ" />
+        <put-attribute name="title" value="Trang đăng bài" />
         <put-attribute name="content"
                        value="/WEB-INF/pages/dangbai.jsp" />
     </definition>
+    
+    <definition name="capnhat" extends="baseLayout">
+        <put-attribute name="title" value="Trang cập nhật" />
+        <put-attribute name="content"
+                       value="/WEB-INF/pages/capnhat.jsp" />
+    </definition>
+    
     <definition name="thtin_bviet" extends="baseLayout">
         <put-attribute name="title" value="Chi tiết tin"/>
         <put-attribute name="content"

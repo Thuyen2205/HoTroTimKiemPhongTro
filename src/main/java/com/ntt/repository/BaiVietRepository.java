@@ -16,6 +16,8 @@ public interface BaiVietRepository {
     List<BaiViet> getBaiViet();
     List<BaiViet> getBaiViet(String tenBaiViet);
     boolean addBaiViet(BaiViet baiviet);
+    boolean updateBaiViet(BaiViet baiviet);
+    boolean deleteBaiViet(int id);
     List<Object> getBaiVietByType (String loaiBViet);
     //Lấy bài viết theo id bài viết
     Object getBaiVietById(int id);
