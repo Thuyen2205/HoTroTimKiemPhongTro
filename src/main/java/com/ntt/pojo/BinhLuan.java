@@ -19,6 +19,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -35,6 +36,48 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "BinhLuan.findByNoiDung", query = "SELECT b FROM BinhLuan b WHERE b.noiDung = :noiDung"),
     @NamedQuery(name = "BinhLuan.findByNgayBinhLuan", query = "SELECT b FROM BinhLuan b WHERE b.ngayBinhLuan = :ngayBinhLuan")})
 public class BinhLuan implements Serializable {
+
+    /**
+     * @return the tenNguoiDangBai
+     */
+    public String getTenNguoiDangBai() {
+        return tenNguoiDangBai;
+    }
+
+    /**
+     * @param tenNguoiDangBai the tenNguoiDangBai to set
+     */
+    public void setTenNguoiDangBai(String tenNguoiDangBai) {
+        this.tenNguoiDangBai = tenNguoiDangBai;
+    }
+
+    /**
+     * @return the idBaiVietBinhLuan
+     */
+    public Integer getIdBaiVietBinhLuan() {
+        return idBaiVietBinhLuan;
+    }
+
+    /**
+     * @param idBaiVietBinhLuan the idBaiVietBinhLuan to set
+     */
+    public void setIdBaiVietBinhLuan(Integer idBaiVietBinhLuan) {
+        this.idBaiVietBinhLuan = idBaiVietBinhLuan;
+    }
+
+    /**
+     * @return the tenBaiVietBinhLuan
+     */
+    public String getTenBaiVietBinhLuan() {
+        return tenBaiVietBinhLuan;
+    }
+
+    /**
+     * @param tenBaiVietBinhLuan the tenBaiVietBinhLuan to set
+     */
+    public void setTenBaiVietBinhLuan(String tenBaiVietBinhLuan) {
+        this.tenBaiVietBinhLuan = tenBaiVietBinhLuan;
+    }
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -54,6 +97,12 @@ public class BinhLuan implements Serializable {
     @JoinColumn(name = "id_nguoi_dung", referencedColumnName = "id")
     @ManyToOne
     private NguoiDung idNguoiDung;
+     @Transient
+    private String tenBaiVietBinhLuan;
+    @Transient
+    private Integer idBaiVietBinhLuan;
+    @Transient
+    private String tenNguoiDangBai;
 
     public BinhLuan() {
     }

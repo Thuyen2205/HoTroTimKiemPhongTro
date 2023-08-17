@@ -7,7 +7,10 @@ package com.ntt.controllers;
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 import com.ntt.pojo.BaiViet;
+import com.ntt.pojo.BinhLuan;
+import com.ntt.pojo.NguoiDung;
 import com.ntt.service.BaiVietService;
+import com.ntt.service.BinhLuanService;
 import com.ntt.service.LoaiBaiVietService;
 import com.ntt.service.NguoiDungService;
 import com.ntt.service.TaiKhoanService;
@@ -46,6 +49,9 @@ public class BaiVietController {
     private TaiKhoanService taikhoan;
     @Autowired
     private NguoiDungService ngdungService;
+    @Autowired
+    private BinhLuanService binhluanService;
+
 
     @GetMapping("/dangbai")
     public String list(Model model, Authentication authen) {
@@ -60,13 +66,33 @@ public class BaiVietController {
 
     @RequestMapping("/thtin_bviet")
     public String bvietThTin(Model model, @RequestParam Map<String, String> params, Authentication authen) {
-        int id = Integer.parseInt(params.get("baivietId").toString());
+        String errMsg = "";
+        int id = Integer.parseInt(params.get("baivietId"));
         if (authen != null) {
+
             model.addAttribute("taikhoan", this.taikhoan.getTaiKhoan(authen.getName()).get(0));
         }
         model.addAttribute("BaiViet", this.baivietService.getBaiVietById(id));
-        return "thtin_bviet";
+        model.addAttribute("binhluan", new BinhLuan());
+        model.addAttribute("binhluans", this.binhluanService.getBinhLuan(id));
 
+        return "thtin_bviet";
+    }
+
+    @PostMapping("/thtin_bviet_bl")
+    public String addBinhLuan(Model model, @ModelAttribute(value = "binhluan") BinhLuan binhluan, Authentication authen, @RequestParam Map<String, String> params) {
+        String errMsg = "";
+        String ms = "";
+        int id = Integer.parseInt(params.get("baivietId"));
+        if (authen.getName() != null) {
+            if (this.binhluanService.addBinhLuan(binhluan) == true) {
+                return "forward:/thtin_bviet";
+            } else {
+
+                ms = "Đã có lỗi xãy ra";
+            }
+        }
+        return "index";
     }
 
     @PostMapping("/dangbai")
@@ -106,8 +132,7 @@ public class BaiVietController {
 //    
 //    @RequestMapping(value = "DeleteBViet/{baivietId}")
 //    public String deleteBViet(HttpServletRequest request, Http)
-    
-    
+
 //    @RequestMapping("/capnhat")
 //    public String xoaBViet(Model model, @RequestParam Map<String, String> params, Authentication authen) {
 //        int id = Integer.parseInt(params.get("baivietId").toString());
@@ -117,7 +142,4 @@ public class BaiVietController {
 //        model.addAttribute("BaiViet", this.baivietService.getBaiVietById(id));
 //        return "capnhat";
 //    }
-
-    
-
 }

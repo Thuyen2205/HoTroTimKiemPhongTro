@@ -12,6 +12,8 @@ import java.util.List;
  * @author ThanhThuyen
  */
 public interface BinhLuanRepository {
-    List<BinhLuan> getBinhLuan();
-   
+
+    List<BinhLuan> getBinhLuan(int idBaiViet);
+
+    boolean addBinhLuan(BinhLuan binhluan);
 }

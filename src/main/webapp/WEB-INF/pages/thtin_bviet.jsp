@@ -6,9 +6,12 @@
 
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <link href="<c:url value="/css/style.css" />" rel="stylesheet" />
+<c:url value="/thtin_bviet_bl" var="action">
+    <c:param name="baivietId" value="${BaiViet.id}" />  
+</c:url>
 <section class="chitiettin" >
     <div class="chitiettin-col1">
         <div class="ct-anh">
@@ -45,7 +48,7 @@
                         </c:if>
                         <c:if test="${BaiViet.loaiBaiViet.id==2}">
                             <th>Khu vực cần tìm trọ:</th>
-                        </c:if>
+                            </c:if>
                         <td>${BaiViet.phamViCanTim}</td>
                     </tr>
                     <tr>
@@ -60,7 +63,28 @@
             </div>
 
         </div>
+        <c:if test="${pageContext.request.userPrincipal.name == null}">
+            <form:form method="post" action="${action}" var="p" modelAttribute="binhluan" enctype="multipart/form-data" >
+
+                <form:input type="text" id="file" path="tenNguoiDangBai" value="${pageContext.request.userPrincipal.name}"  readonly="true"  cssClass="form -control"/>
+                <form:input type="text" id="file" path="idBaiVietBinhLuan" value="${BaiViet.id}"  readonly="true"  cssClass="form -control"/>
+                <form:input type="text" path="noiDung"/>
+                <input type="submit" value="Bình Luận" class="btn btn-danger" disabled/>
+            </form:form>
+        </c:if>
+        <c:if test="${pageContext.request.userPrincipal.name != null}">
+            <form:form method="post" action="${action}" var="p" modelAttribute="binhluan" enctype="multipart/form-data" >
+
+                <form:input type="text" id="file" path="tenNguoiDangBai" value="${pageContext.request.userPrincipal.name}"  readonly="true"  cssClass="form -control"/>
+                <form:input type="text" id="file" path="idBaiVietBinhLuan" value="${BaiViet.id}"  readonly="true"  cssClass="form -control"/>
+
+                <form:input type="text" path="noiDung"/>
+                <input type="submit" value="Bình Luận" class="btn btn-danger"/>
+            </form:form>
+        </c:if>
+
     </div>
+
 
     <div class="chitiettin-col2">
         <div class="ct-thtinngdung">
@@ -75,6 +99,31 @@
 
         </div>
     </div>
+    <div>
+        <c:forEach items="${binhluans}" var="b">
+            <div class="comtent row" style="border-width: 20px">
+                <div class="col-md-1">
+                    <img src="${b.idNguoiDung.avatar} " style="width:80px" />
+                </div>
+                <div>
+                    <p>${b.idNguoiDung.tenNguoiDung}</p>  
+                    <p>${b.noiDung}</p>
+                    <p class="commentDate">${b.ngayBinhLuan}</p>
+                </div>  
+            </div>
+        </c:forEach>
+    </div>
+    <script>
+        window.onload = function () {
+            let dates = document.getElementsByClassName("commentDate")
+            for (let i = 0; i < dates.length; i++)
+            {
+                dates[i].innerText = moment(dates[i].innerText).fromNow()
+            }
+
+        }
+
+    </script>
 
 
 </section>
