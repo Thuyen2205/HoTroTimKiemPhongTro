@@ -4,6 +4,7 @@
  */
 package com.ntt.repository.impl;
 
+import com.ntt.pojo.Follow;
 import com.ntt.pojo.LoaiTaiKhoan;
 import com.ntt.pojo.NguoiDung;
 import com.ntt.repository.TaiKhoanRepository;
@@ -19,6 +20,7 @@ import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
@@ -33,10 +35,14 @@ public class TaiKhoanRepositoryImpl implements TaiKhoanRepository {
     private LocalSessionFactoryBean sessionFactory;
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRED)
     public boolean addTaiKhoan(NguoiDung nguoidung) {
         Session session = this.sessionFactory.getObject().getCurrentSession();
         try {
             session.save(nguoidung);
+            Follow fl=new Follow();
+            fl.setIdKhachHang(nguoidung);
+            session.save(fl);
             return true;
         } catch (HibernateException ex) {
             System.err.println(ex.getMessage());
@@ -76,6 +82,14 @@ public class TaiKhoanRepositoryImpl implements TaiKhoanRepository {
         Query q = s.createQuery("FROM NguoiDung WHERE tenTaiKhoan=:tenTK");
         q.setParameter("tenTK", tenTK);
 
+        return (NguoiDung) q.getSingleResult();
+    }
+
+    @Override
+    public NguoiDung getTaiKhoanId(int id) {
+        Session s = this.sessionFactory.getObject().getCurrentSession();
+        org.hibernate.query.Query q = s.createQuery("FROM NguoiDung WHERE id= :i");
+        q.setParameter("i", id);
         return (NguoiDung) q.getSingleResult();
     }
 

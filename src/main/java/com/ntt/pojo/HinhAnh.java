@@ -5,33 +5,34 @@
 package com.ntt.pojo;
 
 import java.io.Serializable;
-import java.util.Set;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
  * @author ThanhThuyen
  */
 @Entity
-@Table(name = "loai_bai_viet")
+@Table(name = "hinh_anh")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "LoaiBaiViet.findAll", query = "SELECT l FROM LoaiBaiViet l"),
-    @NamedQuery(name = "LoaiBaiViet.findById", query = "SELECT l FROM LoaiBaiViet l WHERE l.id = :id"),
-    @NamedQuery(name = "LoaiBaiViet.findByTenLoaiBaiViet", query = "SELECT l FROM LoaiBaiViet l WHERE l.tenLoaiBaiViet = :tenLoaiBaiViet")})
-public class LoaiBaiViet implements Serializable {
+    @NamedQuery(name = "HinhAnh.findAll", query = "SELECT h FROM HinhAnh h"),
+    @NamedQuery(name = "HinhAnh.findById", query = "SELECT h FROM HinhAnh h WHERE h.id = :id"),
+    @NamedQuery(name = "HinhAnh.findByDuongDan", query = "SELECT h FROM HinhAnh h WHERE h.duongDan = :duongDan")})
+public class HinhAnh implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -39,16 +40,19 @@ public class LoaiBaiViet implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @Size(max = 45)
-    @Column(name = "ten_loai_bai_viet")
-    private String tenLoaiBaiViet;
-    @OneToMany(mappedBy = "loaiBaiViet")
-    private Set<BaiViet> baiVietSet;
+    @Size(max = 500)
+    @Column(name = "duong_dan")
+    private String duongDan;
+    @JoinColumn(name = "id_bai_viet", referencedColumnName = "id")
+    @ManyToOne
+    private BaiViet idBaiViet;
+    @Transient
+    private MultipartFile fileDuongDan;
 
-    public LoaiBaiViet() {
+    public HinhAnh() {
     }
 
-    public LoaiBaiViet(Integer id) {
+    public HinhAnh(Integer id) {
         this.id = id;
     }
 
@@ -60,21 +64,20 @@ public class LoaiBaiViet implements Serializable {
         this.id = id;
     }
 
-    public String getTenLoaiBaiViet() {
-        return tenLoaiBaiViet;
+    public String getDuongDan() {
+        return duongDan;
     }
 
-    public void setTenLoaiBaiViet(String tenLoaiBaiViet) {
-        this.tenLoaiBaiViet = tenLoaiBaiViet;
+    public void setDuongDan(String duongDan) {
+        this.duongDan = duongDan;
     }
 
-    @XmlTransient
-    public Set<BaiViet> getBaiVietSet() {
-        return baiVietSet;
+    public BaiViet getIdBaiViet() {
+        return idBaiViet;
     }
 
-    public void setBaiVietSet(Set<BaiViet> baiVietSet) {
-        this.baiVietSet = baiVietSet;
+    public void setIdBaiViet(BaiViet idBaiViet) {
+        this.idBaiViet = idBaiViet;
     }
 
     @Override
@@ -87,10 +90,10 @@ public class LoaiBaiViet implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof LoaiBaiViet)) {
+        if (!(object instanceof HinhAnh)) {
             return false;
         }
-        LoaiBaiViet other = (LoaiBaiViet) object;
+        HinhAnh other = (HinhAnh) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -99,7 +102,7 @@ public class LoaiBaiViet implements Serializable {
 
     @Override
     public String toString() {
-        return "com.ntt.pojo.LoaiBaiViet[ id=" + id + " ]";
+        return "com.ntt.pojo.HinhAnh[ id=" + id + " ]";
     }
     
 }

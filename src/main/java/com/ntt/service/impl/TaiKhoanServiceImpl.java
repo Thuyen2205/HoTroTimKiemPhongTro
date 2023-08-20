@@ -8,6 +8,7 @@ import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 import com.ntt.pojo.LoaiTaiKhoan;
 import com.ntt.pojo.NguoiDung;
+import com.ntt.repository.FollowRepository;
 import com.ntt.repository.TaiKhoanRepository;
 import com.ntt.service.TaiKhoanService;
 import java.io.IOException;
@@ -35,6 +36,8 @@ public class TaiKhoanServiceImpl implements TaiKhoanService{
     private TaiKhoanRepository taikhoanRepository;
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
+    @Autowired
+    private FollowRepository followRepository;
     @Override
     public boolean addTaiKhoan(NguoiDung nguoidung) {
         
@@ -81,5 +84,10 @@ public class TaiKhoanServiceImpl implements TaiKhoanService{
     @Override
     public NguoiDung getTaiKhoanbyTenTK(String tenTK) {
         return this.taikhoanRepository.getTaiKhoanbyTenTK(tenTK);
+    }
+
+    @Override
+    public NguoiDung getTaiKhoanId(int id) {
+        return this.taikhoanRepository.getTaiKhoanId(id);
     }
 }

@@ -24,13 +24,15 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author ThanhThuyen
  */
 @Entity
-@Table(name = "thong_bao")
+@Table(name = "tieu_chi")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "ThongBao.findAll", query = "SELECT t FROM ThongBao t"),
-    @NamedQuery(name = "ThongBao.findById", query = "SELECT t FROM ThongBao t WHERE t.id = :id"),
-    @NamedQuery(name = "ThongBao.findByNoiDung", query = "SELECT t FROM ThongBao t WHERE t.noiDung = :noiDung")})
-public class ThongBao implements Serializable {
+    @NamedQuery(name = "TieuChi.findAll", query = "SELECT t FROM TieuChi t"),
+    @NamedQuery(name = "TieuChi.findById", query = "SELECT t FROM TieuChi t WHERE t.id = :id"),
+    @NamedQuery(name = "TieuChi.findByDiaChiMongMuon", query = "SELECT t FROM TieuChi t WHERE t.diaChiMongMuon = :diaChiMongMuon"),
+    @NamedQuery(name = "TieuChi.findBySoNguoiMongMuon", query = "SELECT t FROM TieuChi t WHERE t.soNguoiMongMuon = :soNguoiMongMuon"),
+    @NamedQuery(name = "TieuChi.findByGiaMongMuon", query = "SELECT t FROM TieuChi t WHERE t.giaMongMuon = :giaMongMuon")})
+public class TieuChi implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -39,19 +41,20 @@ public class ThongBao implements Serializable {
     @Column(name = "id")
     private Integer id;
     @Size(max = 200)
-    @Column(name = "noi_dung")
-    private String noiDung;
-    @JoinColumn(name = "id_bai_viet", referencedColumnName = "id")
-    @ManyToOne
-    private BaiViet idBaiViet;
+    @Column(name = "dia_chi_mong_muon")
+    private String diaChiMongMuon;
+    @Column(name = "so_nguoi_mong_muon")
+    private Integer soNguoiMongMuon;
+    @Column(name = "gia_mong_muon")
+    private Long giaMongMuon;
     @JoinColumn(name = "id_nguoi_dung", referencedColumnName = "id")
     @ManyToOne
     private NguoiDung idNguoiDung;
 
-    public ThongBao() {
+    public TieuChi() {
     }
 
-    public ThongBao(Integer id) {
+    public TieuChi(Integer id) {
         this.id = id;
     }
 
@@ -63,20 +66,28 @@ public class ThongBao implements Serializable {
         this.id = id;
     }
 
-    public String getNoiDung() {
-        return noiDung;
+    public String getDiaChiMongMuon() {
+        return diaChiMongMuon;
     }
 
-    public void setNoiDung(String noiDung) {
-        this.noiDung = noiDung;
+    public void setDiaChiMongMuon(String diaChiMongMuon) {
+        this.diaChiMongMuon = diaChiMongMuon;
     }
 
-    public BaiViet getIdBaiViet() {
-        return idBaiViet;
+    public Integer getSoNguoiMongMuon() {
+        return soNguoiMongMuon;
     }
 
-    public void setIdBaiViet(BaiViet idBaiViet) {
-        this.idBaiViet = idBaiViet;
+    public void setSoNguoiMongMuon(Integer soNguoiMongMuon) {
+        this.soNguoiMongMuon = soNguoiMongMuon;
+    }
+
+    public Long getGiaMongMuon() {
+        return giaMongMuon;
+    }
+
+    public void setGiaMongMuon(Long giaMongMuon) {
+        this.giaMongMuon = giaMongMuon;
     }
 
     public NguoiDung getIdNguoiDung() {
@@ -97,10 +108,10 @@ public class ThongBao implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof ThongBao)) {
+        if (!(object instanceof TieuChi)) {
             return false;
         }
-        ThongBao other = (ThongBao) object;
+        TieuChi other = (TieuChi) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -109,7 +120,7 @@ public class ThongBao implements Serializable {
 
     @Override
     public String toString() {
-        return "com.ntt.pojo.ThongBao[ id=" + id + " ]";
+        return "com.ntt.pojo.TieuChi[ id=" + id + " ]";
     }
     
 }

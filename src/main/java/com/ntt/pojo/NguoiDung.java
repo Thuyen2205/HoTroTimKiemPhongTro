@@ -26,7 +26,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
- * @author Admins
+ * @author ThanhThuyen
  */
 @Entity
 @Table(name = "nguoi_dung")
@@ -43,13 +43,41 @@ import org.springframework.web.multipart.MultipartFile;
     @NamedQuery(name = "NguoiDung.findByHinhAnh", query = "SELECT n FROM NguoiDung n WHERE n.hinhAnh = :hinhAnh")})
 public class NguoiDung implements Serializable {
 
+    /**
+     * @return the file
+     */
+    public MultipartFile getFile() {
+        return file;
+    }
+
+    /**
+     * @param file the file to set
+     */
+    public void setFile(MultipartFile file) {
+        this.file = file;
+    }
+
+    /**
+     * @return the xacNhanMatKhau
+     */
+    public String getXacNhanMatKhau() {
+        return xacNhanMatKhau;
+    }
+
+    /**
+     * @param xacNhanMatKhau the xacNhanMatKhau to set
+     */
+    public void setXacNhanMatKhau(String xacNhanMatKhau) {
+        this.xacNhanMatKhau = xacNhanMatKhau;
+    }
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @Size(max = 45)
+    @Size(max = 100)
     @Column(name = "ten_nguoi_dung")
     private String tenNguoiDung;
     // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
@@ -59,7 +87,7 @@ public class NguoiDung implements Serializable {
     @Size(max = 45)
     @Column(name = "sdt")
     private String sdt;
-    @Size(max = 45)
+    @Size(max = 100)
     @Column(name = "ten_tai_khoan")
     private String tenTaiKhoan;
     @Size(max = 200)
@@ -71,8 +99,14 @@ public class NguoiDung implements Serializable {
     @Size(max = 500)
     @Column(name = "hinh_anh")
     private String hinhAnh;
+    @Transient
+    private MultipartFile file;
+    @Transient
+    private String xacNhanMatKhau;
     @OneToMany(mappedBy = "idNguoiDung")
     private Set<BinhLuan> binhLuanSet;
+    @OneToMany(mappedBy = "idNguoiDung")
+    private Set<TieuChi> tieuChiSet;
     @JoinColumn(name = "id_loai_tai_khoan", referencedColumnName = "id")
     @ManyToOne
     private LoaiTaiKhoan idLoaiTaiKhoan;
@@ -80,14 +114,11 @@ public class NguoiDung implements Serializable {
     private Set<ThongBao> thongBaoSet;
     @OneToMany(mappedBy = "idNguoiDung")
     private Set<BaiViet> baiVietSet;
-    @Transient
-    private MultipartFile file;
+    @OneToMany(mappedBy = "idChuTro")
+    private Set<Follow> followSet;
+    @OneToMany(mappedBy = "idKhachHang")
+    private Set<Follow> followSet1;
 
-    @Transient
-    private String xacNhanMatKhau;
-    @Transient
-    private String tenNguoiDangNhap;
-    
     public NguoiDung() {
     }
 
@@ -168,6 +199,15 @@ public class NguoiDung implements Serializable {
         this.binhLuanSet = binhLuanSet;
     }
 
+    @XmlTransient
+    public Set<TieuChi> getTieuChiSet() {
+        return tieuChiSet;
+    }
+
+    public void setTieuChiSet(Set<TieuChi> tieuChiSet) {
+        this.tieuChiSet = tieuChiSet;
+    }
+
     public LoaiTaiKhoan getIdLoaiTaiKhoan() {
         return idLoaiTaiKhoan;
     }
@@ -194,6 +234,24 @@ public class NguoiDung implements Serializable {
         this.baiVietSet = baiVietSet;
     }
 
+    @XmlTransient
+    public Set<Follow> getFollowSet() {
+        return followSet;
+    }
+
+    public void setFollowSet(Set<Follow> followSet) {
+        this.followSet = followSet;
+    }
+
+    @XmlTransient
+    public Set<Follow> getFollowSet1() {
+        return followSet1;
+    }
+
+    public void setFollowSet1(Set<Follow> followSet1) {
+        this.followSet1 = followSet1;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -217,48 +275,6 @@ public class NguoiDung implements Serializable {
     @Override
     public String toString() {
         return "com.ntt.pojo.NguoiDung[ id=" + id + " ]";
-    }
-
-    /**
-     * @return the file
-     */
-    public MultipartFile getFile() {
-        return file;
-    }
-
-    /**
-     * @param file the file to set
-     */
-    public void setFile(MultipartFile file) {
-        this.file = file;
-    }
-
-    /**
-     * @return the xacNhanMatKhau
-     */
-    public String getXacNhanMatKhau() {
-        return xacNhanMatKhau;
-    }
-
-    /**
-     * @param xacNhanMatKhau the xacNhanMatKhau to set
-     */
-    public void setXacNhanMatKhau(String xacNhanMatKhau) {
-        this.xacNhanMatKhau = xacNhanMatKhau;
-    }
-
-    /**
-     * @return the tenNguoiDangNhap
-     */
-    public String getTenNguoiDangNhap() {
-        return tenNguoiDangNhap;
-    }
-
-    /**
-     * @param tenNguoiDangNhap the tenNguoiDangNhap to set
-     */
-    public void setTenNguoiDangNhap(String tenNguoiDangNhap) {
-        this.tenNguoiDangNhap = tenNguoiDangNhap;
     }
 
 }

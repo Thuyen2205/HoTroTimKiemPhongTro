@@ -5,6 +5,7 @@
 package com.ntt.repository.impl;
 
 import com.ntt.pojo.BaiViet;
+import com.ntt.pojo.HinhAnh;
 import com.ntt.pojo.NguoiDung;
 
 import com.ntt.repository.BaiVietRepository;
@@ -21,6 +22,7 @@ import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
@@ -94,10 +96,29 @@ public class BaiVietRepositoryImpl implements BaiVietRepository {
     }
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRED)
     public boolean addBaiViet(BaiViet baiviet) {
         Session s = this.factory.getObject().getCurrentSession();
+
         try {
             s.save(baiviet);
+            HinhAnh hinhanh = new HinhAnh();
+            hinhanh.setIdBaiViet(baiviet);
+            hinhanh.setDuongDan(baiviet.getHinhAnh());
+            s.save(hinhanh);
+            if (baiviet.getHinhAnh1() != null) {
+                HinhAnh hinhanh1 = new HinhAnh();
+                hinhanh1.setIdBaiViet(baiviet);
+                hinhanh1.setDuongDan(baiviet.getHinhAnh1());
+                s.save(hinhanh);
+            }
+            if (baiviet.getHinhAnh2() != null) {
+                HinhAnh hinhanh2 = new HinhAnh();
+                hinhanh2.setIdBaiViet(baiviet);
+                hinhanh2.setDuongDan(baiviet.getHinhAnh2());
+                s.save(hinhanh);
+            }
+
             return true;
         } catch (HibernateException e) {
             System.err.println(e.getMessage());
@@ -128,7 +149,7 @@ public class BaiVietRepositoryImpl implements BaiVietRepository {
             ex.printStackTrace();
             return false;
         }
-        
+
     }
 
 }

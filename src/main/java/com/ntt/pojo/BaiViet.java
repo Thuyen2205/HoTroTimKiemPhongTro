@@ -5,7 +5,6 @@
 package com.ntt.pojo;
 
 import java.io.Serializable;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.Set;
 import javax.persistence.Basic;
@@ -31,7 +30,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
- * @author Admins
+ * @author ThanhThuyen
  */
 @Entity
 @Table(name = "bai_viet")
@@ -46,8 +45,81 @@ import org.springframework.web.multipart.MultipartFile;
     @NamedQuery(name = "BaiViet.findBySoNguoi", query = "SELECT b FROM BaiViet b WHERE b.soNguoi = :soNguoi"),
     @NamedQuery(name = "BaiViet.findByGiaThue", query = "SELECT b FROM BaiViet b WHERE b.giaThue = :giaThue"),
     @NamedQuery(name = "BaiViet.findByDienTich", query = "SELECT b FROM BaiViet b WHERE b.dienTich = :dienTich"),
-    @NamedQuery(name = "BaiViet.findByDiaChiCt", query = "SELECT b FROM BaiViet b WHERE b.diaChiCt = :diaChiCt")})
+    @NamedQuery(name = "BaiViet.findByDiaChiCt", query = "SELECT b FROM BaiViet b WHERE b.diaChiCt = :diaChiCt"),
+    @NamedQuery(name = "BaiViet.findByHinhAnh1", query = "SELECT b FROM BaiViet b WHERE b.hinhAnh1 = :hinhAnh1"),
+    @NamedQuery(name = "BaiViet.findByHinhAnh2", query = "SELECT b FROM BaiViet b WHERE b.hinhAnh2 = :hinhAnh2"),
+    @NamedQuery(name = "BaiViet.findByHinhAnh3", query = "SELECT b FROM BaiViet b WHERE b.hinhAnh3 = :hinhAnh3")})
 public class BaiViet implements Serializable {
+
+    /**
+     * @return the file
+     */
+    public MultipartFile getFile() {
+        return file;
+    }
+
+    /**
+     * @param file the file to set
+     */
+    public void setFile(MultipartFile file) {
+        this.file = file;
+    }
+
+    /**
+     * @return the file1
+     */
+    public MultipartFile getFile1() {
+        return file1;
+    }
+
+    /**
+     * @param file1 the file1 to set
+     */
+    public void setFile1(MultipartFile file1) {
+        this.file1 = file1;
+    }
+
+    /**
+     * @return the file2
+     */
+    public MultipartFile getFile2() {
+        return file2;
+    }
+
+    /**
+     * @param file2 the file2 to set
+     */
+    public void setFile2(MultipartFile file2) {
+        this.file2 = file2;
+    }
+
+    /**
+     * @return the file3
+     */
+    public MultipartFile getFile3() {
+        return file3;
+    }
+
+    /**
+     * @param file3 the file3 to set
+     */
+    public void setFile3(MultipartFile file3) {
+        this.file3 = file3;
+    }
+
+    /**
+     * @return the tenNguoiDangBai
+     */
+    public String getTenNguoiDangBai() {
+        return tenNguoiDangBai;
+    }
+
+    /**
+     * @param tenNguoiDangBai the tenNguoiDangBai to set
+     */
+    public void setTenNguoiDangBai(String tenNguoiDangBai) {
+        this.tenNguoiDangBai = tenNguoiDangBai;
+    }
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -55,7 +127,7 @@ public class BaiViet implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @Size(max = 245)
+    @Size(max = 100)
     @Column(name = "ten_bai_viet")
     private String tenBaiViet;
     @Size(max = 500)
@@ -65,11 +137,11 @@ public class BaiViet implements Serializable {
     @Size(max = 2147483647)
     @Column(name = "noi_dung")
     private String noiDung;
-    @Size(max = 100)
+    @Size(max = 200)
     @Column(name = "pham_vi_can_tim")
     private String phamViCanTim;
     @Column(name = "ngay_dang")
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.DATE)
     private Date ngayDang;
     @Column(name = "so_nguoi")
     private Integer soNguoi;
@@ -78,11 +150,32 @@ public class BaiViet implements Serializable {
     @Size(max = 45)
     @Column(name = "dien_tich")
     private String dienTich;
-    @Size(max = 45)
+    @Size(max = 200)
     @Column(name = "dia_chi_ct")
     private String diaChiCt;
+    @Size(max = 500)
+    @Column(name = "hinh_anh1")
+    private String hinhAnh1;
+    @Size(max = 500)
+    @Column(name = "hinh_anh2")
+    private String hinhAnh2;
+    @Size(max = 500)
+    @Column(name = "hinh_anh3")
+    private String hinhAnh3;
+    @Transient
+    private MultipartFile file;
+    @Transient
+    private MultipartFile file1;
+    @Transient
+    private MultipartFile file2;
+    @Transient
+    private MultipartFile file3;
+    @Transient
+    private String tenNguoiDangBai;
     @OneToMany(mappedBy = "idBaiViet")
     private Set<BinhLuan> binhLuanSet;
+    @OneToMany(mappedBy = "idBaiViet")
+    private Set<HinhAnh> hinhAnhSet;
     @OneToMany(mappedBy = "idBaiViet")
     private Set<ThongBao> thongBaoSet;
     @JoinColumn(name = "loai_bai_viet", referencedColumnName = "id")
@@ -91,12 +184,7 @@ public class BaiViet implements Serializable {
     @JoinColumn(name = "id_nguoi_dung", referencedColumnName = "id")
     @ManyToOne
     private NguoiDung idNguoiDung;
-    @Transient
-    private MultipartFile file;
-    @Transient
-    private String tenNguoiDangBai;
-    
-    
+
     public BaiViet() {
     }
 
@@ -184,6 +272,30 @@ public class BaiViet implements Serializable {
         this.diaChiCt = diaChiCt;
     }
 
+    public String getHinhAnh1() {
+        return hinhAnh1;
+    }
+
+    public void setHinhAnh1(String hinhAnh1) {
+        this.hinhAnh1 = hinhAnh1;
+    }
+
+    public String getHinhAnh2() {
+        return hinhAnh2;
+    }
+
+    public void setHinhAnh2(String hinhAnh2) {
+        this.hinhAnh2 = hinhAnh2;
+    }
+
+    public String getHinhAnh3() {
+        return hinhAnh3;
+    }
+
+    public void setHinhAnh3(String hinhAnh3) {
+        this.hinhAnh3 = hinhAnh3;
+    }
+
     @XmlTransient
     public Set<BinhLuan> getBinhLuanSet() {
         return binhLuanSet;
@@ -191,6 +303,15 @@ public class BaiViet implements Serializable {
 
     public void setBinhLuanSet(Set<BinhLuan> binhLuanSet) {
         this.binhLuanSet = binhLuanSet;
+    }
+
+    @XmlTransient
+    public Set<HinhAnh> getHinhAnhSet() {
+        return hinhAnhSet;
+    }
+
+    public void setHinhAnhSet(Set<HinhAnh> hinhAnhSet) {
+        this.hinhAnhSet = hinhAnhSet;
     }
 
     @XmlTransient
@@ -242,37 +363,5 @@ public class BaiViet implements Serializable {
     public String toString() {
         return "com.ntt.pojo.BaiViet[ id=" + id + " ]";
     }
-
-    /**
-     * @return the file
-     */
-    public MultipartFile getFile() {
-        return file;
-    }
-
-    /**
-     * @param file the file to set
-     */
-    public void setFile(MultipartFile file) {
-        this.file = file;
-    }
-
-    /**
-     * @return the tenNguoiDangBai
-     */
-    public String getTenNguoiDangBai() {
-        return tenNguoiDangBai;
-    }
-
-    /**
-     * @param tenNguoiDangBai the tenNguoiDangBai to set
-     */
-    public void setTenNguoiDangBai(String tenNguoiDangBai) {
-        this.tenNguoiDangBai = tenNguoiDangBai;
-    }
-
-   
-
-   
 
 }

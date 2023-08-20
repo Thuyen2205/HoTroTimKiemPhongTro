@@ -14,6 +14,7 @@ import com.ntt.repository.LoaiBaiVietRepository;
 import com.ntt.repository.TaiKhoanRepository;
 import com.ntt.service.BaiVietService;
 import java.io.IOException;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -58,6 +59,7 @@ public class BaiVietServiceImpl implements BaiVietService {
                 Map res = this.cloudinary.uploader().upload(baiviet.getFile().getBytes(),
                         ObjectUtils.asMap("resource_type", "auto"));
                 baiviet.setHinhAnh(res.get("secure_url").toString());
+                baiviet.setNgayDang(new Date());
 
             }
 
