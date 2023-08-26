@@ -1,8 +1,9 @@
 <%-- 
-    Document   : base
-    Created on : Jul 25, 2023, 9:33:58 PM
+    Document   : baseAdmin
+    Created on : Aug 26, 2023, 1:04:51 PM
     Author     : ThanhThuyen
 --%>
+
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles" %>
@@ -20,8 +21,9 @@
      
     </head>
     <body>
-        <tiles:insertAttribute name="header"/>
+        <tiles:insertAttribute name="headerAdmin"/>
         <tiles:insertAttribute name="content"/>
         <tiles:insertAttribute name="footer"/>
     </body>
 </html>
+

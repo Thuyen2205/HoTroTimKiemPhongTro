@@ -91,12 +91,13 @@ public class BinhLuan implements Serializable {
     @Column(name = "ngay_binh_luan")
     @Temporal(TemporalType.DATE)
     private Date ngayBinhLuan;
-    @Transient
+     @Transient
     private String tenBaiVietBinhLuan;
     @Transient
     private Integer idBaiVietBinhLuan;
     @Transient
     private String tenNguoiDangBai;
+
     @JoinColumn(name = "id_bai_viet", referencedColumnName = "id")
     @ManyToOne
     private BaiViet idBaiViet;

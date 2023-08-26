@@ -60,10 +60,5 @@ public class DangNhapController {
     }
 
 
-    @RequestMapping("/admin")
-    public String dangNhapAdmin(Model model, Authentication authen) {
-        model.addAttribute("taikhoan", this.taikhoan.getTaiKhoan(authen.getName()).get(0));
-        return "admin";
-    }
 
 }

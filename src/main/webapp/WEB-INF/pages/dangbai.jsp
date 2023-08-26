@@ -105,17 +105,6 @@
                                 <img src =""  id="image" width="200" height="200"/>
                                 <form:input path="file" type="file" id="imageFile" name="imageFile" onchange="chooseFile(this)" accept="image/jpg, image/jpeg, image/png"/>
                             </div>
-                            <div>  
-                                <p for="file">Hình ảnh phòng trọ: </p>
-                                <img src =""  id="image" width="200" height="200"/>
-                                <form:input path="file1" type="file" id="imageFile" name="imageFile" onchange="chooseFile(this)" accept="image/jpg, image/jpeg, image/png"/>
-                            </div> 
-                            <div>  
-                                <p for="file">Hình ảnh phòng trọ: </p>
-                                <img src =""  id="image" width="200" height="200"/>
-                                <form:input path="file2" type="file" id="imageFile" name="imageFile" onchange="chooseFile(this)" accept="image/jpg, image/jpeg, image/png"/>
-                            </div> 
-
                         </c:if>
 
                         <!--BÀI CỦA KHÁCH HÀNG-->

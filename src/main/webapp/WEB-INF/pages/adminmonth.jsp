@@ -7,51 +7,28 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<link href="<c:url value="/css/style.css" />" rel="stylesheet" />
 <!DOCTYPE html>
 <html>
     <div>
-        <h2>Thống kê theo năm: </h2>
-        <form action="${pageContext.request.contextPath}/admin" method="post">
+        <h2>Thống kê theo tháng: </h2>
+        <form action="${pageContext.request.contextPath}/adminmonth" method="post">
             <label for="year">Chọn năm:</label>
             <select id="year" name="year">
-                <c:forEach var="y" begin="2010" end="2024">
-                    <option value="${y}">${y}</option>
+                <c:forEach var="year" begin="2020" end="2030">
+                    <option value="${year}">${year}</option>
                 </c:forEach>
             </select>
+            <br>
+            <label for="month">Chọn tháng:</label>
+            <select id="month" name="month">
+                <c:forEach var="month" begin="1" end="12">
+                    <option value="${month}">${month}</option>
+                </c:forEach>
+            </select>
+            <br>
             <button type="submit" class="btn btn-danger">Thực hiện thống kê</button>
-            <p>Số lượng chủ trọ: ${countChuTro}</p>
-            <p>Số lượng khách hàng: ${countKhachHang}</p>
         </form>
     </div>
-    <!--    <div id="bieuDoContainer">
-            <canvas id="myChart"></canvas>
-        </div>
-            <script>
-            var countKhachHang = ${countKhachHang};
-            var countChuTro = ${countChuTro};
-    
-            var ctx = document.getElementById('myChart').getContext('2d');
-            var myChart = new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: ['Khách hàng', 'Chủ trọ'],
-                    datasets: [{
-                            label: 'Số lượng',
-                            data: [countKhachHang, countChuTro],
-                            backgroundColor: ['blue', 'green']
-                        }]
-                },
-                options: {
-                    scales: {
-                        y: {
-                            beginAtZero: true
-                        }
-                    }
-                }
-            });
-        </script>-->
-
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript">
         google.charts.load('current', {'packages': ['corechart']});
@@ -81,7 +58,8 @@
         }
     </script>
 
-    <div id="chart_div" style="width: 100%; height: 500px;"></div>
+    <div id="chart_div" style="width: 100%; height: 300px;"></div>
+
 
     <table class="table">
 
@@ -102,13 +80,10 @@
                     <td valign="middle"><img src="${p.avatar}" class="rounded-circle" style="width: 150px;" alt="${pageContext.request.userPrincipal.name}" /></td>
                 </tr>
             </c:forEach>
-            
+
         </tbody>
 
     </table>
-  
-
-
 
 
 

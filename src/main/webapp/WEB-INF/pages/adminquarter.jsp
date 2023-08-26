@@ -1,57 +1,33 @@
 <%-- 
-    Document   : admin
-    Created on : Jul 31, 2023, 2:31:08 PM
+    Document   : adminquarter
+    Created on : Aug 26, 2023, 1:49:21 PM
     Author     : ThanhThuyen
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<link href="<c:url value="/css/style.css" />" rel="stylesheet" />
 <!DOCTYPE html>
 <html>
-    <div>
-        <h2>Thống kê theo năm: </h2>
-        <form action="${pageContext.request.contextPath}/admin" method="post">
-            <label for="year">Chọn năm:</label>
-            <select id="year" name="year">
-                <c:forEach var="y" begin="2010" end="2024">
-                    <option value="${y}">${y}</option>
-                </c:forEach>
-            </select>
-            <button type="submit" class="btn btn-danger">Thực hiện thống kê</button>
-            <p>Số lượng chủ trọ: ${countChuTro}</p>
-            <p>Số lượng khách hàng: ${countKhachHang}</p>
-        </form>
-    </div>
-    <!--    <div id="bieuDoContainer">
-            <canvas id="myChart"></canvas>
-        </div>
-            <script>
-            var countKhachHang = ${countKhachHang};
-            var countChuTro = ${countChuTro};
-    
-            var ctx = document.getElementById('myChart').getContext('2d');
-            var myChart = new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: ['Khách hàng', 'Chủ trọ'],
-                    datasets: [{
-                            label: 'Số lượng',
-                            data: [countKhachHang, countChuTro],
-                            backgroundColor: ['blue', 'green']
-                        }]
-                },
-                options: {
-                    scales: {
-                        y: {
-                            beginAtZero: true
-                        }
-                    }
-                }
-            });
-        </script>-->
+    <form action="${pageContext.request.contextPath}/adminquarter" method="post">
+        <label for="year">Chọn năm:</label>
+        <select id="year" name="year">
+            <c:forEach var="year" begin="2020" end="2030">
+                <option value="${year}">${year}</option>
+            </c:forEach>
+        </select>
+        <br>
+        <label for="quarter">Chọn quý:</label>
+        <select id="quarter" name="quarter">
+            <option value="1">Quý 1</option>
+            <option value="2">Quý 2</option>
+            <option value="3">Quý 3</option>
+            <option value="4">Quý 4</option>
+        </select>
+        <br>
+        <button type="submit" class="btn btn-danger">Thực hiện thống kê</button>
 
+    </form>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript">
         google.charts.load('current', {'packages': ['corechart']});
@@ -81,7 +57,7 @@
         }
     </script>
 
-    <div id="chart_div" style="width: 100%; height: 500px;"></div>
+    <div id="chart_div" style="width: 100%; height: 300px;"></div>
 
     <table class="table">
 
@@ -102,15 +78,9 @@
                     <td valign="middle"><img src="${p.avatar}" class="rounded-circle" style="width: 150px;" alt="${pageContext.request.userPrincipal.name}" /></td>
                 </tr>
             </c:forEach>
-            
+
         </tbody>
 
     </table>
-  
-
-
-
-
-
 
 </html>

@@ -7,6 +7,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ page import="java.util.Date" %>
 <link href="<c:url value="/css/trangchu.css"/>"rel="stylesheet">
 <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 
@@ -36,6 +37,11 @@
             <div class="input-box">
                 <form:input type="password" placeholder="Xác nhận lại mật khẩu" path="xacNhanMatKhau" />           
             </div>
+
+<!--            <div class="input-box">
+                <%--<form:input type="hidden" path="ngayTao" value="<%= new java.util.Date()%>" />--%>           
+            </div>-->
+
             <div class="input-box btn-danger">
                 <form:select class="role" name="role" id="role" path="idLoaiTaiKhoan">
                     <c:forEach items="${user_role}" var="c" >

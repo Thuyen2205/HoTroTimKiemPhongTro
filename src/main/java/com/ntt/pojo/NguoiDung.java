@@ -5,6 +5,7 @@
 package com.ntt.pojo;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.Set;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -18,6 +19,8 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -40,8 +43,23 @@ import org.springframework.web.multipart.MultipartFile;
     @NamedQuery(name = "NguoiDung.findByTenTaiKhoan", query = "SELECT n FROM NguoiDung n WHERE n.tenTaiKhoan = :tenTaiKhoan"),
     @NamedQuery(name = "NguoiDung.findByMatKhau", query = "SELECT n FROM NguoiDung n WHERE n.matKhau = :matKhau"),
     @NamedQuery(name = "NguoiDung.findByAvatar", query = "SELECT n FROM NguoiDung n WHERE n.avatar = :avatar"),
-    @NamedQuery(name = "NguoiDung.findByHinhAnh", query = "SELECT n FROM NguoiDung n WHERE n.hinhAnh = :hinhAnh")})
+    @NamedQuery(name = "NguoiDung.findByHinhAnh", query = "SELECT n FROM NguoiDung n WHERE n.hinhAnh = :hinhAnh"),
+    @NamedQuery(name = "NguoiDung.findByNgayTao", query = "SELECT n FROM NguoiDung n WHERE n.ngayTao = :ngayTao")})
 public class NguoiDung implements Serializable {
+
+    /**
+     * @return the thangChon
+     */
+    public String getThangChon() {
+        return thangChon;
+    }
+
+    /**
+     * @param thangChon the thangChon to set
+     */
+    public void setThangChon(String thangChon) {
+        this.thangChon = thangChon;
+    }
 
     /**
      * @return the file
@@ -99,10 +117,15 @@ public class NguoiDung implements Serializable {
     @Size(max = 500)
     @Column(name = "hinh_anh")
     private String hinhAnh;
-    @Transient
+     @Transient
     private MultipartFile file;
     @Transient
     private String xacNhanMatKhau;
+    @Transient
+    private String thangChon;
+    @Column(name = "ngay_tao")
+    @Temporal(TemporalType.DATE)
+    private Date ngayTao;
     @OneToMany(mappedBy = "idNguoiDung")
     private Set<BinhLuan> binhLuanSet;
     @OneToMany(mappedBy = "idNguoiDung")
@@ -188,6 +211,14 @@ public class NguoiDung implements Serializable {
 
     public void setHinhAnh(String hinhAnh) {
         this.hinhAnh = hinhAnh;
+    }
+
+    public Date getNgayTao() {
+        return ngayTao;
+    }
+
+    public void setNgayTao(Date ngayTao) {
+        this.ngayTao = ngayTao;
     }
 
     @XmlTransient
@@ -276,5 +307,5 @@ public class NguoiDung implements Serializable {
     public String toString() {
         return "com.ntt.pojo.NguoiDung[ id=" + id + " ]";
     }
-
+    
 }

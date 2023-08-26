@@ -10,6 +10,7 @@ import com.ntt.pojo.BaiViet;
 import com.ntt.pojo.BinhLuan;
 import com.ntt.pojo.Follow;
 import com.ntt.pojo.NguoiDung;
+import com.ntt.pojo.NguoiDung_;
 import com.ntt.service.BaiVietService;
 import com.ntt.service.BinhLuanService;
 import com.ntt.service.FollowService;
@@ -25,6 +26,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.constraints.Past;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -58,13 +61,13 @@ public class BaiVietController {
     private BinhLuanService binhluanService;
     @Autowired
     private FollowService followService;
-
+    @Autowired
+    private JavaMailSender emailSender;
     @GetMapping("/dangbai")
-    public String list(Model model, Authentication authen) {
+    public String list(Model model, Authentication authen, @RequestParam Map<String, String> params) {
         model.addAttribute("nguoidung", this.taikhoan.getTaiKhoan(authen.getName()).get(0));
         model.addAttribute("baiviet_role", this.loaiBaiViet.getLoaiBaiViet());
         model.addAttribute("taikhoan", this.taikhoan.getTaiKhoan(authen.getName()).get(0));
-
         model.addAttribute("baiviet", new BaiViet());
         return "dangbai";
 
@@ -124,14 +127,26 @@ public class BaiVietController {
     }
 
     @PostMapping("/dangbai")
-    public String add(Model model, @ModelAttribute(value = "baiviet") BaiViet baiviet, Authentication authen) {
+    public String add(Model model, @ModelAttribute(value = "baiviet") BaiViet baiviet, @RequestParam Map<String, String> params, Authentication authen) {
         String errMsg = "";
-        
-        if (this.baivietService.addBaiViet(baiviet) == true) {
-            
-            return "redirect:/";
-        } else {
-            errMsg = "Đã có lỗi xãy ra";
+
+        if (authen.getName() != null) {
+            NguoiDung nd = this.taikhoan.getTaiKhoan(authen.getName()).get(0);
+            List<Follow> fls = this.followService.getFollowsChuTro(nd);
+            if (this.baivietService.addBaiViet(baiviet) == true) {
+                SimpleMailMessage message = new SimpleMailMessage();
+                for (Follow fl : fls) {
+                    message.setTo(fl.getIdKhachHang().getEmail());
+                    message.setSubject("Xong mail r á (Sài Mail API)");
+                    message.setText("Nguoi dung đã đăng bai mới!!! Vào Xem");
+                     emailSender.send(message);
+                }
+
+                return "redirect:/";
+            } else {
+                errMsg = "Đã có lỗi xãy ra";
+            }
+
         }
 
         return "baiviet";

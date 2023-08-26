@@ -16,10 +16,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
-import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
@@ -46,8 +44,6 @@ public class HinhAnh implements Serializable {
     @JoinColumn(name = "id_bai_viet", referencedColumnName = "id")
     @ManyToOne
     private BaiViet idBaiViet;
-    @Transient
-    private MultipartFile fileDuongDan;
 
     public HinhAnh() {
     }

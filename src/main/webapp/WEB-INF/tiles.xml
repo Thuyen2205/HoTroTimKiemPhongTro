@@ -16,6 +16,15 @@ Click nbfs://nbhost/SystemFileSystem/Templates/XML/XMLDocument.xml to edit this 
         <put-attribute name="footer"
                        value="/WEB-INF/layout/footer.jsp" />
     </definition>
+     <definition name="baseLayoutAdmin"
+                template="/WEB-INF/layout/baseAdmin.jsp">
+        <put-attribute name="title" value="" />
+        <put-attribute name="headerAdmin"
+                       value="/WEB-INF/layout/headerAdmin.jsp" />
+        <put-attribute name="content" value="" />
+        <put-attribute name="footer"
+                       value="/WEB-INF/layout/footer.jsp" />
+    </definition>
     
     <definition name="index" extends="baseLayout">
         <put-attribute name="title" value="Trang chủ" />
@@ -28,7 +37,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/XML/XMLDocument.xml to edit this 
                        value="/WEB-INF/pages/canhan.jsp" />
     </definition>
     
-    <definition name="admin" extends="baseLayout">
+    <definition name="admin" extends="baseLayoutAdmin">
         <put-attribute name="title" value="Trang chủ" />
         <put-attribute name="content"
                        value="/WEB-INF/pages/admin.jsp" />
@@ -59,6 +68,21 @@ Click nbfs://nbhost/SystemFileSystem/Templates/XML/XMLDocument.xml to edit this 
         <put-attribute name="content"
                        value="/WEB-INF/pages/thtin_bviet.jsp" />
     </definition>
+        <definition name="bieudo" extends="baseLayout">
+        <put-attribute name="title" value="Trang chủ" />
+        <put-attribute name="content"
+                       value="/WEB-INF/pages/bieudo.jsp" />
+    </definition>
     
+    <definition name="adminmonth" extends="baseLayoutAdmin">
+        <put-attribute name="title" value="Trang cập nhật" />
+        <put-attribute name="content"
+                       value="/WEB-INF/pages/adminmonth.jsp" />
+    </definition>
+    <definition name="adminquarter" extends="baseLayoutAdmin">
+        <put-attribute name="title" value="Trang cập nhật" />
+        <put-attribute name="content"
+                       value="/WEB-INF/pages/adminquarter.jsp" />
+    </definition>
     
 </tiles-definitions>

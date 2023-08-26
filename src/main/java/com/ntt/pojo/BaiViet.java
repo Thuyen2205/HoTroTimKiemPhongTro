@@ -363,5 +363,5 @@ public class BaiViet implements Serializable {
     public String toString() {
         return "com.ntt.pojo.BaiViet[ id=" + id + " ]";
     }
-
+    
 }

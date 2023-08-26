@@ -48,6 +48,7 @@
                                         <c:url value="/thtin_bviet" var="bvietAction">
                                             <c:param name="baivietId" value="${p.id}" />  
                                         </c:url>
+                                        
                                         <a href="${bvietAction}" >${p.tenBaiViet}</a>
                                         <tr>
                                             <th>Khu vực:</th>

@@ -106,19 +106,6 @@ public class BaiVietRepositoryImpl implements BaiVietRepository {
             hinhanh.setIdBaiViet(baiviet);
             hinhanh.setDuongDan(baiviet.getHinhAnh());
             s.save(hinhanh);
-            if (baiviet.getHinhAnh1() != null) {
-                HinhAnh hinhanh1 = new HinhAnh();
-                hinhanh1.setIdBaiViet(baiviet);
-                hinhanh1.setDuongDan(baiviet.getHinhAnh1());
-                s.save(hinhanh);
-            }
-            if (baiviet.getHinhAnh2() != null) {
-                HinhAnh hinhanh2 = new HinhAnh();
-                hinhanh2.setIdBaiViet(baiviet);
-                hinhanh2.setDuongDan(baiviet.getHinhAnh2());
-                s.save(hinhanh);
-            }
-
             return true;
         } catch (HibernateException e) {
             System.err.println(e.getMessage());

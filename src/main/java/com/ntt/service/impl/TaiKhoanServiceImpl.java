@@ -12,6 +12,8 @@ import com.ntt.repository.FollowRepository;
 import com.ntt.repository.TaiKhoanRepository;
 import com.ntt.service.TaiKhoanService;
 import java.io.IOException;
+import java.util.Date;
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -47,6 +49,8 @@ public class TaiKhoanServiceImpl implements TaiKhoanService{
                     Map res=this.cloudinary.uploader().upload(nguoidung.getFile().getBytes(),
                             ObjectUtils.asMap("resource_type", "auto"));
                     nguoidung.setAvatar(res.get("secure_url").toString());
+                    Date current=new Date();
+                    nguoidung.setNgayTao(current);
                     
                 } catch (IOException ex) {
                      System.err.println("== ADD BaiViet ==" + ex.getMessage());
@@ -89,5 +93,21 @@ public class TaiKhoanServiceImpl implements TaiKhoanService{
     @Override
     public NguoiDung getTaiKhoanId(int id) {
         return this.taikhoanRepository.getTaiKhoanId(id);
+    }
+
+
+    @Override
+    public List<NguoiDung> getTaiKhoansByYear(int year) {
+        return this.taikhoanRepository.getTaiKhoansByYear(year);
+    }
+
+    @Override
+    public List<NguoiDung> getTaiKhoansByMonth(int year, int month) {
+        return this.taikhoanRepository.getTaiKhoansByMonth(year, month);
+    }
+
+    @Override
+    public List<NguoiDung> getTaiKhoansByQuarter(int year, int quarter) {
+        return this.taikhoanRepository.getTaiKhoansByQuarter(year, quarter);
     }
 }
