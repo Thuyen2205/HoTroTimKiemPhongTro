@@ -5,6 +5,7 @@
 package com.ntt.service;
 
 import com.ntt.pojo.BinhLuan;
+import com.ntt.pojo.NguoiDung;
 import java.util.List;
 
 /**
@@ -14,4 +15,9 @@ import java.util.List;
 public interface BinhLuanService {
     List<BinhLuan> getBinhLuan(int idBaiViet);
     boolean addBinhLuan(BinhLuan binhluan);
+     BinhLuan getBinhLuanById(int idBinhLuan);
+      boolean deleteBinhLuan(int id);
+      boolean updateBinhLuan(BinhLuan binhLuan);
+      public void saveBinhLuan(BinhLuan binhLuan);
+      List<BinhLuan> getBinhLuanByNguoiDung(NguoiDung idNguoiDung);
 }

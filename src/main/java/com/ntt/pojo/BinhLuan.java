@@ -38,6 +38,20 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class BinhLuan implements Serializable {
 
     /**
+     * @return the noiDungMoi
+     */
+    public String getNoiDungMoi() {
+        return noiDungMoi;
+    }
+
+    /**
+     * @param noiDungMoi the noiDungMoi to set
+     */
+    public void setNoiDungMoi(String noiDungMoi) {
+        this.noiDungMoi = noiDungMoi;
+    }
+
+    /**
      * @return the tenBaiVietBinhLuan
      */
     public String getTenBaiVietBinhLuan() {
@@ -97,7 +111,9 @@ public class BinhLuan implements Serializable {
     private Integer idBaiVietBinhLuan;
     @Transient
     private String tenNguoiDangBai;
-
+    @Transient
+    private String noiDungMoi;
+            
     @JoinColumn(name = "id_bai_viet", referencedColumnName = "id")
     @ManyToOne
     private BaiViet idBaiViet;

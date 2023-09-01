@@ -31,7 +31,7 @@ Author     : ThanhThuyen
                 <c:if test="${pageContext.request.userPrincipal.name != null}">
 
                     <li class="nav-item">
-                        <a style="color: red" class="nav-link" href="<c:url value ="/canhan" />">Xin chào, ${pageContext.request.userPrincipal.name} </a>                       
+                        <a style="color: burlywood" class="nav-link" href="<c:url value ="/canhan" />">Xin chào, ${pageContext.request.userPrincipal.name} </a>                       
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="<c:url value ="/canhan"/> ">Trang cá nhân</a>
@@ -39,24 +39,21 @@ Author     : ThanhThuyen
                     <li class="nav-item">
                         <a class="nav-link" href="<c:url value ="/dangbai"/> ">Đăng bài</a>
                     </li>
-                    <li class="nav-item">
+<!--                    <li class="nav-item">
                         <a class="nav-link" href="javascript:void(0)">Thông báo</a>
+                    </li>-->
+                    <li class="nav-item">
+                        <a class="nav-link" href="<c:url value ="/bando"/> ">Bản đồ</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="<c:url value ="/logout" />"> Đăng xuất </a>                       
                     </li>
-
-
                 </c:if>
 
 
 
             </ul>
 
-            <form class="d-flex">
-                <input class="form-control me-2" type="text" placeholder="Tìm kiếm">
-                <button class="btn btn-primary" type="button">Tìm</button>
-            </form>
         </div>
     </div>
 </nav>

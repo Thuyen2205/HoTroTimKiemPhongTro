@@ -184,6 +184,9 @@ public class BaiViet implements Serializable {
     @JoinColumn(name = "id_nguoi_dung", referencedColumnName = "id")
     @ManyToOne
     private NguoiDung idNguoiDung;
+    @JoinColumn(name = "loai_trang_thai", referencedColumnName = "id")
+    @ManyToOne
+    private TrangThaiBaiViet loaiTrangThai;
 
     public BaiViet() {
     }
@@ -337,6 +340,14 @@ public class BaiViet implements Serializable {
 
     public void setIdNguoiDung(NguoiDung idNguoiDung) {
         this.idNguoiDung = idNguoiDung;
+    }
+
+    public TrangThaiBaiViet getLoaiTrangThai() {
+        return loaiTrangThai;
+    }
+
+    public void setLoaiTrangThai(TrangThaiBaiViet loaiTrangThai) {
+        this.loaiTrangThai = loaiTrangThai;
     }
 
     @Override

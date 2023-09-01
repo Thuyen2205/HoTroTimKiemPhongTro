@@ -6,6 +6,7 @@ package com.ntt.controllers;
 
 import com.ntt.pojo.BaiViet;
 import com.ntt.pojo.NguoiDung;
+import com.ntt.service.BaiVietService;
 import com.ntt.service.TaiKhoanService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,8 @@ public class ThongKeController {
 
     @Autowired
     private TaiKhoanService taikhoan;
+    @Autowired
+    private BaiVietService baiviet;
 
     @RequestMapping("/admin")
     public String dangNhapAdmin(Model model, Authentication authen) {
@@ -42,13 +45,9 @@ public class ThongKeController {
 
     @PostMapping("/admin")
     public String thongkeAdmin(Model model, Authentication authen, @RequestParam("year") int year) {
-//        List<NguoiDung> ngMonths = this.taikhoan.getTaiKhoansByMonth(year, month);
         List<NguoiDung> ngs = this.taikhoan.getTaiKhoansByYear(year);
         int countChuTro = 0;
         int countKhachHang = 0;
-
-//        int countChuTroMonth=0;
-//        int countKhachHangMonth=0;
         for (NguoiDung ng : ngs) {
             if (ng.getIdLoaiTaiKhoan().getId() == 2) {
                 countChuTro++;
@@ -118,6 +117,9 @@ public class ThongKeController {
         int countKhachHang = 0;
         model.addAttribute("countChuTro", countChuTro);
         model.addAttribute("countKhachHang", countKhachHang);
+         UserDetails user = this.taikhoan.loadUserByUsername(authen.getName());
+        NguoiDung u = this.taikhoan.getTaiKhoanbyTenTK(user.getUsername());
+        model.addAttribute("taikhoan", u);
         return "adminquarter";
     }
 
@@ -141,6 +143,15 @@ public class ThongKeController {
         model.addAttribute("taikhoan", u);
         model.addAttribute("listNg", ngs);
         return "adminquarter";
+    }
+
+    @RequestMapping("/adminduyetbai")
+    public String adminDuyetBai(Model model, Authentication authen) {
+        model.addAttribute("bvChuaDuyet", this.baiviet.getBaiVietAll());
+        UserDetails user = this.taikhoan.loadUserByUsername(authen.getName());
+        NguoiDung u = this.taikhoan.getTaiKhoanbyTenTK(user.getUsername());
+        model.addAttribute("taikhoan", u);
+        return "adminduyetbai";
     }
 
 }

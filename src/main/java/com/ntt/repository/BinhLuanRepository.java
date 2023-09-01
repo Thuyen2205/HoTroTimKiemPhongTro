@@ -4,7 +4,9 @@
  */
 package com.ntt.repository;
 
+import com.ntt.pojo.BaiViet;
 import com.ntt.pojo.BinhLuan;
+import com.ntt.pojo.NguoiDung;
 import java.util.List;
 
 /**
@@ -14,6 +16,12 @@ import java.util.List;
 public interface BinhLuanRepository {
 
     List<BinhLuan> getBinhLuan(int idBaiViet);
+    List<BinhLuan> getBinhLuanByNguoiDung(NguoiDung idNguoiDung);
 
     boolean addBinhLuan(BinhLuan binhluan);
+     boolean deleteBinhLuan(int id);
+     BinhLuan getBinhLuanById(int idBinhLuan);
+     boolean updateBinhLuan(BinhLuan binhLuan);
+     void saveBinhLuan(BinhLuan binhLuan);
+     
 }

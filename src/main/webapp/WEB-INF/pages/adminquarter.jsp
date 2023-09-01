@@ -66,7 +66,8 @@
                 <th scope="col">#</th>
                 <th scope="col">First</th>
                 <th scope="col">Email</th>
-                <th scope="col">Handle</th>
+                <th scope="col">Avatar</th>
+                <th scope="col">Ngày tạo</th>
             </tr>
         </thead>
         <tbody class="bangtkngdung">
@@ -76,6 +77,7 @@
                     <td valign="middle">${p.tenNguoiDung}</td>
                     <td valign="middle">${p.email}</td>
                     <td valign="middle"><img src="${p.avatar}" class="rounded-circle" style="width: 150px;" alt="${pageContext.request.userPrincipal.name}" /></td>
+                    <td valign="middle" class="btn-info btn " style="border-radius: 20px">${p.ngayTao}</td>
                 </tr>
             </c:forEach>
 

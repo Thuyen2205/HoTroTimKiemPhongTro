@@ -70,16 +70,16 @@ public class Follow implements Serializable {
     @Size(max = 45)
     @Column(name = "trang_thai")
     private String trangThai;
-     @Transient
-    private String tenNguoiDangBai;
-    @Transient
-    private Integer idChuBaiViet;
     @JoinColumn(name = "id_chu_tro", referencedColumnName = "id")
     @ManyToOne
     private NguoiDung idChuTro;
     @JoinColumn(name = "id_khach_hang", referencedColumnName = "id")
     @ManyToOne
     private NguoiDung idKhachHang;
+     @Transient
+    private String tenNguoiDangBai;
+    @Transient
+    private Integer idChuBaiViet;
 
     public Follow() {
     }

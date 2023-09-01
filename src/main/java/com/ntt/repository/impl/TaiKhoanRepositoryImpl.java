@@ -4,9 +4,14 @@
  */
 package com.ntt.repository.impl;
 
+import com.ntt.pojo.BaiViet;
+import com.ntt.pojo.BinhLuan;
 import com.ntt.pojo.Follow;
 import com.ntt.pojo.LoaiTaiKhoan;
 import com.ntt.pojo.NguoiDung;
+import com.ntt.repository.BaiVietRepository;
+import com.ntt.repository.BinhLuanRepository;
+import com.ntt.repository.FollowRepository;
 import com.ntt.repository.TaiKhoanRepository;
 import java.time.LocalDate;
 import java.time.YearMonth;
@@ -39,6 +44,14 @@ public class TaiKhoanRepositoryImpl implements TaiKhoanRepository {
 
     @Autowired
     private LocalSessionFactoryBean sessionFactory;
+    @Autowired
+    private TaiKhoanRepository taiKhoanRepo;
+    @Autowired
+    private BaiVietRepository baiVietRepo;
+    @Autowired
+    private FollowRepository followRepo;
+    @Autowired
+    private BinhLuanRepository binhLuanRepo;
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED)
@@ -145,4 +158,35 @@ public class TaiKhoanRepositoryImpl implements TaiKhoanRepository {
                 .setParameter("endDate", endDate)
                 .getResultList();
     }
+
+    @Override
+    public boolean deleteTaiKhoan(int idTaiKhoan) {
+        Session s = this.sessionFactory.getObject().getCurrentSession();
+        NguoiDung nguoiDung = this.taiKhoanRepo.getTaiKhoanId(idTaiKhoan);
+        List<BaiViet> lsBaiViets =(List<BaiViet>)(BaiViet)this.baiVietRepo.getBaiVietByIdNgDung(nguoiDung);
+        for(BaiViet lsBaiViet:lsBaiViets){
+            s.delete(lsBaiViet);
+        }
+        List<Follow> lsFollowKhachHangs=this.followRepo.getFollowsKhachHang(nguoiDung);
+        List<Follow> lsFollowChuTros=this.followRepo.getFollowsChuTro(nguoiDung);
+        for(Follow lsFollowKhachHang: lsFollowKhachHangs){
+            s.delete(lsFollowKhachHang);
+        }
+        for(Follow lsFollowChuTro: lsFollowChuTros){
+            s.delete(lsFollowChuTro);
+        }
+        List<BinhLuan> lsBinhLuans=this.binhLuanRepo.getBinhLuanByNguoiDung(nguoiDung);
+        for(BinhLuan lsBinhLuan:lsBinhLuans){
+            s.delete(lsBinhLuan);
+        }
+        
+        try {
+            s.delete(nguoiDung);
+            return true;
+        } catch (HibernateException ex) {
+            ex.printStackTrace();
+            return false;
+        }
+    }
+   
 }

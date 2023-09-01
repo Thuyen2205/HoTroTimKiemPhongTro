@@ -4,38 +4,33 @@
  */
 package com.ntt.controllers;
 
-import com.ntt.pojo.BaiViet;
-import com.ntt.pojo.TrangThaiBaiViet;
-import com.ntt.service.BaiVietService;
-import java.util.Map;
+import com.ntt.service.FollowService;
+import com.ntt.service.TaiKhoanService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
  *
- * @author Admins
+ * @author ThanhThuyen
  */
 @RestController
 @RequestMapping("/api")
 @CrossOrigin
-public class ApiBaiVietController {
+public class ApiTaiKhoanConTroller {
+    @Autowired 
+    private TaiKhoanService taiKhoanService;
 
-    @Autowired
-    private BaiVietService baivietService;
-
-    @DeleteMapping("/capnhat1/{id}")
+    @DeleteMapping("/deleteTaiKhoan/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteBViet(@PathVariable(value = "id") int id) {
-        this.baivietService.deleteBaiViet(id);
-    }
+    public void deleteTaiKhoanpr(@PathVariable(value = "id") int id) {
+        this.taiKhoanService.deleteTaiKhoan(id);
+       
 
+    }
 }

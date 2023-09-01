@@ -4,38 +4,38 @@
  */
 package com.ntt.controllers;
 
-import com.ntt.pojo.BaiViet;
-import com.ntt.pojo.TrangThaiBaiViet;
-import com.ntt.service.BaiVietService;
-import java.util.Map;
+import com.ntt.pojo.BinhLuan;
+import com.ntt.service.BinhLuanService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
  *
- * @author Admins
+ * @author ThanhThuyen
  */
 @RestController
 @RequestMapping("/api")
 @CrossOrigin
-public class ApiBaiVietController {
+public class ApiBinhLuanController {
 
     @Autowired
-    private BaiVietService baivietService;
+    private BinhLuanService binhLuanService;
 
-    @DeleteMapping("/capnhat1/{id}")
+    @DeleteMapping("/thtin_bvietBinhLuan/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteBViet(@PathVariable(value = "id") int id) {
-        this.baivietService.deleteBaiViet(id);
+    public void deleteBinhLuanwpr(@PathVariable(value = "id") int id) {
+        this.binhLuanService.deleteBinhLuan(id);
+
     }
 
 }

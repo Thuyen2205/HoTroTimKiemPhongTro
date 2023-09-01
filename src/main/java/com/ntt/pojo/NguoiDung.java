@@ -48,20 +48,6 @@ import org.springframework.web.multipart.MultipartFile;
 public class NguoiDung implements Serializable {
 
     /**
-     * @return the thangChon
-     */
-    public String getThangChon() {
-        return thangChon;
-    }
-
-    /**
-     * @param thangChon the thangChon to set
-     */
-    public void setThangChon(String thangChon) {
-        this.thangChon = thangChon;
-    }
-
-    /**
      * @return the file
      */
     public MultipartFile getFile() {
@@ -117,12 +103,10 @@ public class NguoiDung implements Serializable {
     @Size(max = 500)
     @Column(name = "hinh_anh")
     private String hinhAnh;
-     @Transient
+      @Transient
     private MultipartFile file;
     @Transient
     private String xacNhanMatKhau;
-    @Transient
-    private String thangChon;
     @Column(name = "ngay_tao")
     @Temporal(TemporalType.DATE)
     private Date ngayTao;

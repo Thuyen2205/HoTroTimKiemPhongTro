@@ -14,6 +14,7 @@ import com.ntt.repository.LoaiBaiVietRepository;
 import com.ntt.repository.TaiKhoanRepository;
 import com.ntt.service.BaiVietService;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -44,8 +45,8 @@ public class BaiVietServiceImpl implements BaiVietService {
     private LoaiBaiVietRepository loaiBaiViet;
 
     @Override
-    public List<BaiViet> getBaiViet() {
-        return this.baivietRepo.getBaiViet();
+    public List<BaiViet> getBaiVietTK(String address, BigDecimal price, Integer soNguoi) {
+        return this.baivietRepo.getBaiVietTK(address, price, soNguoi);
     }
 
     @Override
@@ -60,7 +61,6 @@ public class BaiVietServiceImpl implements BaiVietService {
                         ObjectUtils.asMap("resource_type", "auto"));
                 baiviet.setHinhAnh(res.get("secure_url").toString());
                 baiviet.setNgayDang(new Date());
-
             }
 
         } catch (IOException ex) {
@@ -77,7 +77,6 @@ public class BaiVietServiceImpl implements BaiVietService {
     @Override
     public BaiViet loadBaiViet(String tenBaiViet) {
         List<BaiViet> baiviets = this.getBaiViet(tenBaiViet);
-
         if (baiviets.isEmpty()) {
             throw new UsernameNotFoundException("Bài Viết Không Tồn Tại!!!");
         }
@@ -89,7 +88,7 @@ public class BaiVietServiceImpl implements BaiVietService {
     }
 
     @Override
-    public Object getBaiVietById(int id) {
+    public BaiViet getBaiVietById(int id) {
         return this.baivietRepo.getBaiVietById(id);
 
     }
@@ -121,6 +120,36 @@ public class BaiVietServiceImpl implements BaiVietService {
     @Override
     public boolean deleteBaiViet(int id) {
         return this.baivietRepo.deleteBaiViet(id);
+    }
+
+    @Override
+    public List<BaiViet> getBaiVietByGiaThue(BigDecimal gia) {
+       return this.baivietRepo.getBaiVietByGiaThue(gia);
+    }
+
+    @Override
+    public List<BaiViet> getBaiVietAll() {
+        return this.baivietRepo.getBaiVietAll();
+    }
+
+    @Override
+    public List<BaiViet> getBaiVietGia(Map<String, String> params) {
+        return this.baivietRepo.getBaiVietGia(params);
+    }
+
+    @Override
+    public List<BaiViet> getBaiVietGiaChuaDuyet() {
+        return this.baivietRepo.getBaiVietGiaChuaDuyet();
+    }
+
+    @Override
+    public boolean updateTrangThai(BaiViet idBaiViet) {
+        return this.baivietRepo.updateTrangThai(idBaiViet);
+    }
+
+    @Override
+    public void saveBaiViet(BaiViet baiviet) {
+        this.baivietRepo.saveBaiViet(baiviet);
     }
 
 }

@@ -110,4 +110,9 @@ public class TaiKhoanServiceImpl implements TaiKhoanService{
     public List<NguoiDung> getTaiKhoansByQuarter(int year, int quarter) {
         return this.taikhoanRepository.getTaiKhoansByQuarter(year, quarter);
     }
+
+    @Override
+    public boolean deleteTaiKhoan(int idTaiKhoan) {
+        return this.taikhoanRepository.deleteTaiKhoan(idTaiKhoan);
+    }
 }

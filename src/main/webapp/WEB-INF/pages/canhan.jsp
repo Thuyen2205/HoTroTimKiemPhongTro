@@ -48,7 +48,7 @@
                                         <c:url value="/thtin_bviet" var="bvietAction">
                                             <c:param name="baivietId" value="${p.id}" />  
                                         </c:url>
-                                        
+
                                         <a href="${bvietAction}" >${p.tenBaiViet}</a>
                                         <tr>
                                             <th>Khu vực:</th>
@@ -75,9 +75,7 @@
                                                 <a href="${bvietAction}" class="btn btn-success" style="vertical-align:middle"> Cập nhật</a>
                                             </td>
                                             <td>   
-                                                <c:url value="/capnhat1" var="api">
-                                                    <c:param name="baivietId" value="${p.id}" />  
-                                                </c:url>
+                                                <c:url value="/api/capnhat1/${p.id}" var="api"/>
                                                 <button  onclick="deleteBViet('${api}')" class="btn btn-danger">Xóa</button>
                                             </td>
                                         </tr>
@@ -86,6 +84,114 @@
                             </div>
                         </c:forEach>
                     </div>
+                </div>
+
+            </div>
+            <div class="trangcanhan-col2">
+                <div class="catngang">
+                    <h4 style="color: white; padding: 10px;">TIN Đang Chờ Duyệt</h4>
+                </div>
+                <div>
+                    <c:forEach items="${baiviet}" var="p">
+                        <c:if test="${p.loaiTrangThai.id==2}">
+                            <div class="tincanhan">
+                                <div class="tincanhan-anh">
+                                    <img src="${p.hinhAnh}"/>
+                                </div>
+                                <div class="tincanhan-noidung">
+                                    <table style="width:100%">
+                                        <c:url value="/thtin_bviet" var="bvietAction">
+                                            <c:param name="baivietId" value="${p.id}" />  
+                                        </c:url>
+
+                                        <a href="${bvietAction}" >${p.tenBaiViet}</a>
+                                        <tr>
+                                            <th>Khu vực:</th>
+                                            <td>${p.phamViCanTim}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Giá thuê:</th>
+                                            <td>${p.giaThue}/tháng</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Ngày đăng:</th>
+                                            <td>${p.ngayDang}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Địa chỉ:</th>
+                                            <td>${p.diaChiCt}</td>
+                                        </tr>
+                                        <tr>
+                                            <th></th>
+                                          
+                                            <td>   
+                                               <c:url value="/api/capnhat1/${p.id}" var="api"/>
+                                                <button  onclick="deleteBViet('${api}')" class="btn btn-danger">Xóa</button>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </c:if>
+
+                    </c:forEach>
+                </div>
+            </div>
+            <div class="trangcanhan-col2">
+                <div class="catngang">
+                    <h4 style="color: white; padding: 10px;">TIN Bị Từ Chối</h4>
+                </div>
+                <div>
+                    <c:forEach items="${baiviet}" var="p">
+                        <c:if test="${p.loaiTrangThai.id==3}">
+                            <div class="tincanhan">
+                                <div class="tincanhan-anh">
+                                    <img src="${p.hinhAnh}"/>
+                                </div>
+                                <div class="tincanhan-noidung">
+                                    <table style="width:100%">
+                                        <c:url value="/thtin_bviet" var="bvietAction">
+                                            <c:param name="baivietId" value="${p.id}" />  
+                                        </c:url>
+
+                                        <a href="${bvietAction}" >${p.tenBaiViet}</a>
+                                        <tr>
+                                            <th>Khu vực:</th>
+                                            <td>${p.phamViCanTim}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Giá thuê:</th>
+                                            <td>${p.giaThue}/tháng</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Ngày đăng:</th>
+                                            <td>${p.ngayDang}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Địa chỉ:</th>
+                                            <td>${p.diaChiCt}</td>
+                                        </tr>
+                                        <tr>
+                                            <th></th>
+                                            <!--                                            <td>   
+                                            <%--<c:url value="/capnhat" var="bvietAction">--%>
+                                            <%--<c:param name="baivietId" value="${p.id}" />--%>  
+                                            <%--</c:url>--%>
+                                            <a href="${bvietAction}" class="btn btn-success" style="vertical-align:middle"> Cập nhật</a>
+                                        </td>-->
+<!--                                            <td>   
+                                                <%--<c:url value="/capnhat1" var="api">--%>
+                                                    <%--<c:param name="baivietId" value="${p.id}" />--%>  
+                                                <%--</c:url>--%>
+                                                <button  onclick="deleteBViet('${api}')" class="btn btn-danger">Xóa</button>
+                                            </td>-->
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </c:if>
+
+                    </c:forEach>
                 </div>
             </div>
         </section>

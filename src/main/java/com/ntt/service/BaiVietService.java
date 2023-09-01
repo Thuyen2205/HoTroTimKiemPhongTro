@@ -6,23 +6,38 @@ package com.ntt.service;
 
 import com.ntt.pojo.BaiViet;
 import com.ntt.pojo.NguoiDung;
+import java.math.BigDecimal;
 import java.util.List;
+import java.util.Map;
 
 /**
  *
  * @author ThanhThuyen
  */
-public interface BaiVietService  {
+public interface BaiVietService {
 
-    List<BaiViet> getBaiViet();
+    List<BaiViet> getBaiVietTK(String address, BigDecimal price, Integer soNguoi);
 
     List<BaiViet> getBaiViet(String tenBaiViet);
-    BaiViet loadBaiViet(String tenBaiViet);
-    boolean addBaiViet(BaiViet baiviet);
-    boolean updateBaiViet(BaiViet baiviet);
-    boolean deleteBaiViet(int id);
-    Object getBaiVietById(int id);
-    List<Object> getBaiVietByType(String loaiBViet);
-    List<Object> getBaiVietByIdNgDung(NguoiDung idNgDung);
-}
 
+    BaiViet loadBaiViet(String tenBaiViet);
+
+    boolean addBaiViet(BaiViet baiviet);
+
+    boolean updateBaiViet(BaiViet baiviet);
+
+    boolean deleteBaiViet(int id);
+
+    BaiViet getBaiVietById(int id);
+
+    List<Object> getBaiVietByType(String loaiBViet);
+
+    List<Object> getBaiVietByIdNgDung(NguoiDung idNgDung);
+
+    List<BaiViet> getBaiVietByGiaThue(BigDecimal gia);
+    List<BaiViet> getBaiVietAll();
+    List<BaiViet> getBaiVietGia(Map<String, String> params);
+    List<BaiViet> getBaiVietGiaChuaDuyet();
+    boolean updateTrangThai(BaiViet idBaiViet);
+    void saveBaiViet(BaiViet baiviet);
+}

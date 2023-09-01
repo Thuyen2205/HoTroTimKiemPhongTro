@@ -8,6 +8,8 @@ import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 import com.ntt.formatter.LoaiBaiVietFormatter;
 import com.ntt.formatter.LoaiTaiKhoanFormatter;
+import com.ntt.formatter.LoaiTrangThaiFormatter;
+import com.ntt.pojo.TrangThaiBaiViet;
 import java.util.Properties;
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.context.annotation.Bean;
@@ -94,7 +96,7 @@ public class WebAppContextConfig implements WebMvcConfigurer {
         properties.put("mail.smtp.starttls.enable", "true");
         mailSender.setJavaMailProperties(properties);
 
-        return mailSender;
+        return mailSender;  
     
     }
  
@@ -103,6 +105,6 @@ public class WebAppContextConfig implements WebMvcConfigurer {
     public void addFormatters(FormatterRegistry registry) {
         registry.addFormatter(new LoaiTaiKhoanFormatter());
         registry.addFormatter(new LoaiBaiVietFormatter());
-
+        registry.addFormatter(new LoaiTrangThaiFormatter());
     }
 }

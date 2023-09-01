@@ -5,6 +5,8 @@
 package com.ntt.repository.impl;
 
 import com.ntt.pojo.BinhLuan;
+import com.ntt.pojo.Follow;
+import com.ntt.pojo.NguoiDung;
 import com.ntt.repository.BinhLuanRepository;
 import java.util.Calendar;
 import java.util.Date;
@@ -30,6 +32,8 @@ public class BinhLuanRepositoryImpl implements BinhLuanRepository {
 
     @Autowired
     private LocalSessionFactoryBean factory;
+    @Autowired
+    private BinhLuanRepository binhLuanRepo;
 
     @Override
     public List<BinhLuan> getBinhLuan(int idBaiViet) {
@@ -64,4 +68,51 @@ public class BinhLuanRepositoryImpl implements BinhLuanRepository {
         return false;
     }
 
+    @Override
+    public boolean deleteBinhLuan(int id) {
+        Session s = this.factory.getObject().getCurrentSession();
+        BinhLuan binhluan = this.binhLuanRepo.getBinhLuanById(id);
+        try {
+            s.delete(binhluan);
+            return true;
+        } catch (HibernateException ex) {
+            ex.printStackTrace();
+            return false;
+        }
+    }
+
+    @Override
+    public BinhLuan getBinhLuanById(int idBinhLuan) {
+        Session s = this.factory.getObject().getCurrentSession();
+        org.hibernate.query.Query q = s.createQuery("FROM BinhLuan WHERE id= :i");
+        q.setParameter("i", idBinhLuan);
+        return (BinhLuan) q.getSingleResult();
+
+    }
+
+    @Override
+    public boolean updateBinhLuan(BinhLuan binhLuan) {
+        Session s = this.factory.getObject().getCurrentSession();
+        try {
+            s.update(binhLuan);
+            return true;
+        } catch (HibernateException e) {
+            System.err.println(e.getMessage());
+        }
+        return false;
+    }
+
+    @Override
+    public void saveBinhLuan(BinhLuan binhLuan) {
+        Session s = this.factory.getObject().getCurrentSession();
+        s.save(binhLuan);
+    }
+
+    @Override
+    public List<BinhLuan> getBinhLuanByNguoiDung(NguoiDung idNguoiDung) {
+        Session s = this.factory.getObject().getCurrentSession();
+        org.hibernate.query.Query q = s.createQuery("FROM BinhLuan WHERE idNguoiDung= :idNguoiDung");
+        q.setParameter("idNguoiDung", idNguoiDung);
+        return q.getResultList();
+    }
 }
