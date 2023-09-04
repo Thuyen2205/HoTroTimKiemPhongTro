@@ -67,5 +67,17 @@ public class BinhLuanServiceImpl implements BinhLuanService{
     public List<BinhLuan> getBinhLuanByNguoiDung(NguoiDung idNguoiDung) {
         return this.binhluan.getBinhLuanByNguoiDung(idNguoiDung);
     }
+
+    @Override
+    public void deleteBinhLuanByBaiViet(BaiViet baiviet) {
+        this.binhluan.deleteBinhLuanByBaiViet(baiviet);
+    }
+
+    @Override
+    public void deleteBinhLuanByNguoiDung(NguoiDung nguoidung) {
+        this.binhluan.deleteBinhLuanByNguoiDung(nguoidung);
+    }
+
+   
     
 }

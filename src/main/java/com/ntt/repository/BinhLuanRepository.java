@@ -23,5 +23,7 @@ public interface BinhLuanRepository {
      BinhLuan getBinhLuanById(int idBinhLuan);
      boolean updateBinhLuan(BinhLuan binhLuan);
      void saveBinhLuan(BinhLuan binhLuan);
+     void deleteBinhLuanByBaiViet(BaiViet baiviet);
+     void deleteBinhLuanByNguoiDung(NguoiDung nguoidung);
      
 }

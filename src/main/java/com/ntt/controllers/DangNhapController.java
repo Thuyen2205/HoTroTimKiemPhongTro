@@ -6,8 +6,11 @@ package com.ntt.controllers;
 
 import com.ntt.pojo.NguoiDung;
 import com.ntt.service.BaiVietService;
+import com.ntt.service.BinhLuanService;
+import com.ntt.service.HinhAnhService;
 import com.ntt.service.NguoiDungService;
 import com.ntt.service.TaiKhoanService;
+import java.util.Map;
 import javax.persistence.Query;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +24,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  *
@@ -40,6 +44,10 @@ public class DangNhapController {
     private BaiVietService baiviet;
     @Autowired
     private NguoiDungService nguoidung;
+    @Autowired
+    private BinhLuanService binhLuanService;
+    @Autowired
+    private HinhAnhService hinhAnhService;
 
     @RequestMapping("/dangnhap")
     public String dangNhap() {
@@ -49,7 +57,7 @@ public class DangNhapController {
     @RequestMapping("/canhan")
 //    @Transactional
     public String dangNhapCaNhan(Model model, Authentication authen) {
-        model.addAttribute("taikhoan", new NguoiDung());
+//        model.addAttribute("taikhoan", new NguoiDung());
         if (authen != null) {
             UserDetails user = this.taikhoan.loadUserByUsername(authen.getName());
             NguoiDung u = this.taikhoan.getTaiKhoanbyTenTK(user.getUsername());
@@ -57,6 +65,17 @@ public class DangNhapController {
             model.addAttribute("baiviet", this.baiviet.getBaiVietByIdNgDung(u));
         }
         return "canhan";
+    }
+    @PostMapping("/canhan_xoa")
+    public String xoaBaiViet(Model model,Authentication authen,@RequestParam Map<String, String> params){
+       Integer id = Integer.parseInt(params.get("idBaiVietXoa"));
+        if(authen!=null){
+            this.binhLuanService.deleteBinhLuanByBaiViet(this.baivietService.getBaiVietById(id));
+            this.hinhAnhService.deleteHinhAnhByBaiViet(this.baivietService.getBaiVietById(id));
+            if(this.baiviet.deleteBaiViet(id)==true)
+                return "forward:/canhan";
+        }
+        return "index";
     }
 
 

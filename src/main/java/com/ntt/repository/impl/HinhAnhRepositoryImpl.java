@@ -4,10 +4,8 @@
  */
 package com.ntt.repository.impl;
 
-import com.ntt.pojo.LoaiBaiViet;
-import com.ntt.repository.LoaiBaiVietRepository;
-import java.util.List;
-import javax.persistence.Query;
+import com.ntt.pojo.BaiViet;
+import com.ntt.repository.HinhAnhRepository;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
@@ -20,24 +18,17 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Repository
 @Transactional
-public class LoaiBaiVietRepositoryImpl implements LoaiBaiVietRepository {
+public class HinhAnhRepositoryImpl implements HinhAnhRepository {
 
     @Autowired
     private LocalSessionFactoryBean factory;
 
     @Override
-    public List<LoaiBaiViet> getLoaiBaiViet() {
-        Session s = this.factory.getObject().getCurrentSession();
-        Query q = s.createQuery("From LoaiBaiViet");
-        return q.getResultList();
-    }
-
-    @Override
-    public void deleteBaiVietById(int baiVietId) {
+    public void deleteHinhAnhByBaiViet(BaiViet baiViet) {
         Session session = factory.getObject().getCurrentSession();
-        String hql = "DELETE FROM LoaiBaiViet nd WHERE nd.baiViet.id = :baiVietId";
+        String hql = "DELETE FROM HinhAnh bl WHERE bl.idBaiViet = :baiViet";
         session.createQuery(hql)
-                .setParameter("baiVietId", baiVietId)
+                .setParameter("baiViet", baiViet)
                 .executeUpdate();
     }
 

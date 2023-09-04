@@ -92,10 +92,10 @@ public class BaiVietRepositoryImpl implements BaiVietRepository {
     }
 
     @Override
-    public BaiViet getBaiVietById(int id) {
+    public BaiViet getBaiVietById(Integer id) {
         Session s = this.factory.getObject().getCurrentSession();
-        Query q = s.createQuery("FROM BaiViet WHERE id =: i");
-        q.setParameter("i", id);
+        Query q = s.createQuery("FROM BaiViet WHERE id =: id");
+        q.setParameter("id", id);
         return (BaiViet) q.getSingleResult();
     }
 
@@ -146,7 +146,12 @@ public class BaiVietRepositoryImpl implements BaiVietRepository {
     @Override
     public boolean updateBaiViet(BaiViet baiviet) {
         Session s = this.factory.getObject().getCurrentSession();
+        TrangThaiBaiViet newTT = new TrangThaiBaiViet();
+        newTT.setId(1);
+        
         try {
+            
+            baiviet.setLoaiTrangThai(newTT);
             s.update(baiviet);
             return true;
         } catch (HibernateException e) {
@@ -154,9 +159,9 @@ public class BaiVietRepositoryImpl implements BaiVietRepository {
         }
         return false;
     }
-
+    @Transactional
     @Override
-    public boolean deleteBaiViet(int id) {
+    public boolean deleteBaiViet(Integer id) {
         Session s = this.factory.getObject().getCurrentSession();
         BaiViet p = this.baiVietRepo.getBaiVietById(id);
         try {
@@ -242,5 +247,16 @@ public class BaiVietRepositoryImpl implements BaiVietRepository {
         Session s = this.factory.getObject().getCurrentSession();
         s.save(baiviet);
     }
+
+    @Override
+    public void deleteBaiVietByNguoiDung(NguoiDung nguoidung) {
+        Session session = factory.getObject().getCurrentSession();
+        String hql = "DELETE FROM BaiViet bl WHERE bl.idNguoiDung = :nguoidung";
+        session.createQuery(hql)
+                .setParameter("nguoidung", nguoidung)
+                .executeUpdate();
+    }
+
+   
 
 }

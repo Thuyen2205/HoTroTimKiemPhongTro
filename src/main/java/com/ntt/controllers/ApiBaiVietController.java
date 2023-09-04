@@ -5,9 +5,17 @@
 package com.ntt.controllers;
 
 import com.ntt.pojo.BaiViet;
+import com.ntt.pojo.NguoiDung;
 import com.ntt.pojo.TrangThaiBaiViet;
 import com.ntt.service.BaiVietService;
+import com.ntt.service.BinhLuanService;
+import com.ntt.service.HinhAnhService;
+import com.ntt.service.LoaiBaiVietService;
+import com.ntt.service.NguoiDungService;
+import com.ntt.service.TaiKhoanService;
+import java.util.List;
 import java.util.Map;
+import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -25,17 +33,29 @@ import org.springframework.web.bind.annotation.RestController;
  * @author Admins
  */
 @RestController
-@RequestMapping("/api")
+
 @CrossOrigin
 public class ApiBaiVietController {
 
     @Autowired
     private BaiVietService baivietService;
+    @Autowired
+    private TaiKhoanService taikhoanService;
+    @Autowired
+    private LoaiBaiVietService loaibaivietService;
+    @Autowired
+    private BinhLuanService binhLuanService;
+    @Autowired
+    private HinhAnhService HinhAnhService;
 
-    @DeleteMapping("/capnhat1/{id}")
+    @DeleteMapping("/canhan/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteBViet(@PathVariable(value = "id") int id) {
+//
+//        this.binhLuanService.deleteBinhLuanByBaiVietId(id);
+//        this.HinhAnhService.deleteHinhAnhByBaiVietId(id);
         this.baivietService.deleteBaiViet(id);
+
     }
 
 }

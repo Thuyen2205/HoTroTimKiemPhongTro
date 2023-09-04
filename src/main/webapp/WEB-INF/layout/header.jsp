@@ -33,6 +33,7 @@ Author     : ThanhThuyen
                     <li class="nav-item">
                         <a style="color: burlywood" class="nav-link" href="<c:url value ="/canhan" />">Xin chào, ${pageContext.request.userPrincipal.name} </a>                       
                     </li>
+                    
                     <li class="nav-item">
                         <a class="nav-link" href="<c:url value ="/canhan"/> ">Trang cá nhân</a>
                     </li>

@@ -62,6 +62,9 @@ public class BaiVietServiceImpl implements BaiVietService {
                 baiviet.setHinhAnh(res.get("secure_url").toString());
                 baiviet.setNgayDang(new Date());
             }
+            if (baiviet.getIdNguoiDung().getIdLoaiTaiKhoan().getId() == 3) {
+                baiviet.setNgayDang(new Date());
+            }
 
         } catch (IOException ex) {
             System.err.println("== ADD BaiViet ==" + ex.getMessage());
@@ -88,7 +91,7 @@ public class BaiVietServiceImpl implements BaiVietService {
     }
 
     @Override
-    public BaiViet getBaiVietById(int id) {
+    public BaiViet getBaiVietById(Integer id) {
         return this.baivietRepo.getBaiVietById(id);
 
     }
@@ -105,26 +108,29 @@ public class BaiVietServiceImpl implements BaiVietService {
 
     @Override
     public boolean updateBaiViet(BaiViet baiviet) {
-        if (!baiviet.getFile().isEmpty()) {
+        if (baiviet.getLoaiBaiViet().getId()== 1) {
             try {
                 Map res = this.cloudinary.uploader().upload(baiviet.getFile().getBytes(),
                         ObjectUtils.asMap("resource_type", "auto"));
                 baiviet.setHinhAnh(res.get("secure_url").toString());
+
             } catch (IOException ex) {
-                System.err.println("== Update BaiViet ==" + ex.getMessage());
+                System.err.println("== UPDATE BaiViet ==" + ex.getMessage());
             }
+
         }
         return this.baivietRepo.updateBaiViet(baiviet);
+
     }
 
     @Override
-    public boolean deleteBaiViet(int id) {
+    public boolean deleteBaiViet(Integer id) {
         return this.baivietRepo.deleteBaiViet(id);
     }
 
     @Override
     public List<BaiViet> getBaiVietByGiaThue(BigDecimal gia) {
-       return this.baivietRepo.getBaiVietByGiaThue(gia);
+        return this.baivietRepo.getBaiVietByGiaThue(gia);
     }
 
     @Override
@@ -150,6 +156,11 @@ public class BaiVietServiceImpl implements BaiVietService {
     @Override
     public void saveBaiViet(BaiViet baiviet) {
         this.baivietRepo.saveBaiViet(baiviet);
+    }
+
+    @Override
+    public void deleteBaiVietByNguoiDung(NguoiDung nguoidung) {
+        this.baivietRepo.deleteBaiVietByNguoiDung(nguoidung);
     }
 
 }

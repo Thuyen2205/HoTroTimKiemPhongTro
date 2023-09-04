@@ -4,6 +4,7 @@
  */
 package com.ntt.repository.impl;
 
+import com.ntt.pojo.BaiViet;
 import com.ntt.pojo.BinhLuan;
 import com.ntt.pojo.Follow;
 import com.ntt.pojo.NguoiDung;
@@ -114,5 +115,23 @@ public class BinhLuanRepositoryImpl implements BinhLuanRepository {
         org.hibernate.query.Query q = s.createQuery("FROM BinhLuan WHERE idNguoiDung= :idNguoiDung");
         q.setParameter("idNguoiDung", idNguoiDung);
         return q.getResultList();
+    }
+
+    @Override
+    public void deleteBinhLuanByBaiViet(BaiViet baiViet) {
+        Session session = factory.getObject().getCurrentSession();
+        String hql = "DELETE FROM BinhLuan bl WHERE bl.idBaiViet = :baiViet";
+        session.createQuery(hql)
+                .setParameter("baiViet", baiViet)
+                .executeUpdate();
+    }
+
+    @Override
+    public void deleteBinhLuanByNguoiDung(NguoiDung nguoidung) {
+        Session session = factory.getObject().getCurrentSession();
+        String hql = "DELETE FROM BinhLuan bl WHERE bl.idNguoiDung = :nguoidung";
+        session.createQuery(hql)
+                .setParameter("nguoidung", nguoidung)
+                .executeUpdate();
     }
 }

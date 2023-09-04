@@ -21,4 +21,6 @@ public interface FollowService {
     boolean deleteFollow(int id);
     Follow getFollowById(int idFollow);
     List<Follow> getFollowsChuTro(NguoiDung idChuTro);
+    void deleteFollowByNguoiDung(NguoiDung nguoidung);
+     void deleteFollowByNguoiDungKH(NguoiDung nguoidung);
 }

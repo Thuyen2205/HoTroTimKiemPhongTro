@@ -10,48 +10,60 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!DOCTYPE html>
 
+<!DOCTYPE html>
 <html>
-<head>
-    <title>Hiển thị Bản đồ</title>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDWTx7bREpM5B6JKdbzOvMW-RRlhkukmVE&callback=initMap" async defer></script>
-    <style>
-        #map {
-            height: 400px;
-            width: 100%;
-        }
-    </style>
-</head>
-<body>
-    
-    <div id="map"></div>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Map with Geocoder</title>
 
-    <script>
-        var map;
-        var DEFAULT_LATITUDE = 10.8231; // Vị trí Thành phố Hồ Chí Minh
-        var DEFAULT_LONGITUDE = 106.6297; // Vị trí Thành phố Hồ Chí Minh
-        var DEFAULT_ZOOM = 15; // Độ zoom mặc định
+        <!-- Thêm các thư viện cần thiết của Leaflet -->
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+        <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
 
-        function initMap() {
-            map = new google.maps.Map(document.getElementById('map'), {
-                center: {lat: DEFAULT_LATITUDE, lng: DEFAULT_LONGITUDE},
-                zoom: DEFAULT_ZOOM
+        <!-- Thêm thư viện Leaflet Control Geocoder -->
+        <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder@1.13.0/dist/Control.Geocoder.css" />
+        <script src="https://unpkg.com/leaflet-control-geocoder@1.13.0/dist/Control.Geocoder.js"></script>
+    </head>
+    <body>
+        <div id="search-bar">
+            <input type="text" id="search-input" placeholder="Nhập địa chỉ hoặc tên địa điểm">
+            <button class="btn-danger" id="search-button">Tìm kiếm</button>
+        </div>
+        <div id="map" style="width: 2000px; height: 800px;"></div>
+        <script>
+            var map = L.map('map').setView([10.7769, 106.7009], 12);
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            }).addTo(map);
+
+            <c:forEach items="${dsBaiViet}" var="baiViet">
+            var diaChiCt = "<c:out value='${baiViet.diaChiCt}' />"; 
+
+            L.Control.Geocoder.nominatim().geocode(diaChiCt, function (results) {
+                var latlng = results[0].center;
+                var marker = L.marker(latlng).addTo(map);
+                marker.bindPopup("<c:out value='${baiViet.diaChiCt}' />").openPopup(); 
             });
+            </c:forEach>
+            var searchInput = document.getElementById('search-input');
+            var searchButton = document.getElementById('search-button');
 
-            var danhSachBaiViet = ${dsBaiViet}; // Danh sách bài viết từ controller
-            danhSachBaiViet.forEach(function(baiViet) {
-                // Sử dụng Geocoding API để lấy tọa độ từ địa chỉ
-                var geocoder = new google.maps.Geocoder();
-                geocoder.geocode({ 'address': baiViet.diaChiCt }, function(results, status) {
-                    if (status === google.maps.GeocoderStatus.OK) {
-                        var marker = new google.maps.Marker({
-                            position: results[0].geometry.location,
-                            map: map,
-                            title: baiViet.tieuDe
-                        });
+            searchButton.addEventListener('click', function () {
+                var query = searchInput.value; 
+
+                
+                L.Control.Geocoder.nominatim().geocode(query, function (results) {
+                    if (results && results.length > 0) {
+                        var latlng = results[0].center;
+                        map.setView(latlng, 15); 
+                    } else {
+                        alert('Không tìm thấy địa điểm.');
                     }
                 });
             });
-        }
-    </script>
-</body>
+            var latlng = results[0].center;
+            map.setView(latlng, 12);
+        </script>
+    </body>
 </html>

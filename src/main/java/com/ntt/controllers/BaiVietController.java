@@ -181,17 +181,19 @@ public class BaiVietController {
         return "capnhat";
     }
 
-    @PostMapping("/capnhat1")
+    @PostMapping("/capnhat")
     public String update(Model model, @ModelAttribute(value = "baiviet") BaiViet baiviet
     ) {
         String errMsg = "";
+        System.out.println(baiviet.getId());
+        System.out.println(baiviet.getHinhAnh());
         if (this.baivietService.updateBaiViet(baiviet) == true) {
             return "redirect:/canhan";
         } else {
             errMsg = "Đã có lỗi xãy ra";
         }
 
-        return "capnhat1";
+        return "capnhat";
     }
 
     @PostMapping("/thtin_bviet_tt")
@@ -237,30 +239,30 @@ public class BaiVietController {
 
         return "thtin_bviet";
     }
-
-    @PostMapping("/thtin_bviet_chinhsua")
-    public String chinhsuaBinhLuan(@RequestParam Map<String, String> params, @ModelAttribute("binhLuanForm") BinhLuan binhLuanForm) {
-        BinhLuan binhLuan = binhluanService.getBinhLuanById(binhLuanForm.getId());
-        binhLuan.setNoiDung(binhLuanForm.getNoiDungMoi());
-        binhluanService.saveBinhLuan(binhLuan);
-        return "thtin_bviet";
-    }
-    @PostMapping("/thtin_bviet_edit")
-    public String editBinhLuan(@RequestParam Map<String, String> params) {
-        String idParam = params.get("id");
-        String editedNoiDung = params.get("editedNoiDung");
-
-        if (idParam != null && editedNoiDung != null) {
-            Integer id = Integer.parseInt(idParam);
-            BinhLuan binhLuan = binhluanService.getBinhLuanById(id);
-            
-            if (binhLuan != null) {
-                binhLuan.setNoiDung(editedNoiDung);
-                binhluanService.updateBinhLuan(binhLuan); // Gọi service để cập nhật bình luận
-            }
-        }
-        editingId = null; // Tắt chế độ chỉnh sửa
-
-        return "thtin_bviet"; // Điều hướng về danh sách bình luận
-    }
+//
+//    @PostMapping("/thtin_bviet_chinhsua")
+//    public String chinhsuaBinhLuan(@RequestParam Map<String, String> params, @ModelAttribute("binhLuanForm") BinhLuan binhLuanForm) {
+//        BinhLuan binhLuan = binhluanService.getBinhLuanById(binhLuanForm.getId());
+//        binhLuan.setNoiDung(binhLuanForm.getNoiDungMoi());
+//        binhluanService.saveBinhLuan(binhLuan);
+//        return "thtin_bviet";
+//    }
+//    @PostMapping("/thtin_bviet_edit")
+//    public String editBinhLuan(@RequestParam Map<String, String> params) {
+//        String idParam = params.get("id");
+//        String editedNoiDung = params.get("editedNoiDung");
+//
+//        if (idParam != null && editedNoiDung != null) {
+//            Integer id = Integer.parseInt(idParam);
+//            BinhLuan binhLuan = binhluanService.getBinhLuanById(id);
+//            
+//            if (binhLuan != null) {
+//                binhLuan.setNoiDung(editedNoiDung);
+//                binhluanService.updateBinhLuan(binhLuan); // Gọi service để cập nhật bình luận
+//            }
+//        }
+//        editingId = null; // Tắt chế độ chỉnh sửa
+//
+//        return "thtin_bviet"; // Điều hướng về danh sách bình luận
+//    }
 }

@@ -77,5 +77,15 @@ public class FollowServiceImpl implements FollowService{
       return this.followRepo.getFollowsChuTro(idChuTro);
     }
 
+    @Override
+    public void deleteFollowByNguoiDung(NguoiDung nguoidung) {
+        this.followRepo.deleteFollowByNguoiDung(nguoidung);
+    }
+
+    @Override
+    public void deleteFollowByNguoiDungKH(NguoiDung nguoidung) {
+        this.followRepo.deleteFollowByNguoiDungKH(nguoidung);
+    }
+
     
 }

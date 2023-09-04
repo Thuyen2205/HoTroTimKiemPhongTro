@@ -163,23 +163,6 @@ public class TaiKhoanRepositoryImpl implements TaiKhoanRepository {
     public boolean deleteTaiKhoan(int idTaiKhoan) {
         Session s = this.sessionFactory.getObject().getCurrentSession();
         NguoiDung nguoiDung = this.taiKhoanRepo.getTaiKhoanId(idTaiKhoan);
-        List<BaiViet> lsBaiViets =(List<BaiViet>)(BaiViet)this.baiVietRepo.getBaiVietByIdNgDung(nguoiDung);
-        for(BaiViet lsBaiViet:lsBaiViets){
-            s.delete(lsBaiViet);
-        }
-        List<Follow> lsFollowKhachHangs=this.followRepo.getFollowsKhachHang(nguoiDung);
-        List<Follow> lsFollowChuTros=this.followRepo.getFollowsChuTro(nguoiDung);
-        for(Follow lsFollowKhachHang: lsFollowKhachHangs){
-            s.delete(lsFollowKhachHang);
-        }
-        for(Follow lsFollowChuTro: lsFollowChuTros){
-            s.delete(lsFollowChuTro);
-        }
-        List<BinhLuan> lsBinhLuans=this.binhLuanRepo.getBinhLuanByNguoiDung(nguoiDung);
-        for(BinhLuan lsBinhLuan:lsBinhLuans){
-            s.delete(lsBinhLuan);
-        }
-        
         try {
             s.delete(nguoiDung);
             return true;
@@ -188,5 +171,37 @@ public class TaiKhoanRepositoryImpl implements TaiKhoanRepository {
             return false;
         }
     }
-   
+
+    @Override
+    public void deleteBaiVietById(int baiVietId) {
+        Session session = sessionFactory.getObject().getCurrentSession();
+        String hql = "DELETE FROM NguoiDung nd WHERE nd.baiViet.id = :baiVietId";
+        session.createQuery(hql)
+                .setParameter("baiVietId", baiVietId)
+                .executeUpdate();
+
+    }
+
+    @Override
+    public List<NguoiDung> getTaiKhoanAll() {
+        Session s = this.sessionFactory.getObject().getCurrentSession();
+        Query q = s.createQuery("From NguoiDung");
+        return q.getResultList();
+    }
+
+    @Override
+    public boolean updateTrangThaiTaiKhoan(NguoiDung nguoidung) {
+        Session s = this.sessionFactory.getObject().getCurrentSession();
+        
+        try {
+            nguoidung.setKiemDuyet("KIEM_DUYET_2");
+            s.update(nguoidung);
+            return true;
+        } catch (HibernateException e) {
+            System.err.println(e.getMessage());
+        }
+        return false;
+
+    }
+
 }

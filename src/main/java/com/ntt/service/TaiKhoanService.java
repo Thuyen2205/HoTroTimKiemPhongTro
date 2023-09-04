@@ -26,4 +26,7 @@ public interface TaiKhoanService extends UserDetailsService {
     List<NguoiDung> getTaiKhoansByMonth(int year,int month);
     List<NguoiDung> getTaiKhoansByQuarter(int year, int quarter);
     boolean deleteTaiKhoan(int idTaiKhoan);
+    void deleteBaiVietById(int baiVietId);
+    List<NguoiDung> getTaiKhoanAll();
+    boolean updateTrangThaiTaiKhoan(NguoiDung nguoidung);
 }

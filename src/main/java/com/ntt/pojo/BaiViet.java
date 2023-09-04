@@ -162,7 +162,7 @@ public class BaiViet implements Serializable {
     @Size(max = 500)
     @Column(name = "hinh_anh3")
     private String hinhAnh3;
-    @Transient
+       @Transient
     private MultipartFile file;
     @Transient
     private MultipartFile file1;

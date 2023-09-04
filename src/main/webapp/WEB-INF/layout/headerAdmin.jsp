@@ -40,6 +40,9 @@
                         <a class="nav-link" href="<c:url value ="/adminduyetbai"/> ">Duyệt bài viết</a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link" href="<c:url value ="/adminduyettaikhoan"/> ">Duyệt tài khoản chủ trọ</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" href="<c:url value ="/adminmonth"/> ">Thông kê theo tháng</a>
                     </li>
                     <li class="nav-item">

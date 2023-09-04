@@ -85,24 +85,27 @@
             </div>
 
         </div>
-        <c:if test="${pageContext.request.userPrincipal.name == null}">
-            <form:form method="post" action="${action}" var="p" modelAttribute="binhluan" enctype="multipart/form-data" >
+        <c:if test="${BaiViet.loaiTrangThai.id==1}">
+            <c:if test="${pageContext.request.userPrincipal.name == null}">
+                <form:form method="post" action="${action}" var="p" modelAttribute="binhluan" enctype="multipart/form-data" >
 
-                <form:input type="hidden" id="file" path="tenNguoiDangBai" value="${pageContext.request.userPrincipal.name}"  readonly="true"  cssClass="form -control"/>
-                <form:input type="hidden" id="file" path="idBaiVietBinhLuan" value="${BaiViet.id}"  readonly="true"  cssClass="form -control"/>
-                <form:input type="text" path="noiDung"/>
-                <input type="submit" value="Bình Luận" class="btn btn-danger" disabled/>
-            </form:form>
-        </c:if>
-        <c:if test="${pageContext.request.userPrincipal.name != null}">
-            <form:form method="post" action="${action}" var="p" modelAttribute="binhluan" enctype="multipart/form-data" >
+                    <form:input type="hidden" id="file" path="tenNguoiDangBai" value="${pageContext.request.userPrincipal.name}"  readonly="true"  cssClass="form -control"/>
+                    <form:input type="hidden" id="file" path="idBaiVietBinhLuan" value="${BaiViet.id}"  readonly="true"  cssClass="form -control"/>
+                    <form:input type="text" path="noiDung"/>
+                    <input type="submit" value="Bình Luận" class="btn btn-danger" disabled/>
+                </form:form>
+            </c:if>
 
-                <form:input type="hidden" id="file" path="tenNguoiDangBai" value="${pageContext.request.userPrincipal.name}"  readonly="true"  cssClass="form -control"/>
-                <form:input type="hidden" id="file" path="idBaiVietBinhLuan" value="${BaiViet.id}"  readonly="true"  cssClass="form -control"/>
+            <c:if test="${pageContext.request.userPrincipal.name != null}">
+                <form:form method="post" action="${action}" var="p" modelAttribute="binhluan" enctype="multipart/form-data" >
 
-                <form:input type="text" path="noiDung"/>
-                <input type="submit" value="Bình Luận" class="btn btn-danger"/>
-            </form:form>
+                    <form:input type="hidden" id="file" path="tenNguoiDangBai" value="${pageContext.request.userPrincipal.name}"  readonly="true"  cssClass="form -control"/>
+                    <form:input type="hidden" id="file" path="idBaiVietBinhLuan" value="${BaiViet.id}"  readonly="true"  cssClass="form -control"/>
+
+                    <form:input type="text" path="noiDung"/>
+                    <input type="submit" value="Bình Luận" class="btn btn-danger"/>
+                </form:form>
+            </c:if>
         </c:if>
     </div>
 
@@ -163,7 +166,7 @@
 
     </div>
 
-    
+
     <div>
         <c:forEach items="${binhluans}" var="b">
             <c:url value="/api/thtin_bvietBinhLuan/${b.id}" var="apiDelete"/>

@@ -19,10 +19,10 @@ public interface BaiVietRepository {
     List<BaiViet> getBaiViet(String tenBaiViet);
     boolean addBaiViet(BaiViet baiviet);
     boolean updateBaiViet(BaiViet baiviet);
-    boolean deleteBaiViet(int id);
+    boolean deleteBaiViet(Integer id);
     List<Object> getBaiVietByType (String loaiBViet);
     //Lấy bài viết theo id bài viết
-    BaiViet getBaiVietById(int id);
+    BaiViet getBaiVietById(Integer id);
     //Lấy bài viết theo id người dùng
     List<Object> getBaiVietByIdNgDung(NguoiDung idNgDung);
     List<BaiViet> getBaiVietByGiaThue(BigDecimal gia);
@@ -31,4 +31,6 @@ public interface BaiVietRepository {
     List<BaiViet> getBaiVietGiaChuaDuyet();
     boolean updateTrangThai(BaiViet idBaiViet);
     void saveBaiViet(BaiViet baiviet);
+     void deleteBaiVietByNguoiDung(NguoiDung nguoidung);
+    
 }

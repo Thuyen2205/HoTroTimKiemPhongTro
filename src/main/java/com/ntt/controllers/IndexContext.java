@@ -43,6 +43,11 @@ public class IndexContext {
     public String index(Model model, Authentication authen) {
 
         model.addAttribute("baiviet", this.baivietService.getBaiVietAll());
+        if (authen != null) {
+            UserDetails user = this.taikhoan.loadUserByUsername(authen.getName());
+            NguoiDung u = this.taikhoan.getTaiKhoanbyTenTK(user.getUsername());
+            model.addAttribute("taikhoan", u);
+        }
         return "index";
 
     }

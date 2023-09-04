@@ -89,5 +89,15 @@ Click nbfs://nbhost/SystemFileSystem/Templates/XML/XMLDocument.xml to edit this 
         <put-attribute name="content"
                        value="/WEB-INF/pages/adminduyetbai.jsp" />
     </definition>
+      <definition name="adminduyettaikhoan" extends="baseLayoutAdmin">
+        <put-attribute name="title" value="Trang cập nhật" />
+        <put-attribute name="content"
+                       value="/WEB-INF/pages/adminduyettaikhoan.jsp" />
+    </definition>
+       <definition name="thtin_taiKhoan" extends="baseLayoutAdmin">
+        <put-attribute name="title" value="Chi tiết tin"/>
+        <put-attribute name="content"
+                       value="/WEB-INF/pages/thtin_taiKhoan.jsp" />
+    </definition>
     
 </tiles-definitions>

@@ -22,6 +22,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
+import javax.validation.constraints.Null;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -44,21 +45,22 @@ import org.springframework.web.multipart.MultipartFile;
     @NamedQuery(name = "NguoiDung.findByMatKhau", query = "SELECT n FROM NguoiDung n WHERE n.matKhau = :matKhau"),
     @NamedQuery(name = "NguoiDung.findByAvatar", query = "SELECT n FROM NguoiDung n WHERE n.avatar = :avatar"),
     @NamedQuery(name = "NguoiDung.findByHinhAnh", query = "SELECT n FROM NguoiDung n WHERE n.hinhAnh = :hinhAnh"),
-    @NamedQuery(name = "NguoiDung.findByNgayTao", query = "SELECT n FROM NguoiDung n WHERE n.ngayTao = :ngayTao")})
+    @NamedQuery(name = "NguoiDung.findByNgayTao", query = "SELECT n FROM NguoiDung n WHERE n.ngayTao = :ngayTao"),
+    @NamedQuery(name = "NguoiDung.findByKiemDuyet", query = "SELECT n FROM NguoiDung n WHERE n.kiemDuyet = :kiemDuyet")})
 public class NguoiDung implements Serializable {
 
     /**
-     * @return the file
+     * @return the file2
      */
-    public MultipartFile getFile() {
-        return file;
+    public MultipartFile getFile2() {
+        return file2;
     }
 
     /**
-     * @param file the file to set
+     * @param file2 the file2 to set
      */
-    public void setFile(MultipartFile file) {
-        this.file = file;
+    public void setFile2(MultipartFile file2) {
+        this.file2 = file2;
     }
 
     /**
@@ -73,6 +75,20 @@ public class NguoiDung implements Serializable {
      */
     public void setXacNhanMatKhau(String xacNhanMatKhau) {
         this.xacNhanMatKhau = xacNhanMatKhau;
+    }
+
+    /**
+     * @return the file
+     */
+    public MultipartFile getFile() {
+        return file;
+    }
+
+    /**
+     * @param file the file to set
+     */
+    public void setFile(MultipartFile file) {
+        this.file = file;
     }
 
     private static final long serialVersionUID = 1L;
@@ -103,13 +119,20 @@ public class NguoiDung implements Serializable {
     @Size(max = 500)
     @Column(name = "hinh_anh")
     private String hinhAnh;
-      @Transient
-    private MultipartFile file;
-    @Transient
-    private String xacNhanMatKhau;
     @Column(name = "ngay_tao")
     @Temporal(TemporalType.DATE)
     private Date ngayTao;
+    @Size(max = 45)
+    @Column(name = "kiem_duyet")
+    private String kiemDuyet;
+    @Transient
+    @Null
+    private MultipartFile file;
+    @Transient
+    private String xacNhanMatKhau;
+    @Transient
+    private MultipartFile file2;
+
     @OneToMany(mappedBy = "idNguoiDung")
     private Set<BinhLuan> binhLuanSet;
     @OneToMany(mappedBy = "idNguoiDung")
@@ -203,6 +226,14 @@ public class NguoiDung implements Serializable {
 
     public void setNgayTao(Date ngayTao) {
         this.ngayTao = ngayTao;
+    }
+
+    public String getKiemDuyet() {
+        return kiemDuyet;
+    }
+
+    public void setKiemDuyet(String kiemDuyet) {
+        this.kiemDuyet = kiemDuyet;
     }
 
     @XmlTransient

@@ -4,14 +4,12 @@
  */
 package com.ntt.service;
 
-import com.ntt.pojo.LoaiBaiViet;
-import java.util.List;
+import com.ntt.pojo.BaiViet;
 
 /**
  *
  * @author ThanhThuyen
  */
-public interface LoaiBaiVietService  {
-    List<LoaiBaiViet> getLoaiBaiViet();
-     void deleteBaiVietById(int baiVietId);
+public interface HinhAnhService {
+    void deleteHinhAnhByBaiViet(BaiViet baiViet);
 }

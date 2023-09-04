@@ -26,9 +26,9 @@ public interface BaiVietService {
 
     boolean updateBaiViet(BaiViet baiviet);
 
-    boolean deleteBaiViet(int id);
+    boolean deleteBaiViet(Integer id);
 
-    BaiViet getBaiVietById(int id);
+    BaiViet getBaiVietById(Integer id);
 
     List<Object> getBaiVietByType(String loaiBViet);
 
@@ -40,4 +40,5 @@ public interface BaiVietService {
     List<BaiViet> getBaiVietGiaChuaDuyet();
     boolean updateTrangThai(BaiViet idBaiViet);
     void saveBaiViet(BaiViet baiviet);
+    void deleteBaiVietByNguoiDung(NguoiDung nguoidung);
 }

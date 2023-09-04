@@ -2,16 +2,14 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
  */
-package com.ntt.service;
+package com.ntt.repository;
 
-import com.ntt.pojo.LoaiBaiViet;
-import java.util.List;
+import com.ntt.pojo.BaiViet;
 
 /**
  *
  * @author ThanhThuyen
  */
-public interface LoaiBaiVietService  {
-    List<LoaiBaiViet> getLoaiBaiViet();
-     void deleteBaiVietById(int baiVietId);
+public interface HinhAnhRepository {
+     void deleteHinhAnhByBaiViet(BaiViet baiViet);
 }
