@@ -18,4 +18,11 @@ public interface TaiKhoanRepository {
     LoaiTaiKhoan getLoaiTaiKhoan (String tenLoaiTaiKhoan);
     NguoiDung getTaiKhoanbyTenTK(String tenTK);
     NguoiDung getTaiKhoanId(int id);
+    List<NguoiDung> getTaiKhoansByYear(int year);
+    List<NguoiDung> getTaiKhoansByMonth(int year,int month);
+    List<NguoiDung> getTaiKhoansByQuarter(int year,int quarter);
+    boolean deleteTaiKhoan(int idTaiKhoan);
+    void deleteBaiVietById(int baiVietId);
+    List<NguoiDung> getTaiKhoanAll();
+    boolean updateTrangThaiTaiKhoan(NguoiDung nguoidung);
 }

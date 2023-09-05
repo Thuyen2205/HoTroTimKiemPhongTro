@@ -10,12 +10,14 @@ import com.ntt.pojo.BaiViet;
 import com.ntt.pojo.BinhLuan;
 import com.ntt.pojo.Follow;
 import com.ntt.pojo.NguoiDung;
+import com.ntt.pojo.TrangThaiBaiViet;
 import com.ntt.service.BaiVietService;
 import com.ntt.service.BinhLuanService;
 import com.ntt.service.FollowService;
 import com.ntt.service.LoaiBaiVietService;
 import com.ntt.service.NguoiDungService;
 import com.ntt.service.TaiKhoanService;
+import com.ntt.service.impl.LoaiTrangThaiServiceImpl;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
@@ -25,6 +27,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.constraints.Past;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -58,6 +62,11 @@ public class BaiVietController {
     private BinhLuanService binhluanService;
     @Autowired
     private FollowService followService;
+    @Autowired
+    private JavaMailSender emailSender;
+    @Autowired
+    private LoaiTrangThaiServiceImpl loaiTrangThaiService;
+    private Long editingId;
 
     @GetMapping("/dangbai")
     public String list(Model model, Authentication authen) {
@@ -69,6 +78,12 @@ public class BaiVietController {
         return "dangbai";
 
     }
+    
+    @ModelAttribute
+    public void commonAttr(Model model) {
+        model.addAttribute("trangThai_role", this.loaiTrangThaiService.getLoaiTrangThai());
+    }
+
 
     @RequestMapping("/thtin_bviet")
     public String bvietThTin(Model model, @RequestParam Map<String, String> params, Authentication authen) {
@@ -76,7 +91,6 @@ public class BaiVietController {
         int id = Integer.parseInt(params.get("baivietId"));
         BaiViet bv = (BaiViet) this.baivietService.getBaiVietById(id);
         if (authen != null) {
-
             model.addAttribute("taikhoan", this.taikhoan.getTaiKhoan(authen.getName()).get(0));
             NguoiDung nd = this.taikhoan.getTaiKhoan(authen.getName()).get(0);
             model.addAttribute("follows", this.followService.getFollowsKhachHang(nd).get(0));
@@ -122,13 +136,29 @@ public class BaiVietController {
         }
         return "index";
     }
+    
+    @PostMapping("/thtin_bviet_xn")
+    public String xacNhan(Model model, Authentication authen, @RequestParam Map<String, String> params) {
+        String ms = "";
+        int id = Integer.parseInt(params.get("baivietId"));
+        BaiViet idBaiViet = (BaiViet) this.baivietService.getBaiVietById(id);
+        if (authen != null) {
+            if (this.baivietService.updateTrangThai(idBaiViet) == true) {
+                return "forward:/thtin_bviet";
+            } else {
+                ms = "Đã có lỗi xãy ra";
+            }
+
+        }
+        return "index";
+    }
 
     @PostMapping("/dangbai")
     public String add(Model model, @ModelAttribute(value = "baiviet") BaiViet baiviet, Authentication authen) {
         String errMsg = "";
-        
+
         if (this.baivietService.addBaiViet(baiviet) == true) {
-            
+
             return "redirect:/";
         } else {
             errMsg = "Đã có lỗi xãy ra";
@@ -148,18 +178,68 @@ public class BaiVietController {
         return "capnhat";
     }
 
-    @PostMapping("/capnhat1")
+    @PostMapping("/capnhat")
     public String update(Model model, @ModelAttribute(value = "baiviet") BaiViet baiviet
     ) {
         String errMsg = "";
+        System.out.println(baiviet.getId());
+        System.out.println(baiviet.getHinhAnh());
         if (this.baivietService.updateBaiViet(baiviet) == true) {
             return "redirect:/canhan";
         } else {
             errMsg = "Đã có lỗi xãy ra";
         }
 
-        return "capnhat1";
+        return "capnhat";
     }
+    
+    @PostMapping("/thtin_bviet_tt")
+    public String capNhatTrangThai(@RequestParam Map<String, String> params, Authentication authen) {
+        int id = Integer.parseInt(params.get("baivietId").toString());
+        BaiViet baiviet = (BaiViet)this.baivietService.getBaiVietById(id);
+        NguoiDung ndChuTro = this.taikhoan.getTaiKhoanId(baiviet.getIdNguoiDung().getId());
+        List<Follow> fls = this.followService.getFollowsChuTro(ndChuTro);
+        List<TrangThaiBaiViet> lsts = this.loaiTrangThaiService.getLoaiTrangThaiAll();
+        for (TrangThaiBaiViet lst : lsts) {
+            if (lst.getId() == 1) {
+                baiviet.setLoaiTrangThai(lst);
+                baivietService.saveBaiViet(baiviet);
+                SimpleMailMessage message = new SimpleMailMessage();
+                for (Follow fl : fls) {
+                    message.setTo(fl.getIdKhachHang().getEmail());
+                    message.setSubject("Xong mail r á (Sài Mail API)");
+                    message.setText("Nguoi dung đã đăng bai mới!!! Vào Xem");
+                    emailSender.send(message);
+                }
+
+                return "redirect:/admin";
+            }
+        }
+
+        return "thtin_bviet";
+    }
+
+    @PostMapping("/thtin_bviet_tuchoi")
+    public String capNhatTrangThaiTuChoi(@RequestParam Map<String, String> params) {
+        int id = Integer.parseInt(params.get("baivietId").toString());
+        System.out.println(id);
+        BaiViet baiviet = (BaiViet) this.baivietService.getBaiVietById(id);
+        System.out.println(baiviet.getTenBaiViet());
+        List<TrangThaiBaiViet> lsts = this.loaiTrangThaiService.getLoaiTrangThaiAll();
+        for (TrangThaiBaiViet lst : lsts) {
+            if (lst.getId() == 3) {
+                baiviet.setLoaiTrangThai(lst);
+                baivietService.saveBaiViet(baiviet);
+                return "redirect:/admin";
+            }
+        }
+
+        return "thtin_bviet";
+    }
+
+
+
+
 //    
 //    @RequestMapping(value = "DeleteBViet/{baivietId}")
 //    public String deleteBViet(HttpServletRequest request, Http)

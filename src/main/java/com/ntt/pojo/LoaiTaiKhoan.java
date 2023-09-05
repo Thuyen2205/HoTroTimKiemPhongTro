@@ -4,6 +4,7 @@
  */
 package com.ntt.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Set;
 import javax.persistence.Basic;
@@ -22,7 +23,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author ThanhThuyen
+ * @author Admins
  */
 @Entity
 @Table(name = "loai_tai_khoan")
@@ -43,6 +44,7 @@ public class LoaiTaiKhoan implements Serializable {
     @Column(name = "ten_loai_tai_khoan")
     private String tenLoaiTaiKhoan;
     @OneToMany(mappedBy = "idLoaiTaiKhoan")
+    @JsonIgnore
     private Set<NguoiDung> nguoiDungSet;
 
     public LoaiTaiKhoan() {

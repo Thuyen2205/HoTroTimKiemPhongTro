@@ -4,7 +4,9 @@
  */
 package com.ntt.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.Set;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -18,6 +20,8 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -26,7 +30,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
- * @author ThanhThuyen
+ * @author Admins
  */
 @Entity
 @Table(name = "nguoi_dung")
@@ -40,36 +44,10 @@ import org.springframework.web.multipart.MultipartFile;
     @NamedQuery(name = "NguoiDung.findByTenTaiKhoan", query = "SELECT n FROM NguoiDung n WHERE n.tenTaiKhoan = :tenTaiKhoan"),
     @NamedQuery(name = "NguoiDung.findByMatKhau", query = "SELECT n FROM NguoiDung n WHERE n.matKhau = :matKhau"),
     @NamedQuery(name = "NguoiDung.findByAvatar", query = "SELECT n FROM NguoiDung n WHERE n.avatar = :avatar"),
-    @NamedQuery(name = "NguoiDung.findByHinhAnh", query = "SELECT n FROM NguoiDung n WHERE n.hinhAnh = :hinhAnh")})
+    @NamedQuery(name = "NguoiDung.findByHinhAnh", query = "SELECT n FROM NguoiDung n WHERE n.hinhAnh = :hinhAnh"),
+    @NamedQuery(name = "NguoiDung.findByNgayTao", query = "SELECT n FROM NguoiDung n WHERE n.ngayTao = :ngayTao"),
+    @NamedQuery(name = "NguoiDung.findByKiemDuyet", query = "SELECT n FROM NguoiDung n WHERE n.kiemDuyet = :kiemDuyet")})
 public class NguoiDung implements Serializable {
-
-    /**
-     * @return the file
-     */
-    public MultipartFile getFile() {
-        return file;
-    }
-
-    /**
-     * @param file the file to set
-     */
-    public void setFile(MultipartFile file) {
-        this.file = file;
-    }
-
-    /**
-     * @return the xacNhanMatKhau
-     */
-    public String getXacNhanMatKhau() {
-        return xacNhanMatKhau;
-    }
-
-    /**
-     * @param xacNhanMatKhau the xacNhanMatKhau to set
-     */
-    public void setXacNhanMatKhau(String xacNhanMatKhau) {
-        this.xacNhanMatKhau = xacNhanMatKhau;
-    }
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -99,26 +77,41 @@ public class NguoiDung implements Serializable {
     @Size(max = 500)
     @Column(name = "hinh_anh")
     private String hinhAnh;
-    @Transient
-    private MultipartFile file;
-    @Transient
-    private String xacNhanMatKhau;
+    @Column(name = "ngay_tao")
+    @Temporal(TemporalType.DATE)
+    private Date ngayTao;
+    @Size(max = 45)
+    @Column(name = "kiem_duyet")
+    private String kiemDuyet;
     @OneToMany(mappedBy = "idNguoiDung")
+    @JsonIgnore
     private Set<BinhLuan> binhLuanSet;
     @OneToMany(mappedBy = "idNguoiDung")
+    @JsonIgnore
     private Set<TieuChi> tieuChiSet;
     @JoinColumn(name = "id_loai_tai_khoan", referencedColumnName = "id")
     @ManyToOne
     private LoaiTaiKhoan idLoaiTaiKhoan;
     @OneToMany(mappedBy = "idNguoiDung")
+    @JsonIgnore
     private Set<ThongBao> thongBaoSet;
     @OneToMany(mappedBy = "idNguoiDung")
+    @JsonIgnore
     private Set<BaiViet> baiVietSet;
     @OneToMany(mappedBy = "idChuTro")
+    @JsonIgnore
     private Set<Follow> followSet;
     @OneToMany(mappedBy = "idKhachHang")
+    @JsonIgnore
     private Set<Follow> followSet1;
 
+    @Transient
+    private MultipartFile file;
+    @Transient
+    private String xacNhanMatKhau;
+    
+    
+    
     public NguoiDung() {
     }
 
@@ -126,6 +119,30 @@ public class NguoiDung implements Serializable {
         this.id = id;
     }
 
+    public NguoiDung(Integer id, String tenNguoiDung, String email, String sdt, String tenTaiKhoan, String matKhau, String avatar, String hinhAnh, Date ngayTao, String kiemDuyet, Set<BinhLuan> binhLuanSet, Set<TieuChi> tieuChiSet, LoaiTaiKhoan idLoaiTaiKhoan, Set<ThongBao> thongBaoSet, Set<BaiViet> baiVietSet, Set<Follow> followSet, Set<Follow> followSet1, MultipartFile file, String xacNhanMatKhau) {
+        this.id = id;
+        this.tenNguoiDung = tenNguoiDung;
+        this.email = email;
+        this.sdt = sdt;
+        this.tenTaiKhoan = tenTaiKhoan;
+        this.matKhau = matKhau;
+        this.avatar = avatar;
+        this.hinhAnh = hinhAnh;
+        this.ngayTao = ngayTao;
+        this.kiemDuyet = kiemDuyet;
+        this.binhLuanSet = binhLuanSet;
+        this.tieuChiSet = tieuChiSet;
+        this.idLoaiTaiKhoan = idLoaiTaiKhoan;
+        this.thongBaoSet = thongBaoSet;
+        this.baiVietSet = baiVietSet;
+        this.followSet = followSet;
+        this.followSet1 = followSet1;
+        this.file = file;
+        this.xacNhanMatKhau = xacNhanMatKhau;
+    }
+
+    
+    
     public Integer getId() {
         return id;
     }
@@ -188,6 +205,22 @@ public class NguoiDung implements Serializable {
 
     public void setHinhAnh(String hinhAnh) {
         this.hinhAnh = hinhAnh;
+    }
+
+    public Date getNgayTao() {
+        return ngayTao;
+    }
+
+    public void setNgayTao(Date ngayTao) {
+        this.ngayTao = ngayTao;
+    }
+
+    public String getKiemDuyet() {
+        return kiemDuyet;
+    }
+
+    public void setKiemDuyet(String kiemDuyet) {
+        this.kiemDuyet = kiemDuyet;
     }
 
     @XmlTransient
@@ -277,4 +310,32 @@ public class NguoiDung implements Serializable {
         return "com.ntt.pojo.NguoiDung[ id=" + id + " ]";
     }
 
+    /**
+     * @return the file
+     */
+    public MultipartFile getFile() {
+        return file;
+    }
+
+    /**
+     * @param file the file to set
+     */
+    public void setFile(MultipartFile file) {
+        this.file = file;
+    }
+
+    /**
+     * @return the xacNhanMatKhau
+     */
+    public String getXacNhanMatKhau() {
+        return xacNhanMatKhau;
+    }
+
+    /**
+     * @param xacNhanMatKhau the xacNhanMatKhau to set
+     */
+    public void setXacNhanMatKhau(String xacNhanMatKhau) {
+        this.xacNhanMatKhau = xacNhanMatKhau;
+    }
+    
 }

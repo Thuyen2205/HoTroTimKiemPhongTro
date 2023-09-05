@@ -1,0 +1,39 @@
+.logout{
+    color: white;
+    text-decoration: none;
+}
+//FOOOTER
+
+//ĐĂNG NHẬP
+
+.form-dangnhap{
+    width: 50%;
+    border: 1px solid gray;
+    padding: 50px 15px;
+
+    // margin-bottom: 26.5%;
+}
+.container-dangnhap{
+    padding: 50px 15px;
+    display: flex;
+    justify-content: space-around;
+}
+
+
+
+
+
+
+
+
+//TRANG CHỦ
+.trangchu{
+    display: flex   ;
+}
+.trangchu-baiviet{
+    width: 65%;
+}
+.trangchu-timkiem{
+    width: 35%;
+    border: 1px solid gray;
+}

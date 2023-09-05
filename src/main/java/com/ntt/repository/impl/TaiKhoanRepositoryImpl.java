@@ -8,6 +8,9 @@ import com.ntt.pojo.Follow;
 import com.ntt.pojo.LoaiTaiKhoan;
 import com.ntt.pojo.NguoiDung;
 import com.ntt.repository.TaiKhoanRepository;
+import java.time.LocalDate;
+import java.time.YearMonth;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -33,7 +36,16 @@ public class TaiKhoanRepositoryImpl implements TaiKhoanRepository {
 
     @Autowired
     private LocalSessionFactoryBean sessionFactory;
-
+@Autowired
+    private TaiKhoanRepository taiKhoanRepo;
+    @Autowired
+    private BaiVietRepositoryImpl baiVietRepo;
+    @Autowired
+    private FollowRepositoryImpl followRepo;
+    @Autowired
+    private BinhLuanRepositoryImpl binhLuanRepo;
+    
+    
     @Override
     @Transactional(propagation = Propagation.REQUIRED)
     public boolean addTaiKhoan(NguoiDung nguoidung) {
@@ -91,6 +103,96 @@ public class TaiKhoanRepositoryImpl implements TaiKhoanRepository {
         org.hibernate.query.Query q = s.createQuery("FROM NguoiDung WHERE id= :i");
         q.setParameter("i", id);
         return (NguoiDung) q.getSingleResult();
+    }
+
+    @Override
+    public List<NguoiDung> getTaiKhoansByYear(int year) {
+         Session s = this.sessionFactory.getObject().getCurrentSession();
+        CriteriaBuilder builder = s.getCriteriaBuilder();
+        CriteriaQuery<NguoiDung> query = builder.createQuery(NguoiDung.class);
+        Root root = query.from(NguoiDung.class);
+        query = query.select(root).where(builder.equal(builder.function("YEAR", Integer.class, root.get("ngayTao")), year));
+        Query q = s.createQuery(query);
+
+        return q.getResultList();
+    }
+
+    @Override
+    public List<NguoiDung> getTaiKhoansByMonth(int year, int month) {
+        Session s = this.sessionFactory.getObject().getCurrentSession();
+        CriteriaBuilder builder = s.getCriteriaBuilder();
+        CriteriaQuery<NguoiDung> query = builder.createQuery(NguoiDung.class);
+        Root root = query.from(NguoiDung.class);
+
+        Predicate yearPre = builder.equal(builder.function("YEAR", Integer.class, root.get("ngayTao")), year);
+        Predicate monthPre = builder.equal(builder.function("MONTH", Integer.class, root.get("ngayTao")), month);
+
+        query = query.select(root).where(builder.and(yearPre, monthPre));
+        Query q = s.createQuery(query);
+
+        return q.getResultList();
+    }
+
+    @Override
+    public List<NguoiDung> getTaiKhoansByQuarter(int year, int quarter) {
+          int startMonth = (quarter - 1) * 3 + 1;
+        int endMonth = startMonth + 2;
+
+        LocalDate startLocalDate = LocalDate.of(year, startMonth, 1);
+        LocalDate endLocalDate = LocalDate.of(year, endMonth, YearMonth.of(year, endMonth).lengthOfMonth());
+
+        Date startDate = java.sql.Date.valueOf(startLocalDate);
+        Date endDate = java.sql.Date.valueOf(endLocalDate);
+
+        Session session = sessionFactory.getObject().getCurrentSession();
+        String query = "FROM NguoiDung nd WHERE nd.ngayTao BETWEEN :startDate AND :endDate";
+        return session.createQuery(query, NguoiDung.class)
+                .setParameter("startDate", startDate)
+                .setParameter("endDate", endDate)
+                .getResultList();
+    }
+
+    @Override
+    public boolean deleteTaiKhoan(int idTaiKhoan) {
+        Session s = this.sessionFactory.getObject().getCurrentSession();
+        NguoiDung nguoiDung = this.taiKhoanRepo.getTaiKhoanId(idTaiKhoan);
+        try {
+            s.delete(nguoiDung);
+            return true;
+        } catch (HibernateException ex) {
+            ex.printStackTrace();
+            return false;
+        }
+    }
+
+    @Override
+    public void deleteBaiVietById(int baiVietId) {
+        Session session = sessionFactory.getObject().getCurrentSession();
+        String hql = "DELETE FROM NguoiDung nd WHERE nd.baiViet.id = :baiVietId";
+        session.createQuery(hql)
+                .setParameter("baiVietId", baiVietId)
+                .executeUpdate();
+    }
+
+    @Override
+    public List<NguoiDung> getTaiKhoanAll() {
+          Session s = this.sessionFactory.getObject().getCurrentSession();
+        Query q = s.createQuery("From NguoiDung");
+        return q.getResultList();
+    }
+
+    @Override
+    public boolean updateTrangThaiTaiKhoan(NguoiDung nguoidung) {
+          Session s = this.sessionFactory.getObject().getCurrentSession();
+        
+        try {
+            nguoidung.setKiemDuyet("KIEM_DUYET_2");
+            s.update(nguoidung);
+            return true;
+        } catch (HibernateException e) {
+            System.err.println(e.getMessage());
+        }
+        return false;
     }
 
 }

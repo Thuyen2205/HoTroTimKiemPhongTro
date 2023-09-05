@@ -4,6 +4,7 @@
  */
 package com.ntt.configs;
 
+import com.ntt.components.JwtService;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
 /**
@@ -18,7 +19,9 @@ public class DispatcherServletInit extends AbstractAnnotationConfigDispatcherSer
         HibernateConfig.class,
         TitlesConfig.class,
         SpringSecurityConfig.class,
-        AppConfig.class
+        AppConfig.class, 
+        JwtService.class, 
+        JwtSecurityConfig.class
         };
     }
 

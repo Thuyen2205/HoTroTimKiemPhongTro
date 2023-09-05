@@ -29,7 +29,8 @@ import org.springframework.stereotype.Service;
  * @author ThanhThuyen
  */
 @Service("taikhoanDetailsService")
-public class TaiKhoanServiceImpl implements TaiKhoanService{
+public class TaiKhoanServiceImpl implements TaiKhoanService {
+
     @Autowired
     private Cloudinary cloudinary;
     @Autowired
@@ -38,47 +39,47 @@ public class TaiKhoanServiceImpl implements TaiKhoanService{
     private BCryptPasswordEncoder passwordEncoder;
     @Autowired
     private FollowRepository followRepository;
+
     @Override
     public boolean addTaiKhoan(NguoiDung nguoidung) {
-        
-        String pass=nguoidung.getMatKhau(); 
+
+        String pass = nguoidung.getMatKhau();
         nguoidung.setMatKhau(this.passwordEncoder.encode(pass));
         try {
-                    Map res=this.cloudinary.uploader().upload(nguoidung.getFile().getBytes(),
-                            ObjectUtils.asMap("resource_type", "auto"));
-                    nguoidung.setAvatar(res.get("secure_url").toString());
-                    
-                } catch (IOException ex) {
-                     System.err.println("== ADD BaiViet ==" + ex.getMessage());
-                }
-//        nguoidung.setLoaiTaiKhoan(NguoiDung.KhachHang);
+            Map res = this.cloudinary.uploader().upload(nguoidung.getFile().getBytes(),
+                    ObjectUtils.asMap("resource_type", "auto"));
+            nguoidung.setAvatar(res.get("secure_url").toString());
+
+        } catch (IOException ex) {
+            System.err.println("== ADD TaiKhoan ==" + ex.getMessage());
+        }
+
         return this.taikhoanRepository.addTaiKhoan(nguoidung);
     }
 
     @Override
     public List<NguoiDung> getTaiKhoan(String username) {
-      return this.taikhoanRepository.getTaiKhoan(username);
+        return this.taikhoanRepository.getTaiKhoan(username);
     }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-       List<NguoiDung> taikhoans=this.getTaiKhoan(username);
-       
-       if(taikhoans.isEmpty())
-       {
-           throw new UsernameNotFoundException("Tai Khoan Khong Ton Tại!!!");
-       }
-       NguoiDung taikhoan=taikhoans.get(0);
-       
-       Set<GrantedAuthority> auth= new HashSet<>();
-       auth.add(new SimpleGrantedAuthority(taikhoan.getIdLoaiTaiKhoan().getTenLoaiTaiKhoan()));
-       return new org.springframework.security.core.userdetails.User(taikhoan.getTenTaiKhoan(),taikhoan.getMatKhau(),auth);
-       
+        List<NguoiDung> taikhoans = this.getTaiKhoan(username);
+
+        if (taikhoans.isEmpty()) {
+            throw new UsernameNotFoundException("Tai Khoan Khong Ton Tại!!!");
+        }
+        NguoiDung taikhoan = taikhoans.get(0);
+
+        Set<GrantedAuthority> auth = new HashSet<>();
+        auth.add(new SimpleGrantedAuthority(taikhoan.getIdLoaiTaiKhoan().getTenLoaiTaiKhoan()));
+        return new org.springframework.security.core.userdetails.User(taikhoan.getTenTaiKhoan(), taikhoan.getMatKhau(), auth);
+
     }
 
     @Override
     public LoaiTaiKhoan getLoaiTaiKhoan(String tenLoaiTaiKhoan) {
-      return this.taikhoanRepository.getLoaiTaiKhoan(tenLoaiTaiKhoan);
+        return this.taikhoanRepository.getLoaiTaiKhoan(tenLoaiTaiKhoan);
     }
 
     @Override
@@ -89,5 +90,40 @@ public class TaiKhoanServiceImpl implements TaiKhoanService{
     @Override
     public NguoiDung getTaiKhoanId(int id) {
         return this.taikhoanRepository.getTaiKhoanId(id);
+    }
+
+    @Override
+    public List<NguoiDung> getTaiKhoansByYear(int year) {
+        return this.taikhoanRepository.getTaiKhoansByYear(year);
+    }
+
+    @Override
+    public List<NguoiDung> getTaiKhoansByMonth(int year, int month) {
+        return this.taikhoanRepository.getTaiKhoansByMonth(year, month);
+    }
+
+    @Override
+    public List<NguoiDung> getTaiKhoansByQuarter(int year, int quarter) {
+        return this.taikhoanRepository.getTaiKhoansByQuarter(year, quarter);
+    }
+
+    @Override
+    public boolean deleteTaiKhoan(int idTaiKhoan) {
+        return this.taikhoanRepository.deleteTaiKhoan(idTaiKhoan);
+    }
+
+    @Override
+    public void deleteBaiVietById(int baiVietId) {
+        this.taikhoanRepository.deleteBaiVietById(baiVietId);
+    }
+
+    @Override
+    public List<NguoiDung> getTaiKhoanAll() {
+        return this.taikhoanRepository.getTaiKhoanAll();
+    }
+
+    @Override
+    public boolean updateTrangThaiTaiKhoan(NguoiDung nguoidung) {
+        return this.taikhoanRepository.updateTrangThaiTaiKhoan(nguoidung);
     }
 }

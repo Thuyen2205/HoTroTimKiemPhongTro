@@ -29,5 +29,14 @@ public class LoaiBaiVietRepositoryImpl implements LoaiBaiVietRepository{
         Query q=s.createQuery("From LoaiBaiViet");
         return q.getResultList();
     }
+
+    @Override
+    public void deleteBaiVietById(int baiVietId) {
+        Session session = factory.getObject().getCurrentSession();
+        String hql = "DELETE FROM LoaiBaiViet nd WHERE nd.baiViet.id = :baiVietId";
+        session.createQuery(hql)
+                .setParameter("baiVietId", baiVietId)
+                .executeUpdate();
+    }
     
 }
