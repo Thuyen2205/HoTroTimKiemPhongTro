@@ -9,6 +9,10 @@ import com.ntt.service.BaiVietService;
 import com.ntt.service.LoaiBaiVietService;
 import com.ntt.service.TaiKhoanService;
 import java.math.BigDecimal;
+
+import java.util.HashMap;
+import java.util.List;
+
 import java.util.Map;
 import javax.persistence.Query;
 import org.hibernate.Session;
@@ -19,6 +23,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -37,19 +42,18 @@ public class IndexContext {
     private BaiVietService baivietService;
 
     @RequestMapping("/")
-    @Transactional
-    public String index(Model model, NguoiDung nguoidung, Authentication authen) {
+    public String index(Model model, Authentication authen) {
+
+        model.addAttribute("baiviet", this.baivietService.getBaiVietAll());
         if (authen != null) {
-            model.addAttribute("baiviet", this.baivietService.getBaiViet().get(0));
-            model.addAttribute("taikhoan", this.taikhoan.getTaiKhoan(authen.getName()).get(0));
+            UserDetails user = this.taikhoan.loadUserByUsername(authen.getName());
+            NguoiDung u = this.taikhoan.getTaiKhoanbyTenTK(user.getUsername());
+            model.addAttribute("taikhoan", u);
         }
-        model.addAttribute("baiviet", this.baivietService.getBaiViet());
-        model.addAttribute("baiviet_1", this.baivietService.getBaiVietByType("1"));
-        model.addAttribute("baiviet_2", this.baivietService.getBaiVietByType("2"));
         return "index";
+
     }
-    
-    
+
     @RequestMapping("/timkiem")
     public String timKiem(Model model, NguoiDung nguoidung, Authentication authen, @RequestParam(name = "address", required = false) String address,
             @RequestParam(name = "price", required = false) BigDecimal price,
@@ -68,7 +72,7 @@ public class IndexContext {
         model.addAttribute("baiviet_2", this.baivietService.getBaiVietByType("2"));
         return "index";
     }
-    
+
     @PostMapping("/")
     public String index(Model model, Authentication authen, @RequestParam("gia") int gia) {
         BigDecimal giaBigDecimal = new BigDecimal(gia);
@@ -89,6 +93,4 @@ public class IndexContext {
         model.addAttribute("taikhoan", u);
         return "bando";
     }
-    
-    
 }

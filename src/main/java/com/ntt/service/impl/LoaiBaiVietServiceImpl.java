@@ -26,7 +26,7 @@ public class LoaiBaiVietServiceImpl implements LoaiBaiVietService{
 
     @Override
     public void deleteBaiVietById(int baiVietId) {
-          this.loaiBaiViet.deleteBaiVietById(baiVietId);
+        this.loaiBaiViet.deleteBaiVietById(baiVietId);
     }
     
 }

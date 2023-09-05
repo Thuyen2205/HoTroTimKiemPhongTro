@@ -20,13 +20,15 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Repository
 @Transactional
-public class LoaiBaiVietRepositoryImpl implements LoaiBaiVietRepository{
+public class LoaiBaiVietRepositoryImpl implements LoaiBaiVietRepository {
+
     @Autowired
     private LocalSessionFactoryBean factory;
+
     @Override
     public List<LoaiBaiViet> getLoaiBaiViet() {
-        Session s= this.factory.getObject().getCurrentSession();
-        Query q=s.createQuery("From LoaiBaiViet");
+        Session s = this.factory.getObject().getCurrentSession();
+        Query q = s.createQuery("From LoaiBaiViet");
         return q.getResultList();
     }
 
@@ -38,5 +40,4 @@ public class LoaiBaiVietRepositoryImpl implements LoaiBaiVietRepository{
                 .setParameter("baiVietId", baiVietId)
                 .executeUpdate();
     }
-    
 }

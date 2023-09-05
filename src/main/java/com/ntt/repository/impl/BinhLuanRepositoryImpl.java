@@ -6,6 +6,7 @@ package com.ntt.repository.impl;
 
 import com.ntt.pojo.BaiViet;
 import com.ntt.pojo.BinhLuan;
+import com.ntt.pojo.Follow;
 import com.ntt.pojo.NguoiDung;
 import com.ntt.repository.BinhLuanRepository;
 import java.util.ArrayList;
@@ -161,6 +162,8 @@ public class BinhLuanRepositoryImpl implements BinhLuanRepository {
         s.save(binhLuan);
     }
 
+    
+
     @Override
     public void deleteBinhLuanByBaiViet(BaiViet baiViet) {
         Session session = factory.getObject().getCurrentSession();
@@ -178,6 +181,4 @@ public class BinhLuanRepositoryImpl implements BinhLuanRepository {
                 .setParameter("nguoidung", nguoidung)
                 .executeUpdate();
     }
-
-
 }

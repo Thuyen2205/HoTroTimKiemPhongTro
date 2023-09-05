@@ -28,5 +28,4 @@ public class LoaiTrangThaiServiceImpl implements LoaiTrangThaiService{
     public List<TrangThaiBaiViet> getLoaiTrangThaiAll() {
         return this.loaiTrangThaiRepo.getLoaiTrangThaiAll();
     }
-    
 }

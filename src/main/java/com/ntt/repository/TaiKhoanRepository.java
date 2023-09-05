@@ -6,13 +6,14 @@ package com.ntt.repository;
 
 import com.ntt.pojo.LoaiTaiKhoan;
 import com.ntt.pojo.NguoiDung;
+import java.util.Date;
 import java.util.List;
 
 /**
  *
  * @author ThanhThuyen
  */
-public interface TaiKhoanRepository {
+public interface TaiKhoanRepository{
     boolean addTaiKhoan(NguoiDung nguoidung);
     List<NguoiDung> getTaiKhoan(String username);
     LoaiTaiKhoan getLoaiTaiKhoan (String tenLoaiTaiKhoan);

@@ -1,8 +1,9 @@
 <%-- 
     Document   : bando
-    Created on : Sep 5, 2023, 5:18:40 AM
-    Author     : Admins
+    Created on : Aug 22, 2023, 2:07:58 AM
+    Author     : ThanhThuyen
 --%>
+
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <link href="<c:url value="/css/style.css" />" rel="stylesheet" />

@@ -59,14 +59,13 @@ public class BinhLuan implements Serializable {
     @JoinColumn(name = "id_nguoi_dung", referencedColumnName = "id")
     @ManyToOne
     private NguoiDung idNguoiDung;
-
-    
-    @Transient
+     @Transient
     private String tenBaiVietBinhLuan;
     @Transient
     private Integer idBaiVietBinhLuan;
     @Transient
     private String tenNguoiDangBai;
+
     
     public BinhLuan() {
     }

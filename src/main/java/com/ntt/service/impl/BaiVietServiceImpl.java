@@ -50,8 +50,8 @@ public class BaiVietServiceImpl implements BaiVietService {
     private LoaiTaiKhoanRepository LoaiTaiKhoanRepository;
 
     @Override
-    public List<BaiViet> getBaiViet() {
-        return this.baivietRepo.getBaiViet();
+    public List<BaiViet> getBaiVietTK(String address, BigDecimal price, Integer soNguoi) {
+        return this.baivietRepo.getBaiVietTK(address, price, soNguoi);
     }
 
     @Override
@@ -62,11 +62,13 @@ public class BaiVietServiceImpl implements BaiVietService {
 
             if (baiviet.getIdNguoiDung().getIdLoaiTaiKhoan().getId() == 2) {
 
-                Map res = this.cloudinary.uploader().upload(baiviet.getFile().getBytes(),
+                Map res = this.cloudinary.uploader().upload(baiviet.getFile2().getBytes(),
                         ObjectUtils.asMap("resource_type", "auto"));
                 baiviet.setHinhAnh(res.get("secure_url").toString());
                 baiviet.setNgayDang(new Date());
-
+            }
+            if (baiviet.getIdNguoiDung().getIdLoaiTaiKhoan().getId() == 3) {
+                baiviet.setNgayDang(new Date());
             }
 
         } catch (IOException ex) {
@@ -83,7 +85,6 @@ public class BaiVietServiceImpl implements BaiVietService {
     @Override
     public BaiViet loadBaiViet(String tenBaiViet) {
         List<BaiViet> baiviets = this.getBaiViet2(tenBaiViet);
-
         if (baiviets.isEmpty()) {
             throw new UsernameNotFoundException("Bài Viết Không Tồn Tại!!!");
         }
@@ -111,21 +112,19 @@ public class BaiVietServiceImpl implements BaiVietService {
 
     @Override
     public boolean updateBaiViet(BaiViet baiviet) {
-        if (!baiviet.getFile().isEmpty()) {
+        if (baiviet.getLoaiBaiViet().getId()== 1) {
             try {
                 Map res = this.cloudinary.uploader().upload(baiviet.getFile().getBytes(),
                         ObjectUtils.asMap("resource_type", "auto"));
                 baiviet.setHinhAnh(res.get("secure_url").toString());
+
             } catch (IOException ex) {
-                System.err.println("== Update BaiViet ==" + ex.getMessage());
+                System.err.println("== UPDATE BaiViet ==" + ex.getMessage());
             }
+
         }
         return this.baivietRepo.updateBaiViet(baiviet);
-    }
 
-    @Override
-    public boolean deleteBaiViet(int id) {
-        return this.baivietRepo.deleteBaiViet(id);
     }
 
     @Override
@@ -206,14 +205,17 @@ public class BaiVietServiceImpl implements BaiVietService {
         this.baivietRepo.deleteBaiVietByNguoiDung(nguoidung);
     }
 
+
     @Override
     public BaiViet getBaiVietById(int id) {
         return this.baivietRepo.getBaiVietById(id);
     }
-
-    @Override
-    public List<BaiViet> getBaiVietTK(String address, BigDecimal price, Integer soNguoi) {
-        return this.baivietRepo.getBaiVietTK(address, price, soNguoi);
+    public boolean deleteBaiViet(int id) {
+        return this.baivietRepo.deleteBaiViet(id);
     }
 
+    public List<BaiViet> getBaiViet() {
+        return this.baivietRepo.getBaiViet();
+
+    }
 }

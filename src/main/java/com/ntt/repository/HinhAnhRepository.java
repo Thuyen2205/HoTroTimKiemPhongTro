@@ -8,7 +8,10 @@ import com.ntt.pojo.BaiViet;
 
 /**
  *
+<<<<<<< HEAD
  * @author Admins
+=======
+ * @author ThanhThuyen
  */
 public interface HinhAnhRepository {
      void deleteHinhAnhByBaiViet(BaiViet baiViet);

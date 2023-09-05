@@ -27,6 +27,7 @@ public class BinhLuanServiceImpl implements BinhLuanService{
     private TaiKhoanRepository taikhoan;
     @Autowired
     private BaiVietRepository baiviet;
+    
     @Override
     public List<BinhLuan> getBinhLuan(int idBaiViet) {
         return this.binhluan.getBinhLuan(idBaiViet);

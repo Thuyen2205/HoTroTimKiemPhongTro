@@ -5,6 +5,7 @@
 package com.ntt.service.impl;
 
 import com.cloudinary.Cloudinary;
+import com.example.security.CustomUser;
 import com.cloudinary.utils.ObjectUtils;
 import com.ntt.pojo.LoaiTaiKhoan;
 import com.ntt.pojo.NguoiDung;
@@ -12,6 +13,8 @@ import com.ntt.repository.FollowRepository;
 import com.ntt.repository.TaiKhoanRepository;
 import com.ntt.service.TaiKhoanService;
 import java.io.IOException;
+import java.util.Date;
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -49,11 +52,23 @@ public class TaiKhoanServiceImpl implements TaiKhoanService {
             Map res = this.cloudinary.uploader().upload(nguoidung.getFile().getBytes(),
                     ObjectUtils.asMap("resource_type", "auto"));
             nguoidung.setAvatar(res.get("secure_url").toString());
+            Date current = new Date();
+            nguoidung.setNgayTao(current);
+            if (nguoidung.getIdLoaiTaiKhoan().getId() == 2) {
+                Map res2 = this.cloudinary.uploader().upload(nguoidung.getFile().getBytes(),
+                        ObjectUtils.asMap("resource_type", "auto"));
+                nguoidung.setHinhAnh(res2.get("secure_url").toString());
+                nguoidung.setKiemDuyet("KIEM_DUYET_1");
+            }
+            if (nguoidung.getIdLoaiTaiKhoan().getId() == 3) {
+                nguoidung.setKiemDuyet("KIEM_DUYET_2");
+                nguoidung.setHinhAnh(null);
+            }
 
         } catch (IOException ex) {
-            System.err.println("== ADD TaiKhoan ==" + ex.getMessage());
+            System.err.println("== ADD BaiViet ==" + ex.getMessage());
         }
-
+//        nguoidung.setLoaiTaiKhoan(NguoiDung.KhachHang);
         return this.taikhoanRepository.addTaiKhoan(nguoidung);
     }
 
@@ -67,13 +82,13 @@ public class TaiKhoanServiceImpl implements TaiKhoanService {
         List<NguoiDung> taikhoans = this.getTaiKhoan(username);
 
         if (taikhoans.isEmpty()) {
-            throw new UsernameNotFoundException("Tai Khoan Khong Ton Tại!!!");
+            throw new UsernameNotFoundException("Tai Khoan Khong Ton T?i!!!");
         }
         NguoiDung taikhoan = taikhoans.get(0);
 
         Set<GrantedAuthority> auth = new HashSet<>();
         auth.add(new SimpleGrantedAuthority(taikhoan.getIdLoaiTaiKhoan().getTenLoaiTaiKhoan()));
-        return new org.springframework.security.core.userdetails.User(taikhoan.getTenTaiKhoan(), taikhoan.getMatKhau(), auth);
+        return new CustomUser(taikhoan.getTenTaiKhoan(), taikhoan.getMatKhau(), auth, taikhoan.getKiemDuyet());
 
     }
 

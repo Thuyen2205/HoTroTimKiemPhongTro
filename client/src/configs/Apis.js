@@ -17,7 +17,8 @@ export const endpoints ={
     "bviet-ngdung" :(id) => `${SERVER_CONTEXT}/api/getBVietByIdNgDung/${id}`,
     "dangbai" :`${SERVER_CONTEXT}/api/dangbai/`,
     "capnhatbv" :(id) => `${SERVER_CONTEXT}/api/updateBaiVietAPI/${id}` ,
-    "doimatkhau":`${SERVER_CONTEXT}/api/doimatkhau/`   
+    "doimatkhau":`${SERVER_CONTEXT}/api/doimatkhau/`
+
     
 }
 

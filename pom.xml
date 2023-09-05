@@ -123,6 +123,7 @@
             <artifactId>spring-security-config</artifactId>
             <version>5.2.1.RELEASE</version>
         </dependency>
+        
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
@@ -133,6 +134,7 @@
             <artifactId>nimbus-jose-jwt</artifactId>
             <version>9.31</version>
         </dependency>
+        
         <dependency>
             <groupId>javax.mail</groupId>
             <artifactId>javax.mail-api</artifactId>
@@ -158,8 +160,6 @@
             <artifactId>javax.mail</artifactId>
             <version>1.6.2</version> <!-- Sử dụng phiên bản tương ứng -->
         </dependency>
-        
-        
     </dependencies>
 
     <build>

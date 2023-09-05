@@ -43,6 +43,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private Environment env;
+    
     @Autowired
     private UserDetailsService userDetailsService;
 
@@ -73,9 +74,10 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.logout().logoutSuccessUrl("/dangnhap");
         http.exceptionHandling().accessDeniedPage("/dangnhap?accessDenied");
-        http.authorizeRequests().antMatchers("/").permitAll()
+        http.authorizeRequests()
+                .antMatchers("/canhan").access("hasAnyRole('ROLE_CHUTRO', 'ROLE_KHACHHANG') and principal.kiemDuyet == 'KIEM_DUYET_2'")
+                .antMatchers("/").permitAll()
                 .antMatchers("/admin").access("hasRole('ROLE_ADMIN')");
-
         http.csrf().disable();
 
     }
@@ -90,11 +92,6 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 "secure", true));
 
         return c;
-    }
-
-    @Bean
-    public SimpleDateFormat simpleDateFormat() {
-        return new SimpleDateFormat("yyyy-MM-dd");
     }
 
     @Bean
@@ -113,4 +110,26 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
         return mailSender;
 
     }
+
+    @Bean
+    public SimpleDateFormat simpleDateFormat() {
+        return new SimpleDateFormat("yyyy-MM-dd");
+    }
+
+//    @Bean
+//    public JavaMailSender javaMailSender() {
+//        JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
+//        mailSender.setHost("smtp.gmail.com");
+//        mailSender.setPort(587);
+//        mailSender.setUsername("2051050488thuyen@ou.edu.vn");
+//        mailSender.setPassword("thuyen22052002##");
+//
+//        Properties properties = new Properties();
+//        properties.put("mail.smtp.auth", "true");
+//        properties.put("mail.smtp.starttls.enable", "true");
+//        mailSender.setJavaMailProperties(properties);
+//
+//        return mailSender;
+//
+//    }
 }

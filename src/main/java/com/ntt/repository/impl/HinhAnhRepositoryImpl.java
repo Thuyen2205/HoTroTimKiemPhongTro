@@ -31,5 +31,4 @@ public class HinhAnhRepositoryImpl implements HinhAnhRepository {
                 .setParameter("baiViet", baiViet)
                 .executeUpdate();
     }
-
 }

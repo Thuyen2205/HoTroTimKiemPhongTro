@@ -22,5 +22,4 @@ public class HinhAnhServiceImpl implements HinhAnhService{
     public void deleteHinhAnhByBaiViet(BaiViet baiViet) {
         this.hinhAnhRepository.deleteHinhAnhByBaiViet(baiViet);
     }
-    
 }

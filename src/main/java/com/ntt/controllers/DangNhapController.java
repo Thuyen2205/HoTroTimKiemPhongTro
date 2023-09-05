@@ -57,7 +57,7 @@ public class DangNhapController {
     @RequestMapping("/canhan")
 //    @Transactional
     public String dangNhapCaNhan(Model model, Authentication authen) {
-        model.addAttribute("taikhoan", new NguoiDung());
+//        model.addAttribute("taikhoan", new NguoiDung());
         if (authen != null) {
             UserDetails user = this.taikhoan.loadUserByUsername(authen.getName());
             NguoiDung u = this.taikhoan.getTaiKhoanbyTenTK(user.getUsername());
@@ -66,14 +66,6 @@ public class DangNhapController {
         }
         return "canhan";
     }
-
-
-    @RequestMapping("/admin")
-    public String dangNhapAdmin(Model model, Authentication authen) {
-        model.addAttribute("taikhoan", this.taikhoan.getTaiKhoan(authen.getName()).get(0));
-        return "admin";
-    }
-    
     @PostMapping("/canhan_xoa")
     public String xoaBaiViet(Model model,Authentication authen,@RequestParam Map<String, String> params){
        Integer id = Integer.parseInt(params.get("idBaiVietXoa"));
@@ -85,7 +77,7 @@ public class DangNhapController {
         }
         return "index";
     }
-
+    
     
     @GetMapping("/doimatkhau")
     public String doiMatKhau(Model model, @RequestParam Map<String, String> params, Authentication authen){

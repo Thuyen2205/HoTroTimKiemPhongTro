@@ -4,6 +4,7 @@
  */
 package com.ntt.repository;
 
+import com.ntt.pojo.BaiViet;
 import com.ntt.pojo.Follow;
 import com.ntt.pojo.NguoiDung;
 import java.util.List;

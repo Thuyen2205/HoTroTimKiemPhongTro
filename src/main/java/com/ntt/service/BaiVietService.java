@@ -16,10 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
  * @author ThanhThuyen
  */
 public interface BaiVietService  {
-    List<BaiViet> getBaiVietTK(String address, BigDecimal price, Integer soNguoi);
-
     List<BaiViet> getBaiViet();
-
     List<BaiViet> getBaiViet2(String tenBaiViet);
     BaiViet loadBaiViet(String tenBaiViet);
     boolean addBaiViet(BaiViet baiviet);
@@ -30,16 +27,16 @@ public interface BaiVietService  {
     List<Object> getBaiViet2Type (int loaiBViet);
     List<Object> getBaiVietByIdNgDung(NguoiDung idNgDung);
     //PHAT
-    BaiViet addBaiVietAPI(Map<String, String> params
-            , MultipartFile hinhanh);
+    BaiViet addBaiVietAPI(Map<String, String> params, MultipartFile hinhanh);
     //THUYEN
-     List<BaiViet> getBaiVietByGiaThue(BigDecimal gia);
+    List<BaiViet> getBaiVietByGiaThue(BigDecimal gia);
     List<BaiViet> getBaiVietAll();
     List<BaiViet> getBaiVietGia(Map<String, String> params);
     List<BaiViet> getBaiVietGiaChuaDuyet();
     boolean updateTrangThai(BaiViet idBaiViet);
     void saveBaiViet(BaiViet baiviet);
     void deleteBaiVietByNguoiDung(NguoiDung nguoidung);
+    List<BaiViet> getBaiVietTK(String address, BigDecimal price, Integer soNguoi);
+
 
 }
-

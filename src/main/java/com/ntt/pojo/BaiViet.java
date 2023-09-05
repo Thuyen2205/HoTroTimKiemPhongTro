@@ -50,11 +50,12 @@ import org.springframework.web.multipart.MultipartFile;
     @NamedQuery(name = "BaiViet.findByHinhAnh1", query = "SELECT b FROM BaiViet b WHERE b.hinhAnh1 = :hinhAnh1"),
     @NamedQuery(name = "BaiViet.findByHinhAnh2", query = "SELECT b FROM BaiViet b WHERE b.hinhAnh2 = :hinhAnh2"),
     @NamedQuery(name = "BaiViet.findByHinhAnh3", query = "SELECT b FROM BaiViet b WHERE b.hinhAnh3 = :hinhAnh3")})
+
 public class BaiViet implements Serializable {
 
     
     
-    private static final long serialVersionUID = 1L;
+    private static long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
@@ -95,6 +96,7 @@ public class BaiViet implements Serializable {
     @Size(max = 500)
     @Column(name = "hinh_anh3")
     private String hinhAnh3;
+
     @OneToMany(mappedBy = "idBaiViet")
     @JsonIgnore
     private Set<BinhLuan> binhLuanSet;
@@ -114,6 +116,7 @@ public class BaiViet implements Serializable {
     @ManyToOne
     private TrangThaiBaiViet loaiTrangThai;
 
+    
     @Transient
     private MultipartFile file;
     @Transient
@@ -124,8 +127,8 @@ public class BaiViet implements Serializable {
     private MultipartFile file3;
     @Transient
     private String tenNguoiDangBai;
-    
-    
+
+
     public BaiViet() {
     }
 
@@ -341,12 +344,6 @@ public class BaiViet implements Serializable {
         return "com.ntt.pojo.BaiViet[ id=" + id + " ]";
     }
 
-    /**
-     * @return the file
-     */
-    public MultipartFile getFile() {
-        return file;
-    }
 
     /**
      * @param file the file to set
@@ -409,6 +406,27 @@ public class BaiViet implements Serializable {
      */
     public void setTenNguoiDangBai(String tenNguoiDangBai) {
         this.tenNguoiDangBai = tenNguoiDangBai;
+    }
+
+    /**
+     * @return the serialVersionUID
+     */
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
+    }
+
+    /**
+     * @param aSerialVersionUID the serialVersionUID to set
+     */
+    public static void setSerialVersionUID(long aSerialVersionUID) {
+        serialVersionUID = aSerialVersionUID;
+    }
+
+    /**
+     * @return the file
+     */
+    public MultipartFile getFile() {
+        return file;
     }
     
 }

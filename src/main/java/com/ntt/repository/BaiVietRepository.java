@@ -17,20 +17,22 @@ import java.util.Map;
 public interface BaiVietRepository {
     List<BaiViet> getBaiViet();
     List<BaiViet> getBaiViet2(String tenBaiViet);
+    List<BaiViet> getBaiVietTK(String address, BigDecimal price, Integer soNguoi);
+    List<BaiViet> getBaiViet(String tenBaiViet);
     boolean addBaiViet(BaiViet baiviet);
     boolean updateBaiViet(BaiViet baiviet);
-    boolean deleteBaiViet(int id);
+    boolean deleteBaiViet(Integer id);
     List<Object> getBaiVietByType (String loaiBViet);
     List<Object> getBaiViet2Type (int loaiBViet);
 
     //Lấy bài viết theo id bài viết
     BaiViet getBaiVietById(int id);
-    //Lấy bài viết theo id người dùng
+    //Lấy bài viết theo id ngư�?i dùng
     List<Object> getBaiVietByIdNgDung(NguoiDung idNgDung);
     BaiViet addBaiVietAPI(BaiViet baiviet);
     //THUYỀN MỚI PUSH
     
-    List<BaiViet> getBaiVietTK(String address, BigDecimal price, Integer soNguoi);
+    
     List<BaiViet> getBaiVietByGiaThue(BigDecimal gia);
     List<BaiViet> getBaiVietAll();
     List<BaiViet> getBaiVietGia(Map<String, String> params);
@@ -38,7 +40,5 @@ public interface BaiVietRepository {
     boolean updateTrangThai(BaiViet idBaiViet);
     void saveBaiViet(BaiViet baiviet);
     void deleteBaiVietByNguoiDung(NguoiDung nguoidung);
-    
-    
     
 }

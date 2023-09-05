@@ -23,6 +23,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
+import javax.validation.constraints.Null;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -49,6 +50,48 @@ import org.springframework.web.multipart.MultipartFile;
     @NamedQuery(name = "NguoiDung.findByKiemDuyet", query = "SELECT n FROM NguoiDung n WHERE n.kiemDuyet = :kiemDuyet")})
 public class NguoiDung implements Serializable {
 
+    /**
+     * @return the file2
+     */
+    public MultipartFile getFile2() {
+        return file2;
+    }
+
+    /**
+     * @param file2 the file2 to set
+     */
+    public void setFile2(MultipartFile file2) {
+        this.file2 = file2;
+    }
+
+    /**
+     * @return the xacNhanMatKhau
+     */
+    public String getXacNhanMatKhau() {
+        return xacNhanMatKhau;
+    }
+
+    /**
+     * @param xacNhanMatKhau the xacNhanMatKhau to set
+     */
+    public void setXacNhanMatKhau(String xacNhanMatKhau) {
+        this.xacNhanMatKhau = xacNhanMatKhau;
+    }
+
+    /**
+     * @return the file
+     */
+    public MultipartFile getFile() {
+        return file;
+    }
+
+    /**
+     * @param file the file to set
+     */
+    public void setFile(MultipartFile file) {
+        this.file = file;
+    }
+    
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -83,6 +126,9 @@ public class NguoiDung implements Serializable {
     @Size(max = 45)
     @Column(name = "kiem_duyet")
     private String kiemDuyet;
+
+    
+
     @OneToMany(mappedBy = "idNguoiDung")
     @JsonIgnore
     private Set<BinhLuan> binhLuanSet;
@@ -105,12 +151,15 @@ public class NguoiDung implements Serializable {
     @JsonIgnore
     private Set<Follow> followSet1;
 
+    
+    
     @Transient
+    @Null
     private MultipartFile file;
     @Transient
     private String xacNhanMatKhau;
-    
-    
+    @Transient
+    private MultipartFile file2;
     
     public NguoiDung() {
     }
@@ -310,32 +359,6 @@ public class NguoiDung implements Serializable {
         return "com.ntt.pojo.NguoiDung[ id=" + id + " ]";
     }
 
-    /**
-     * @return the file
-     */
-    public MultipartFile getFile() {
-        return file;
-    }
-
-    /**
-     * @param file the file to set
-     */
-    public void setFile(MultipartFile file) {
-        this.file = file;
-    }
-
-    /**
-     * @return the xacNhanMatKhau
-     */
-    public String getXacNhanMatKhau() {
-        return xacNhanMatKhau;
-    }
-
-    /**
-     * @param xacNhanMatKhau the xacNhanMatKhau to set
-     */
-    public void setXacNhanMatKhau(String xacNhanMatKhau) {
-        this.xacNhanMatKhau = xacNhanMatKhau;
-    }
+    
     
 }

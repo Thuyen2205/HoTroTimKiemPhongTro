@@ -23,7 +23,11 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
+<<<<<<< HEAD
  * @author Admins
+=======
+ * @author ThanhThuyen
+>>>>>>> 3920839a004168c57b3fefe5f804b02063b2013d
  */
 @Entity
 @Table(name = "trang_thai_bai_viet")
