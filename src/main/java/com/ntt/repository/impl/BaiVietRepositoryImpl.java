@@ -23,6 +23,7 @@ import javax.persistence.criteria.Root;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
@@ -42,9 +43,11 @@ public class BaiVietRepositoryImpl implements BaiVietRepository {
     private TaiKhoanRepository taikhoan;
     @Autowired
     private BaiVietRepository baiVietRepo;
+    @Autowired
+    private Environment env;
 
     @Override
-    public List<BaiViet> getBaiVietTK(String address, BigDecimal price, Integer soNguoi) {
+    public List<BaiViet> getBaiVietTK(String address, BigDecimal price, Integer soNguoi, Map<String, String> params) {
         Session s = this.factory.getObject().getCurrentSession();
         CriteriaBuilder b = s.getCriteriaBuilder();
         CriteriaQuery<BaiViet> q = b.createQuery(BaiViet.class);
@@ -65,13 +68,22 @@ public class BaiVietRepositoryImpl implements BaiVietRepository {
         if (soNguoi != null) {
             predicates.add(b.equal(root.get("soNguoi"), soNguoi));
         }
-
-        // Kết hợp tất cả các điều kiện bằng AND
         Predicate finalPredicate = b.and(predicates.toArray(new Predicate[0]));
 
         q.where(finalPredicate);
-
         Query query = s.createQuery(q);
+//        if (params != null) {
+//            String page = params.get("page");
+//            if (page == null) {
+//                page = "1";
+//            }
+//            if (!page.equals("0")) {
+//                int pageSize = Integer.parseInt(this.env.getProperty("PAGE_SIZE"));
+//                query.setFirstResult((Integer.parseInt(page) - 1) * pageSize);
+//                query.setMaxResults(pageSize);
+//            }
+//        }
+
         return query.getResultList();
     }
 
@@ -148,9 +160,9 @@ public class BaiVietRepositoryImpl implements BaiVietRepository {
         Session s = this.factory.getObject().getCurrentSession();
         TrangThaiBaiViet newTT = new TrangThaiBaiViet();
         newTT.setId(1);
-        
+
         try {
-            
+
             baiviet.setLoaiTrangThai(newTT);
             s.update(baiviet);
             return true;
@@ -159,6 +171,7 @@ public class BaiVietRepositoryImpl implements BaiVietRepository {
         }
         return false;
     }
+
     @Transactional
     @Override
     public boolean deleteBaiViet(Integer id) {
@@ -257,6 +270,21 @@ public class BaiVietRepositoryImpl implements BaiVietRepository {
                 .executeUpdate();
     }
 
-   
+    @Override
+    public int getCountOfBaiViet() {
+        Session s = this.factory.getObject().getCurrentSession();
+        Query q = s.createQuery("SELECT COUNT(*) FROM BaiViet");
+
+        List<Long> resultList = q.getResultList();
+
+        if (resultList != null && !resultList.isEmpty()) {
+            Long count = resultList.get(0);
+            if (count != null) {
+                return count.intValue();
+            }
+        }
+
+        return 0;
+    }
 
 }

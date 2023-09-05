@@ -96,14 +96,12 @@ public class BaiVietController {
             model.addAttribute("follows", this.followService.getFollowsKhachHang(nd).get(0));
             model.addAttribute("followlist", this.followService.getFollowsKhachHang(nd));
             model.addAttribute("nguoidung", this.taikhoan.getTaiKhoan(authen.getName()).get(0));
-
         }
         model.addAttribute("BaiViet", this.baivietService.getBaiVietById(id));
         model.addAttribute("binhluan", new BinhLuan());
         model.addAttribute("binhluans", this.binhluanService.getBinhLuan(id));
         model.addAttribute("flChuTro", this.followService.getFollowsChuTro(bv.getIdNguoiDung()));
         model.addAttribute("follow", new Follow());
-
         return "thtin_bviet";
     }
 
@@ -113,6 +111,7 @@ public class BaiVietController {
         String ms = "";
         int id = Integer.parseInt(params.get("baivietId"));
         if (authen.getName() != null) {
+            
             if (this.binhluanService.addBinhLuan(binhluan) == true) {
                 return "forward:/thtin_bviet";
             } else {

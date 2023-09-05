@@ -16,7 +16,7 @@ import java.util.Map;
  */
 public interface BaiVietService {
 
-    List<BaiViet> getBaiVietTK(String address, BigDecimal price, Integer soNguoi);
+    List<BaiViet> getBaiVietTK(String address, BigDecimal price, Integer soNguoi,Map<String, String> params);
 
     List<BaiViet> getBaiViet(String tenBaiViet);
 
@@ -41,4 +41,5 @@ public interface BaiVietService {
     boolean updateTrangThai(BaiViet idBaiViet);
     void saveBaiViet(BaiViet baiviet);
     void deleteBaiVietByNguoiDung(NguoiDung nguoidung);
+     int getCountOfBaiViet();
 }

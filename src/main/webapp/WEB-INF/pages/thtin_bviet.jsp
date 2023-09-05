@@ -8,6 +8,9 @@
 <%@page import="com.ntt.pojo.BaiViet"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.34/moment-timezone-with-data.min.js"></script>
+
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ page import="java.util.Objects" %>
 <link href="<c:url value="/css/style.css" />" rel="stylesheet" />
@@ -172,6 +175,7 @@
             <c:url value="/api/thtin_bvietBinhLuan/${b.id}" var="apiDelete"/>
             <div class="comtent row" style="border-width: 20px">
                 <div class="col-md-1">
+                    <p>${b.id}</p>
                     <img src="${b.idNguoiDung.avatar}" style="width:80px" />
                 </div>
                 <div>
@@ -182,6 +186,7 @@
                             <form action="${pageContext.request.contextPath}/binhluan/thtin_bviet_edit" method="post">
                                 <input type="hidden" name="id" value="${b.id}" />
                                 <textarea name="editedNoiDung">${b.noiDung}</textarea>
+
                                 <button type="submit">Lưu thay đổi</button>
                                 <button type="button" onclick="cancelEditing()">Hủy</button>
                             </form>
@@ -202,16 +207,15 @@
             </div>
         </c:forEach>
     </div>
-
     <script>
+        moment.tz.setDefault("Asia/Ho_Chi_Minh");
+
         window.onload = function () {
-            let dates = document.getElementsByClassName("commentDate")
-            for (let i = 0; i < dates.length; i++)
-            {
-                dates[i].innerText = moment(dates[i].innerText).fromNow()
+            let dates = document.getElementsByClassName("commentDate");
+            for (let i = 0; i < dates.length; i++) {
+                dates[i].innerText = moment(dates[i].innerText).fromNow();
             }
         }
-
     </script>
     <script src="<c:url value="/js/main.js"/>"></script>
 

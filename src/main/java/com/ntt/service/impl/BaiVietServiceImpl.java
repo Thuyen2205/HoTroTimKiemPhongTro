@@ -45,8 +45,8 @@ public class BaiVietServiceImpl implements BaiVietService {
     private LoaiBaiVietRepository loaiBaiViet;
 
     @Override
-    public List<BaiViet> getBaiVietTK(String address, BigDecimal price, Integer soNguoi) {
-        return this.baivietRepo.getBaiVietTK(address, price, soNguoi);
+    public List<BaiViet> getBaiVietTK(String address, BigDecimal price, Integer soNguoi,Map<String, String> params) {
+        return this.baivietRepo.getBaiVietTK(address, price, soNguoi,params);
     }
 
     @Override
@@ -161,6 +161,11 @@ public class BaiVietServiceImpl implements BaiVietService {
     @Override
     public void deleteBaiVietByNguoiDung(NguoiDung nguoidung) {
         this.baivietRepo.deleteBaiVietByNguoiDung(nguoidung);
+    }
+
+    @Override
+    public int getCountOfBaiViet() {
+        return this.baivietRepo.getCountOfBaiViet();
     }
 
 }
