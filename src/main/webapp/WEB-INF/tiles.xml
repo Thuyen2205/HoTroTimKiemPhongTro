@@ -17,7 +17,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/XML/XMLDocument.xml to edit this 
                        value="/WEB-INF/layout/footer.jsp" />
     </definition>
     <definition name="baseLayoutAdmin"
-                 template="/WEB-INF/layout/baseAdmin.jsp">
+                template="/WEB-INF/layout/baseAdmin.jsp">
         <put-attribute name="title" value="" />
         <put-attribute name="headerAdmin"
                        value="/WEB-INF/layout/headerAdmin.jsp" />
@@ -79,25 +79,38 @@ Click nbfs://nbhost/SystemFileSystem/Templates/XML/XMLDocument.xml to edit this 
         <put-attribute name="content"
                        value="/WEB-INF/pages/adminquarter.jsp" />
     </definition>
-        <definition name="bando" extends="baseLayout">
+    <definition name="bando" extends="baseLayout">
         <put-attribute name="title" value="Chi tiết tin"/>
         <put-attribute name="content"
                        value="/WEB-INF/pages/bando.jsp" />
     </definition>
-     <definition name="adminduyetbai" extends="baseLayoutAdmin">
+    <definition name="adminduyetbai" extends="baseLayoutAdmin">
         <put-attribute name="title" value="Trang cập nhật" />
         <put-attribute name="content"
                        value="/WEB-INF/pages/adminduyetbai.jsp" />
     </definition>
-      <definition name="adminduyettaikhoan" extends="baseLayoutAdmin">
+    <definition name="adminduyettaikhoan" extends="baseLayoutAdmin">
         <put-attribute name="title" value="Trang cập nhật" />
         <put-attribute name="content"
                        value="/WEB-INF/pages/adminduyettaikhoan.jsp" />
     </definition>
-       <definition name="thtin_taiKhoan" extends="baseLayoutAdmin">
+    
+    <definition name="thtin_taiKhoan" extends="baseLayoutAdmin">
         <put-attribute name="title" value="Chi tiết tin"/>
         <put-attribute name="content"
                        value="/WEB-INF/pages/thtin_taiKhoan.jsp" />
     </definition>
+    
+    
+    <definition name="doimatkhau"
+                    template="/WEB-INF/pages/doimatkhau.jsp">
+    </definition>
+    
+     <definition name="capnhattaikhoan" extends="baseLayout">
+        <put-attribute name="title" value="Trang cập nhật" />
+        <put-attribute name="content"
+                       value="/WEB-INF/pages/capnhattaikhoan.jsp" />
+    </definition>
+   
     
 </tiles-definitions>

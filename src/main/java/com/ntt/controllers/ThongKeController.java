@@ -179,7 +179,7 @@ public class ThongKeController {
             {
                 return "forward:/adminduyettaikhoan";
             }else {
-                ms = "ÄÃ£ cÃ³ lá»—i xÃ£y ra";
+                ms = "?ã có l?i xãy ra";
             }
         }
         return "index";
@@ -198,11 +198,9 @@ public class ThongKeController {
             {
                 return "forward:/adminduyettaikhoan";
             }else {
-                ms = "ÄÃ£ cÃ³ lá»—i xÃ£y ra";
+                ms = "?ã có l?i xãy ra";
             }
         }
         return "index";
     }
-
-
 }

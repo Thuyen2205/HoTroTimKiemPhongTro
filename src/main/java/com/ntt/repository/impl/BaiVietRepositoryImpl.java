@@ -88,7 +88,7 @@ public class BaiVietRepositoryImpl implements BaiVietRepository {
     }
 
     @Override
-    public List<BaiViet> getBaiViet(String tenBaiViet) {
+    public List<BaiViet> getBaiViet2(String tenBaiViet) {
         Session s = this.factory.getObject().getCurrentSession();
         CriteriaBuilder builder = s.getCriteriaBuilder();
         CriteriaQuery<NguoiDung> query = builder.createQuery(NguoiDung.class);
@@ -101,14 +101,6 @@ public class BaiVietRepositoryImpl implements BaiVietRepository {
         }
         Query q = s.createQuery(query);
         return q.getResultList();
-    }
-
-    @Override
-    public BaiViet getBaiVietById(Integer id) {
-        Session s = this.factory.getObject().getCurrentSession();
-        Query q = s.createQuery("FROM BaiViet WHERE id =: id");
-        q.setParameter("id", id);
-        return (BaiViet) q.getSingleResult();
     }
 
     @Override
@@ -129,11 +121,21 @@ public class BaiVietRepositoryImpl implements BaiVietRepository {
     }
 
     @Override
-    public List<Object> getBaiVietByIdNgDung(NguoiDung idNguoiDung) {
+    public List<Object> getBaiViet2Type(int loaiBViet) {
         Session s = this.factory.getObject().getCurrentSession();
-        org.hibernate.query.Query q = s.createQuery("FROM BaiViet WHERE idNguoiDung= :idNguoiDung");
-        q.setParameter("idNguoiDung", idNguoiDung);
-        return q.getResultList();
+        CriteriaBuilder b = s.getCriteriaBuilder();
+        CriteriaQuery<Object[]> q = b.createQuery(Object[].class);
+        List<Predicate> predicates = new ArrayList<>();
+        Root rPost = q.from(BaiViet.class);
+        q.select(rPost);
+
+        Predicate p = b.equal(rPost.get("loaiBaiViet"), loaiBViet);
+        predicates.add(p);
+        q.where(predicates.toArray(Predicate[]::new));
+
+        q.orderBy(b.desc(rPost.get("id")));
+        Query query = s.createQuery(q);
+        return query.getResultList();
     }
 
     @Override
@@ -185,6 +187,55 @@ public class BaiVietRepositoryImpl implements BaiVietRepository {
             return false;
         }
 
+    }
+
+    @Override
+    public List<Object> getBaiVietByIdNgDung(NguoiDung idNgDung) {
+        Session s = this.factory.getObject().getCurrentSession();
+        org.hibernate.query.Query q = s.createQuery("FROM BaiViet WHERE idNguoiDung= :idNguoiDung");
+        q.setParameter("idNguoiDung", idNgDung);
+        return q.getResultList();
+    }
+
+    @Override
+    public BaiViet addBaiVietAPI(BaiViet baiviet) {
+        Session s = this.factory.getObject().getCurrentSession();
+        s.save(baiviet);
+
+        return baiviet;
+
+    }
+
+    @Override
+    public List<BaiViet> getBaiVietTK(String address, BigDecimal price, Integer soNguoi) {
+        Session s = this.factory.getObject().getCurrentSession();
+        CriteriaBuilder b = s.getCriteriaBuilder();
+        CriteriaQuery<BaiViet> q = b.createQuery(BaiViet.class);
+
+        Root<BaiViet> root = q.from(BaiViet.class);
+        q.select(root);
+
+        List<Predicate> predicates = new ArrayList<>();
+        if (address != null) {
+            predicates.add(b.like(root.get("diaChiCt"), String.format("%%%s%%", address)));
+
+        }
+        // Thêm các đi�?u kiện tìm kiếm vào danh sách predicates
+
+        if (price != null) {
+            predicates.add(b.equal(root.get("giaThue"), price));
+        }
+        if (soNguoi != null) {
+            predicates.add(b.equal(root.get("soNguoi"), soNguoi));
+        }
+
+        // Kết hợp tất cả các đi�?u kiện bằng AND
+        Predicate finalPredicate = b.and(predicates.toArray(new Predicate[0]));
+
+        q.where(finalPredicate);
+
+        Query query = s.createQuery(q);
+        return query.getResultList();
     }
 
     @Override
@@ -285,6 +336,38 @@ public class BaiVietRepositoryImpl implements BaiVietRepository {
         }
 
         return 0;
+
     }
 
+    @Override
+    public List<BaiViet> getBaiViet() {
+        Session s = this.factory.getObject().getCurrentSession();
+        Query q = s.createQuery("From BaiViet");
+        return q.getResultList();
+    }
+
+    @Override
+    public List<BaiViet> getBaiViet(String tenBaiViet) {
+        Session s = this.factory.getObject().getCurrentSession();
+        CriteriaBuilder builder = s.getCriteriaBuilder();
+        CriteriaQuery<NguoiDung> query = builder.createQuery(NguoiDung.class);
+        Root root = query.from(NguoiDung.class);
+        query = query.select(root);
+
+        if (!tenBaiViet.isEmpty()) {
+            Predicate p = builder.equal(root.get("tenBaiViet").as(String.class), tenBaiViet.trim());
+            query = query.where(p);
+        }
+
+        Query q = s.createQuery(query);
+        return q.getResultList();
+    }
+
+    @Override
+    public BaiViet getBaiVietById(int id) {
+        Session s = this.factory.getObject().getCurrentSession();
+        Query q = s.createQuery("FROM BaiViet WHERE id =: id");
+        q.setParameter("id", id);
+        return (BaiViet) q.getSingleResult();
+    }
 }

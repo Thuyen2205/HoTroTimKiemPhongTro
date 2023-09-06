@@ -43,8 +43,3 @@ function deleteTaiKhoanpr(path) {
     }
 }
 let editingId = null;
-
-
-
-
-

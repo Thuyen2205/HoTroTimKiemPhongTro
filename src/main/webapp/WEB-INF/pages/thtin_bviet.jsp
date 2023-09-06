@@ -164,10 +164,49 @@
             <form:input type="hidden" id="file" path="tenNguoiDangBai" value="${pageContext.request.userPrincipal.name}"  readonly="true"  cssClass="form -control"/>
             <form:input type="hidden" id="file" path="idChuBaiViet" value="${BaiViet.idNguoiDung.id}"  readonly="true"   cssClass="form -control"/>
         </form:form>
+        <br></br>   
+        <div id="search-bar">
+            <input type="text" id="search-input" placeholder="Nhập địa chỉ hoặc tên địa điểm">
+            <button class="btn-danger" id="search-button">Tìm kiếm</button>
+        </div>
+        <div id="map" style="width: 700px; height: 6 00px;"></div>
+        <script>
+            var map = L.map('map').setView([10.7769, 106.7009], 12);
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            }).addTo(map);
 
+            var diaChiCt = "<c:out value='${BaiViet.diaChiCt}' />";
+
+            L.Control.Geocoder.nominatim().geocode(diaChiCt, function (results) {
+                if (results && results.length > 0) {
+                    var latlng = results[0].center;
+                    var marker = L.marker(latlng).addTo(map);
+                    marker.bindPopup("<c:out value='${BaiViet.diaChiCt}' />").openPopup();
+                }
+            });
+
+            var searchInput = document.getElementById('search-input');
+            var searchButton = document.getElementById('search-button');
+
+            searchButton.addEventListener('click', function () {
+                var query = searchInput.value;
+
+                L.Control.Geocoder.nominatim().geocode(query, function (results) {
+                    if (results && results.length > 0) {
+                        var latlng = results[0].center;
+                        map.setView(latlng, 25);
+                    } else {
+                        alert('Không tìm thấy địa điểm.');
+                    }
+                });
+            });
+        </script>
 
 
     </div>
+
+
 
 
     <div>
@@ -207,6 +246,7 @@
             </div>
         </c:forEach>
     </div>
+
     <script>
         moment.tz.setDefault("Asia/Ho_Chi_Minh");
 

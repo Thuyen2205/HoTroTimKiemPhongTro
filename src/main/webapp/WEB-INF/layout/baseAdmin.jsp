@@ -1,9 +1,9 @@
 <%-- 
     Document   : baseAdmin
-    Created on : Aug 26, 2023, 1:04:51 PM
-    Author     : ThanhThuyen
+<<<<<<< HEAD
+    Created on : Sep 5, 2023, 5:14:48 AM
+    Author     : Admins
 --%>
-
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles" %>
@@ -25,4 +25,3 @@
         <tiles:insertAttribute name="footer"/>
     </body>
 </html>
-

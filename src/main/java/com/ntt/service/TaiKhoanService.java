@@ -22,6 +22,7 @@ public interface TaiKhoanService extends UserDetailsService {
     LoaiTaiKhoan getLoaiTaiKhoan(String tenLoaiTaiKhoan);
     NguoiDung getTaiKhoanbyTenTK(String tenTK);
     NguoiDung getTaiKhoanId(int id);
+    //THUYEN
     List<NguoiDung> getTaiKhoansByYear(int year);
     List<NguoiDung> getTaiKhoansByMonth(int year,int month);
     List<NguoiDung> getTaiKhoansByQuarter(int year, int quarter);
@@ -29,4 +30,6 @@ public interface TaiKhoanService extends UserDetailsService {
     void deleteBaiVietById(int baiVietId);
     List<NguoiDung> getTaiKhoanAll();
     boolean updateTrangThaiTaiKhoan(NguoiDung nguoidung);
+    boolean updateTaiKhoan(NguoiDung nguoiDung);
+     boolean updateNguoiDung(NguoiDung nguoidung);
 }

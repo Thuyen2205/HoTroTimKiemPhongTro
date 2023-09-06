@@ -26,6 +26,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
@@ -55,7 +56,7 @@ public class TaiKhoanServiceImpl implements TaiKhoanService {
             Date current = new Date();
             nguoidung.setNgayTao(current);
             if (nguoidung.getIdLoaiTaiKhoan().getId() == 2) {
-                Map res2 = this.cloudinary.uploader().upload(nguoidung.getFile2().getBytes(),
+                Map res2 = this.cloudinary.uploader().upload(nguoidung.getFile().getBytes(),
                         ObjectUtils.asMap("resource_type", "auto"));
                 nguoidung.setHinhAnh(res2.get("secure_url").toString());
                 nguoidung.setKiemDuyet("KIEM_DUYET_1");
@@ -82,7 +83,7 @@ public class TaiKhoanServiceImpl implements TaiKhoanService {
         List<NguoiDung> taikhoans = this.getTaiKhoan(username);
 
         if (taikhoans.isEmpty()) {
-            throw new UsernameNotFoundException("Tai Khoan Khong Ton Tại!!!");
+            throw new UsernameNotFoundException("Tai Khoan Khong Ton T?i!!!");
         }
         NguoiDung taikhoan = taikhoans.get(0);
 
@@ -140,5 +141,28 @@ public class TaiKhoanServiceImpl implements TaiKhoanService {
     @Override
     public boolean updateTrangThaiTaiKhoan(NguoiDung nguoidung) {
         return this.taikhoanRepository.updateTrangThaiTaiKhoan(nguoidung);
+    }
+
+    @Override
+    public boolean updateTaiKhoan(NguoiDung nguoiDung) {
+        return this.taikhoanRepository.updateTaiKhoan(nguoiDung);
+    }
+
+    @Override
+    public boolean updateNguoiDung(NguoiDung nguoidung) {
+
+        Date current = new Date();
+        try {
+            MultipartFile file = nguoidung.getFile();
+            if (file != null && !file.isEmpty()) {
+                Map res = this.cloudinary.uploader().upload(nguoidung.getFile().getBytes(),
+                        ObjectUtils.asMap("resource_type", "auto"));
+                nguoidung.setAvatar(res.get("secure_url").toString());
+            }
+        } catch (IOException ex) {
+            System.err.println("== UPDATE BaiViet ==" + ex.getMessage());
+        }
+        nguoidung.setNgayTao(current);
+        return this.taikhoanRepository.updateNguoiDung(nguoidung);
     }
 }

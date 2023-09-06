@@ -27,6 +27,7 @@ public class BinhLuanServiceImpl implements BinhLuanService{
     private TaiKhoanRepository taikhoan;
     @Autowired
     private BaiVietRepository baiviet;
+    
     @Override
     public List<BinhLuan> getBinhLuan(int idBaiViet) {
         return this.binhluan.getBinhLuan(idBaiViet);
@@ -41,6 +42,11 @@ public class BinhLuanServiceImpl implements BinhLuanService{
         
         
        return this.binhluan.addBinhLuan(binhluan);
+    }
+
+    @Override
+    public List<Object> getBinhLuanByBV(int bvId) {
+        return this.binhluan.getBinhLuanByBV(bvId);
     }
 
     @Override
@@ -61,7 +67,7 @@ public class BinhLuanServiceImpl implements BinhLuanService{
     @Override
     public void saveBinhLuan(BinhLuan binhLuan) {
         this.binhluan.saveBinhLuan(binhLuan);
-   }
+    }
 
     @Override
     public List<BinhLuan> getBinhLuanByNguoiDung(NguoiDung idNguoiDung) {
@@ -77,7 +83,5 @@ public class BinhLuanServiceImpl implements BinhLuanService{
     public void deleteBinhLuanByNguoiDung(NguoiDung nguoidung) {
         this.binhluan.deleteBinhLuanByNguoiDung(nguoidung);
     }
-
-   
     
 }

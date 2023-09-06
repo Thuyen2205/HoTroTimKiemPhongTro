@@ -9,8 +9,10 @@ import com.ntt.service.BaiVietService;
 import com.ntt.service.LoaiBaiVietService;
 import com.ntt.service.TaiKhoanService;
 import java.math.BigDecimal;
+
 import java.util.HashMap;
 import java.util.List;
+
 import java.util.Map;
 import javax.persistence.Query;
 import org.hibernate.Session;
@@ -58,7 +60,7 @@ public class IndexContext {
 
         return "index";
 
-    }
+    }   
 
     @RequestMapping("/timkiem")
     public String timKiem(Model model, NguoiDung nguoidung, Authentication authen, @RequestParam(name = "address", required = false) String address,
@@ -84,13 +86,12 @@ public class IndexContext {
     public String index(Model model, Authentication authen, @RequestParam("gia") int gia) {
         BigDecimal giaBigDecimal = new BigDecimal(gia);
         model.addAttribute("baiviet_1", this.baivietService.getBaiVietByGiaThue(giaBigDecimal));
-//        model.addAttribute("baiviet_2", this.baivietService.getBaiVietByGiaThue(giaBigDecimal));
         UserDetails user = this.taikhoan.loadUserByUsername(authen.getName());
         NguoiDung u = this.taikhoan.getTaiKhoanbyTenTK(user.getUsername());
         model.addAttribute("taikhoan", u);
         return "index";
     }
-
+    
     @RequestMapping("/bando")
     public String bando(Model model, NguoiDung nguoidung, Authentication authen) {
 
@@ -100,4 +101,6 @@ public class IndexContext {
         model.addAttribute("taikhoan", u);
         return "bando";
     }
+    
+    
 }

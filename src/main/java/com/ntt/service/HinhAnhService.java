@@ -8,6 +8,8 @@ import com.ntt.pojo.BaiViet;
 
 /**
  *
+ * @author Admins
+=======
  * @author ThanhThuyen
  */
 public interface HinhAnhService {

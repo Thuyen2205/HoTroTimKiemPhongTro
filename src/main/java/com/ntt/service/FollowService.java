@@ -13,7 +13,7 @@ import java.util.List;
  * @author ThanhThuyen
  */
 public interface FollowService {
-     boolean addFollow(Follow follow);
+    boolean addFollow(Follow follow);
     List<Follow> getFollows();
     List<Follow> getFollowsKhachHang(NguoiDung idKhachHang);
     Follow getFollow(NguoiDung idKhachHang);
@@ -22,5 +22,5 @@ public interface FollowService {
     Follow getFollowById(int idFollow);
     List<Follow> getFollowsChuTro(NguoiDung idChuTro);
     void deleteFollowByNguoiDung(NguoiDung nguoidung);
-     void deleteFollowByNguoiDungKH(NguoiDung nguoidung);
+    void deleteFollowByNguoiDungKH(NguoiDung nguoidung);
 }

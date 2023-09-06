@@ -22,8 +22,9 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class LoaiTrangThaiRepositoryImpl implements LoaiTrangThaiRepository{
 
-     @Autowired
+    @Autowired
     private LocalSessionFactoryBean factory;
+    
     @Override
     public List<TrangThaiBaiViet> getLoaiTrangThai() {
          Session s = this.factory.getObject().getCurrentSession();
@@ -39,5 +40,5 @@ public class LoaiTrangThaiRepositoryImpl implements LoaiTrangThaiRepository{
 
         return q.getResultList();
     }
-    
 }
+

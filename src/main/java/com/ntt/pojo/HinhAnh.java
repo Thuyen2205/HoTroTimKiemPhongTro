@@ -16,12 +16,14 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
- * @author ThanhThuyen
+ * @author Admins
  */
 @Entity
 @Table(name = "hinh_anh")
@@ -45,6 +47,10 @@ public class HinhAnh implements Serializable {
     @ManyToOne
     private BaiViet idBaiViet;
 
+    
+    @Transient
+    private MultipartFile fileDuongDan;
+    
     public HinhAnh() {
     }
 
@@ -99,6 +105,20 @@ public class HinhAnh implements Serializable {
     @Override
     public String toString() {
         return "com.ntt.pojo.HinhAnh[ id=" + id + " ]";
+    }
+
+    /**
+     * @return the fileDuongDan
+     */
+    public MultipartFile getFileDuongDan() {
+        return fileDuongDan;
+    }
+
+    /**
+     * @param fileDuongDan the fileDuongDan to set
+     */
+    public void setFileDuongDan(MultipartFile fileDuongDan) {
+        this.fileDuongDan = fileDuongDan;
     }
     
 }

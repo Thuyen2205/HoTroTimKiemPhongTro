@@ -6,12 +6,18 @@ package com.ntt.service;
 
 import com.ntt.pojo.NguoiDung;
 import java.util.List;
+import java.util.Map;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
  * @author Admins
  */
 public interface NguoiDungService {
-        List<NguoiDung> getTTNgDung(String tenNguoiDangNhap);
-
+    List<NguoiDung> getTTNgDung(String tenNguoiDangNhap);
+    NguoiDung getTaiKhoanbyTenTK(String username);
+    boolean authUser(String tenTaiKhoan, String matKhau);
+    NguoiDung addUser(Map<String, String> params, MultipartFile avatar);
+    Object getNgDungById(int id);
+    NguoiDung doiMatKhau(Map<String, String> params);
 }

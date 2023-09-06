@@ -8,7 +8,8 @@ import com.ntt.pojo.TrangThaiBaiViet;
 import java.util.List;
 
 /**
- *
+ * @author Admins
+=======
  * @author ThanhThuyen
  */
 public interface LoaiTrangThaiService {

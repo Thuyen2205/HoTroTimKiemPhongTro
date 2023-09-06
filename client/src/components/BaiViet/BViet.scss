@@ -1,0 +1,118 @@
+body{
+    background-color: #F5F5F5;
+}
+.thtinbviet{
+    display: flex;
+    margin-top: 30px;
+    margin-bottom: 50px;
+
+}
+.thtin-col1{
+    width: 65%;
+}
+.thtin-col1 p{
+    font-size: 20px;
+}
+.thtin-col2{
+    width: 5%;
+    background-color: #F5F5F5;
+}
+.thtin-col3{
+    width: 30%;
+    
+}
+.thtin-anh {
+    width: 100%;
+    padding: 35px;
+    background-color: #272829;
+    margin-bottom: 20px;
+}
+.thtin-anh img{
+    width: 100%;
+}
+.thtin-ndung{
+    background-color: white;
+    padding: 35px;
+}
+.bv-ten{
+    color:#E21818
+}
+.bv-3thongtin{
+    display: flex;
+    justify-content: space-between;
+}
+.bv-mota, .bv-dacdiemtin{
+    margin-bottom: 20px;
+}
+.bv-dacdiemtin th{
+    width: 40%;
+}
+.bv-dacdiemtin tr{
+    width: 60%;
+}
+.thtin-tacgia{
+    height: 320px;
+    background-color: white;
+}
+.tacgia-anh{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 35px 0;
+}
+.tacgia-anh img{
+    width: 150px;
+    height: 150px;
+    border-radius: 75px;
+}
+
+//BAIVIET1 BAIVIET2
+
+.container-bv{
+   width: 100%;
+   justify-content: space-between;
+}
+.itembv {
+    display: flex;
+    border-bottom: 1px solid gray;
+    border-radius: 8px;
+    width: 100%;
+    margin-bottom: 3px;
+    padding: 10px;
+    background-color: white;
+}
+.itembv-anh{
+    width: 40%;
+    
+}
+.itembv-anh img{
+    width: 100%;
+    border-radius: 8px;
+}
+.itembv-thtin{
+    margin-left: 15px;
+}
+.btn-docthem{
+    display: flex;
+    justify-content: space-between;
+}
+.btn-docthem button{
+    background-color: white;
+    border: 1px solid gray;
+    border-radius: 5px;
+    transition-duration: 0.6s;
+    padding: 10px;
+}
+.btn-docthem button:hover {
+    color: white;
+    padding-right: 20px;   
+}
+.ChangePage{
+    display: flex;
+    justify-content: center;
+    margin-top: 10px ;
+    margin-bottom: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    background-color: aliceblue;
+}

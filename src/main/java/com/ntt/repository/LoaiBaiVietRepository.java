@@ -13,5 +13,5 @@ import java.util.List;
  */
 public interface LoaiBaiVietRepository {
     List<LoaiBaiViet> getLoaiBaiViet();
-      void deleteBaiVietById(int baiVietId);
+    void deleteBaiVietById(int baiVietId);
 }

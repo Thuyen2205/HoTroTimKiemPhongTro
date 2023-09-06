@@ -6,6 +6,8 @@ package com.ntt.repository;
 
 import com.ntt.pojo.NguoiDung;
 import java.util.List;
+import java.util.Map;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
@@ -13,4 +15,10 @@ import java.util.List;
  */
 public interface NguoiDungRepository {
     List<NguoiDung> getTTNguoiDung(String tenNguoiDangNhap);
+    NguoiDung getTaiKhoanbyTenTK(String username);
+    boolean authUser(String tenTaiKhoan, String matKhau);
+    NguoiDung addUser(NguoiDung user);
+    Object getNgDungById(int id);
+    NguoiDung doiMatKhau(NguoiDung a);
+
 }

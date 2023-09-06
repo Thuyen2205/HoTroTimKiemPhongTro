@@ -25,7 +25,6 @@
             <div class="ct-anh">
                 <center>
                     <img src="${BaiViet.hinhAnh}"  style="width:100%" > 
-
                 </center>
             </div>
             <div class="ndung-chitiet">
@@ -180,16 +179,12 @@
 
     </section>
     <script>
-// Lấy đối tượng trường ngaydangbv
         var ngayDangField = document.getElementById("ngaydangbv");
 
-// Tạo một đối tượng Date chứa ngày hiện tại
         var currentDate = new Date();
 
-// Định dạng ngày hiện tại thành yyyy-mm-dd
         var formattedDate = currentDate.toISOString().slice(0, 10);
 
-// Gán giá trị đã định dạng vào trường ngayDang
         ngayDangField.value = formattedDate;
     </script>
 

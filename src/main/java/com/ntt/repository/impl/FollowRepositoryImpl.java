@@ -131,7 +131,7 @@ public class FollowRepositoryImpl implements FollowRepository {
 
     @Override
     public void deleteFollowByNguoiDungKH(NguoiDung nguoidung) {
-            Session session = factory.getObject().getCurrentSession();
+        Session session = factory.getObject().getCurrentSession();
         String hql = "DELETE FROM Follow bl WHERE bl.idKhachHang = :nguoidung";
         session.createQuery(hql)
                 .setParameter("nguoidung", nguoidung)

@@ -40,5 +40,4 @@ public class LoaiBaiVietRepositoryImpl implements LoaiBaiVietRepository {
                 .setParameter("baiVietId", baiVietId)
                 .executeUpdate();
     }
-
 }

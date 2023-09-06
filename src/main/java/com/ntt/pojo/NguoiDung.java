@@ -4,6 +4,7 @@
  */
 package com.ntt.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
@@ -30,7 +31,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
- * @author ThanhThuyen
+ * @author Admins
  */
 @Entity
 @Table(name = "nguoi_dung")
@@ -48,6 +49,34 @@ import org.springframework.web.multipart.MultipartFile;
     @NamedQuery(name = "NguoiDung.findByNgayTao", query = "SELECT n FROM NguoiDung n WHERE n.ngayTao = :ngayTao"),
     @NamedQuery(name = "NguoiDung.findByKiemDuyet", query = "SELECT n FROM NguoiDung n WHERE n.kiemDuyet = :kiemDuyet")})
 public class NguoiDung implements Serializable {
+
+    /**
+     * @return the mkCu
+     */
+    public String getMkCu() {
+        return mkCu;
+    }
+
+    /**
+     * @param mkCu the mkCu to set
+     */
+    public void setMkCu(String mkCu) {
+        this.mkCu = mkCu;
+    }
+
+    /**
+     * @return the mkMoi
+     */
+    public String getMkMoi() {
+        return mkMoi;
+    }
+
+    /**
+     * @param mkMoi the mkMoi to set
+     */
+    public void setMkMoi(String mkMoi) {
+        this.mkMoi = mkMoi;
+    }
 
     /**
      * @return the file2
@@ -90,7 +119,7 @@ public class NguoiDung implements Serializable {
     public void setFile(MultipartFile file) {
         this.file = file;
     }
-
+    
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -126,29 +155,42 @@ public class NguoiDung implements Serializable {
     @Column(name = "kiem_duyet")
     private String kiemDuyet;
     @Transient
+    private String mkCu;
+    @Transient
+    private String mkMoi;
+ 
+    @OneToMany(mappedBy = "idNguoiDung")
+    @JsonIgnore
+    private Set<BinhLuan> binhLuanSet;
+    @OneToMany(mappedBy = "idNguoiDung")
+    @JsonIgnore
+    private Set<TieuChi> tieuChiSet;
+    @JoinColumn(name = "id_loai_tai_khoan", referencedColumnName = "id")
+    @ManyToOne
+    private LoaiTaiKhoan idLoaiTaiKhoan;
+    @OneToMany(mappedBy = "idNguoiDung")
+    @JsonIgnore
+    private Set<ThongBao> thongBaoSet;
+    @OneToMany(mappedBy = "idNguoiDung")
+    @JsonIgnore
+    private Set<BaiViet> baiVietSet;
+    @OneToMany(mappedBy = "idChuTro")
+    @JsonIgnore
+    private Set<Follow> followSet;
+    @OneToMany(mappedBy = "idKhachHang")
+    @JsonIgnore
+    private Set<Follow> followSet1;
+
+    
+    
+    @Transient
     @Null
     private MultipartFile file;
     @Transient
     private String xacNhanMatKhau;
     @Transient
     private MultipartFile file2;
-
-    @OneToMany(mappedBy = "idNguoiDung")
-    private Set<BinhLuan> binhLuanSet;
-    @OneToMany(mappedBy = "idNguoiDung")
-    private Set<TieuChi> tieuChiSet;
-    @JoinColumn(name = "id_loai_tai_khoan", referencedColumnName = "id")
-    @ManyToOne
-    private LoaiTaiKhoan idLoaiTaiKhoan;
-    @OneToMany(mappedBy = "idNguoiDung")
-    private Set<ThongBao> thongBaoSet;
-    @OneToMany(mappedBy = "idNguoiDung")
-    private Set<BaiViet> baiVietSet;
-    @OneToMany(mappedBy = "idChuTro")
-    private Set<Follow> followSet;
-    @OneToMany(mappedBy = "idKhachHang")
-    private Set<Follow> followSet1;
-
+    
     public NguoiDung() {
     }
 
@@ -156,6 +198,30 @@ public class NguoiDung implements Serializable {
         this.id = id;
     }
 
+    public NguoiDung(Integer id, String tenNguoiDung, String email, String sdt, String tenTaiKhoan, String matKhau, String avatar, String hinhAnh, Date ngayTao, String kiemDuyet, Set<BinhLuan> binhLuanSet, Set<TieuChi> tieuChiSet, LoaiTaiKhoan idLoaiTaiKhoan, Set<ThongBao> thongBaoSet, Set<BaiViet> baiVietSet, Set<Follow> followSet, Set<Follow> followSet1, MultipartFile file, String xacNhanMatKhau) {
+        this.id = id;
+        this.tenNguoiDung = tenNguoiDung;
+        this.email = email;
+        this.sdt = sdt;
+        this.tenTaiKhoan = tenTaiKhoan;
+        this.matKhau = matKhau;
+        this.avatar = avatar;
+        this.hinhAnh = hinhAnh;
+        this.ngayTao = ngayTao;
+        this.kiemDuyet = kiemDuyet;
+        this.binhLuanSet = binhLuanSet;
+        this.tieuChiSet = tieuChiSet;
+        this.idLoaiTaiKhoan = idLoaiTaiKhoan;
+        this.thongBaoSet = thongBaoSet;
+        this.baiVietSet = baiVietSet;
+        this.followSet = followSet;
+        this.followSet1 = followSet1;
+        this.file = file;
+        this.xacNhanMatKhau = xacNhanMatKhau;
+    }
+
+    
+    
     public Integer getId() {
         return id;
     }
@@ -322,5 +388,7 @@ public class NguoiDung implements Serializable {
     public String toString() {
         return "com.ntt.pojo.NguoiDung[ id=" + id + " ]";
     }
+
+    
     
 }
