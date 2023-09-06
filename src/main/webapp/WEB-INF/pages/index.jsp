@@ -11,14 +11,16 @@
 <html>
     <body>
         <c:if test="${pageContext.request.userPrincipal.name != null}">
+
             <div style="text-align: center">
                 <c:url value="/timkiem" var="action"/>
                 <h1>TRANG CHỦ</h1>
                 <form action="${action}" method="GET">
-                    <input type="text" name="address" placeholder="Nhập địa chỉ...">
-                    <input type="text" name="price" placeholder="Nhập giá tiền...">
-                    <input type="text" name="soNguoi" placeholder="Nhập số người...">
-                    <button type="submit" class="btn btn-danger">Tìm kiếm</button>
+
+                    <input class="find" type="text" name="address" placeholder="Nhập địa chỉ...">
+                    <input class="find" type="text" name="price" placeholder="Nhập giá tiền...">
+                    <input class="find" type="text" name="soNguoi" placeholder="Nhập số người...">
+                    <button class="find" type="submit" class="btn btn-danger">Tìm kiếm</button>
                 </form>
             </div>
         </c:if>
@@ -53,7 +55,7 @@
                                 <img src="${t.hinhAnh}"/>
                             </div>
                             <div class="bviet_ndung">
-                                <table style="width:100%">
+                                <table class="table_bv" style="width:100%">
                                     <c:url value="/thtin_bviet" var="bvietAction">
                                         <c:param name="baivietId" value="${t.id}" />  
                                     </c:url>

@@ -17,11 +17,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Map with Geocoder</title>
 
-        <!-- Thêm các thư viện cần thiết của Leaflet -->
         <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
         <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
 
-        <!-- Thêm thư viện Leaflet Control Geocoder -->
         <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder@1.13.0/dist/Control.Geocoder.css" />
         <script src="https://unpkg.com/leaflet-control-geocoder@1.13.0/dist/Control.Geocoder.js"></script>
     </head>

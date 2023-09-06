@@ -23,7 +23,7 @@
                 </div>
                 <div class="thongtincanhan">
                     <center>
-                        <img src="${taikhoan.avatar}" class="rounded-circle" style="width: 150px;" alt="${pageContext.request.userPrincipal.name}" />
+                        <img src="${taikhoan.avatar}" class="rounded-circle" style="width:100%;" alt="${pageContext.request.userPrincipal.name}" />
                         <p><c:if test="${taikhoan.idLoaiTaiKhoan.id == 2}">CHỦ TRỌ</c:if></p>
                         <p><c:if test="${taikhoan.idLoaiTaiKhoan.id == 3}">KHÁCH HÀNG</c:if></p>
                         <p>${taikhoan.tenNguoiDung}</p>

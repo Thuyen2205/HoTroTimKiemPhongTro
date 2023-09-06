@@ -169,7 +169,7 @@
             <input type="text" id="search-input" placeholder="Nhập địa chỉ hoặc tên địa điểm">
             <button class="btn-danger" id="search-button">Tìm kiếm</button>
         </div>
-        <div id="map" style="width: 700px; height: 6 00px;"></div>
+        <div id="map" style="width: 700px; height: 600px;"></div>
         <script>
             var map = L.map('map').setView([10.7769, 106.7009], 12);
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -209,12 +209,12 @@
 
 
 
-    <div>
+    <div >
         <c:forEach items="${binhluans}" var="b">
             <c:url value="/api/thtin_bvietBinhLuan/${b.id}" var="apiDelete"/>
             <div class="comtent row" style="border-width: 20px">
                 <div class="col-md-1">
-                    <p>${b.id}</p>
+
                     <img src="${b.idNguoiDung.avatar}" style="width:80px" />
                 </div>
                 <div>
@@ -225,7 +225,6 @@
                             <form action="${pageContext.request.contextPath}/binhluan/thtin_bviet_edit" method="post">
                                 <input type="hidden" name="id" value="${b.id}" />
                                 <textarea name="editedNoiDung">${b.noiDung}</textarea>
-
                                 <button type="submit">Lưu thay đổi</button>
                                 <button type="button" onclick="cancelEditing()">Hủy</button>
                             </form>
@@ -234,10 +233,21 @@
                             <div>
                                 ${b.noiDung}
                             </div>
-                            <div class="edit-controls">
-                                <button class="btn btn-info text-center edit-button" onclick="enableEditMode('${b.id}')">Chỉnh sửa</button>
-                                <button class="btn btn-danger text-center" onclick="deleteBinhLuanwpr('${apiDelete}')">Xóa</button>
-                            </div>
+                            <c:if test="${nguoidung.id.toString() eq b.idNguoiDung.id}">
+                                <div class="edit-controls">
+                                    <button class="btn btn-info text-center edit-button" onclick="enableEditMode('${b.id}')">Chỉnh sửa</button>
+                                    <button class="btn btn-danger text-center" onclick="deleteBinhLuanwpr('${apiDelete}')">Xóa</button>
+                                </div>
+                            </c:if>
+                            <c:url value="/reply_comment" var="actionReply">
+                                <c:param name="binhLuanId" value="${b.id}" />  
+                            </c:url>
+
+                            <form:form modelAttribute="binhluan" action="${actionReply}" method="post">
+                                <form:input type="hidden"  path="hoiDap" value="${b.id}"  readonly="true"  cssClass="form -control"/>
+                                <form:input type="text"  path="noiDung" />
+                                <button type="submit">Gửi Trả Lời</button>
+                            </form:form>
                         </c:otherwise>
                     </c:choose>
                     </p>
@@ -258,6 +268,7 @@
         }
     </script>
     <script src="<c:url value="/js/main.js"/>"></script>
+
 
 
 </section>

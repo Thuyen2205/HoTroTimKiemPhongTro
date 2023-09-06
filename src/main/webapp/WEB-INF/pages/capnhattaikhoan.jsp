@@ -7,6 +7,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page import="java.util.Date" %>
+<link href="<c:url value="/css/trangchu.css"/>"rel="stylesheet">
 
 <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 
@@ -17,39 +18,46 @@
 
 <html>
     <c:url value="/capnhattaikhoan" var="updateTaiKhoan"/>
-    
-    
+
+
     <form:form action="${updateTaiKhoan}" method="POST" modelAttribute="taikhoan"  enctype="multipart/form-data" >
-        
+
         <form:hidden path="id" />
         <form:hidden path="idLoaiTaiKhoan" />
         <form:hidden path="kiemDuyet" />
-        <%--<form:hidden path="ngayTao" />--%>
+
         <form:hidden path="matKhau" />
-        <div class="input-bigsize">
-            <p>Tên nguoi dùng </p>
-            <form:input type="text" id="tenbv" name="tenbv" path="tenNguoiDung" placeholder="Tên nguoi dung"/>
-        </div>
-        <div class="input-bigsize">
-            <p>Email </p>
-            <form:input type="text" id="email" name="email" path="email" placeholder="email"/>
-        </div>
-        <div class="input-bigsize">
-            <p>SDT </p>
-            <form:input type="number" id="sdt" name="sdt" path="sdt" placeholder="So dien thoai"/>
-        </div>
-        <div class="input-bigsize">
-            <p>Tên tài khoan</p>
-            <form:input type="text" id="tenTaiKhoan" name="tenTaiKhoan" path="tenTaiKhoan" placeholder="Tên tài khoan"/>
-        </div>
+        <div class="wrapper">
+            <div class="input-box">
+
+                <p>Email </p>
+                <form:input type="text" id="email" name="email" path="email" placeholder="email"/>
+
+            </div>
+
+            <div class="input-box">
+
+                <p>SDT </p>
+                <form:input type="text" id="sdt" name="sdt" path="sdt" placeholder="So dien thoai"/>
+
+            </div>
+
+            <div class="input-box">
+                <p>Tên tài khoan</p>
+                <form:input type="text" id="tenTaiKhoan" name="tenTaiKhoan" path="tenTaiKhoan" placeholder="Tên tài khoan"/>
+
+            </div>
+
+            <div class="input-box">
+                <p for="file">Avatar: </p>
+                <form:input path="file" type="file" id="imageFile" name="imageFile" onchange="chooseFile(this)"  accept="image/jpg, image/jpeg, image/png"/>
+
+            </div>
 
 
-        <div>
-            <p for="file">Avatar: </p>
-            <form:input path="file" type="file" id="imageFile" name="imageFile" onchange="chooseFile(this)"  accept="image/jpg, image/jpeg, image/png"/>
+            <button class="btn btn-info " type="sumit">Cập nhật</button>
         </div>
 
-        <button class="btn btn-info " type="sumit">Cập nhật</button>
 
     </form:form>
 </html>
