@@ -55,26 +55,41 @@ public class BaiVietRepositoryImpl implements BaiVietRepository {
 
         Root<BaiViet> root = q.from(BaiViet.class);
         q.select(root);
+        if (params != null) {
+            List<Predicate> predicates = new ArrayList<>();
 
-        List<Predicate> predicates = new ArrayList<>();
-        if (address != null) {
-            predicates.add(b.like(root.get("diaChiCt"), String.format("%%%s%%", address)));
+            if (address != null) {
+                predicates.add(b.like(root.get("diaChiCt"), String.format("%%%s%%", address)));
+
+            }
+
+            if (price != null) {
+                Expression<BigDecimal> giaThue = root.get("giaThue");
+                Predicate diffPredicate = b.lessThan(b.abs(b.diff(giaThue, price)), new BigDecimal(500000));
+                predicates.add(diffPredicate);
+            }
+            if (soNguoi != null) {
+                predicates.add(b.equal(root.get("soNguoi"), soNguoi));
+            }
+
+//            Predicate finalPredicate = b.and(predicates.toArray(new Predicate[0]));
+            q.where(predicates.toArray(Predicate[]::new));
 
         }
 
-        if (price != null) {
-            Expression<BigDecimal> giaThue = root.get("giaThue");
-            Predicate diffPredicate = b.lessThan(b.abs(b.diff(giaThue, price)), new BigDecimal(500000));
-            predicates.add(diffPredicate);
-        }
-        if (soNguoi != null) {
-            predicates.add(b.equal(root.get("soNguoi"), soNguoi));
-        }
-        Predicate finalPredicate = b.and(predicates.toArray(new Predicate[0]));
-
-        q.where(finalPredicate);
         Query query = s.createQuery(q);
 
+        if (params != null) {
+            String page = params.get("page");
+            if (page == null) {
+                page = "1";
+            }
+            if (!page.equals("0")) {
+                int pageSize = Integer.parseInt(this.env.getProperty("PAGE_SIZE"));
+                query.setFirstResult((Integer.parseInt(page) - 1) * pageSize);
+                query.setMaxResults(pageSize);
+            }
+        }
         return query.getResultList();
     }
 
@@ -315,17 +330,7 @@ public class BaiVietRepositoryImpl implements BaiVietRepository {
     public int getCountOfBaiViet() {
         Session s = this.factory.getObject().getCurrentSession();
         Query q = s.createQuery("SELECT COUNT(*) FROM BaiViet");
-
-        List<Long> resultList = q.getResultList();
-
-        if (resultList != null && !resultList.isEmpty()) {
-            Long count = resultList.get(0);
-            if (count != null) {
-                return count.intValue();
-            }
-        }
-
-        return 0;
+        return Integer.parseInt(q.getSingleResult().toString());
 
     }
 

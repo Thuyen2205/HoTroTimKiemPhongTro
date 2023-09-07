@@ -13,7 +13,7 @@
         <c:if test="${pageContext.request.userPrincipal.name != null}">
 
             <div style="text-align: center">
-                <c:url value="/timkiem" var="action"/>
+                <c:url value="/" var="action"/>
                 <h1>TRANG CHỦ</h1>
                 <form action="${action}" method="GET">
 
@@ -21,28 +21,11 @@
                     <input class="find" type="text" name="price" placeholder="Nhập giá tiền...">
                     <input class="find" type="text" name="soNguoi" placeholder="Nhập số người...">
                     <button class="find" type="submit" class="btn btn-danger">Tìm kiếm</button>
-                    
+
                 </form>
             </div>
         </c:if>
 
-        <c:if test="${pages > 1}">
-            <ul class="pagination mt-1">
-                <c:url value="/" var="pageUrl">
-                    <c:param name="page" value="0" /> 
-                </c:url>
-                <li class="page-item"><a class="page-link" href="${pageUrl}">Tất cả</a></li>
-
-
-                <c:forEach begin="1" end="${pages}" var="i">
-                    <c:url value="/" var="pageAction">
-                        <c:param name="page" value="${i}" /> 
-                    </c:url>
-                    <li class="page-item"><a class="page-link" href="${pageAction}">${i}</a></li>
-                    </c:forEach>
-            </ul>
-
-        </c:if>
 
 
 
@@ -127,6 +110,23 @@
 
             </c:forEach>
         </div>
+        <c:if test="${pages > 1}">
+            <ul class="pagination mt-1">
+                <c:url value="/" var="pageUrl">
+                    <c:param name="page" value="0" /> 
+                </c:url>
+                <li class="page-item"><a class="page-link" href="${pageUrl}">Tất cả</a></li>
+
+
+                <c:forEach begin="1" end="${pages}" var="i">
+                    <c:url value="/" var="pageAction">
+                        <c:param name="page" value="${i}" /> 
+                    </c:url>
+                    <li class="page-item"><a class="page-link" href="${pageAction}">${i}</a></li>
+                    </c:forEach>
+            </ul>
+
+        </c:if>
 
     </body>
 </html>
