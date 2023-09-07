@@ -18,6 +18,7 @@ import java.util.Map;
 import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Expression;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import org.hibernate.HibernateException;
@@ -60,10 +61,11 @@ public class BaiVietRepositoryImpl implements BaiVietRepository {
             predicates.add(b.like(root.get("diaChiCt"), String.format("%%%s%%", address)));
 
         }
-        // Thêm các điều kiện tìm kiếm vào danh sách predicates
 
         if (price != null) {
-            predicates.add(b.equal(root.get("giaThue"), price));
+            Expression<BigDecimal> giaThue = root.get("giaThue");
+            Predicate diffPredicate = b.lessThan(b.abs(b.diff(giaThue, price)), new BigDecimal(500000));
+            predicates.add(diffPredicate);
         }
         if (soNguoi != null) {
             predicates.add(b.equal(root.get("soNguoi"), soNguoi));
@@ -72,17 +74,6 @@ public class BaiVietRepositoryImpl implements BaiVietRepository {
 
         q.where(finalPredicate);
         Query query = s.createQuery(q);
-//        if (params != null) {
-//            String page = params.get("page");
-//            if (page == null) {
-//                page = "1";
-//            }
-//            if (!page.equals("0")) {
-//                int pageSize = Integer.parseInt(this.env.getProperty("PAGE_SIZE"));
-//                query.setFirstResult((Integer.parseInt(page) - 1) * pageSize);
-//                query.setMaxResults(pageSize);
-//            }
-//        }
 
         return query.getResultList();
     }
@@ -162,7 +153,6 @@ public class BaiVietRepositoryImpl implements BaiVietRepository {
         Session s = this.factory.getObject().getCurrentSession();
         TrangThaiBaiViet newTT = new TrangThaiBaiViet();
         newTT.setId(1);
-
         try {
 
             baiviet.setLoaiTrangThai(newTT);

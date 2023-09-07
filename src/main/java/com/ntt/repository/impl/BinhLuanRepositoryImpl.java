@@ -181,4 +181,26 @@ public class BinhLuanRepositoryImpl implements BinhLuanRepository {
                 .setParameter("nguoidung", nguoidung)
                 .executeUpdate();
     }
+
+    @Override
+    public BinhLuan themBinhLuan(BinhLuan binhluan) {
+        Session s = this.factory.getObject().getCurrentSession();
+        Date current = new Date();
+        binhluan.setNgayBinhLuan(current);
+        try {
+            if (binhluan.getId() == null) {
+                
+            
+                s.save(binhluan);
+                System.out.println("Thêm bình luận thành công!!");
+            } else {
+                s.update(binhluan);
+                System.out.println("Thêm bình luận thất bại!!");
+            }
+            return binhluan;
+        } catch (HibernateException ex) {
+            System.out.println(ex.getMessage());
+            return null;
+        }
+    }
 }

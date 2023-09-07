@@ -14,6 +14,8 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ page import="java.util.Objects" %>
 <link href="<c:url value="/css/style.css" />" rel="stylesheet" />
+
+
 <c:url value="/thtin_bviet_bl" var="action">
     <c:param name="baivietId" value="${BaiViet.id}" />  
 </c:url>
@@ -24,6 +26,10 @@
     <c:param name="baivietId" value="${BaiViet.id}" />  
 </c:url>
 <c:url value="/thtin_bviet_tuchoi" var="actionTrangThaiTuChoi">
+    <c:param name="baivietId" value="${BaiViet.id}" />  
+</c:url>
+
+<c:url value="/tao_binhluan" var="actionTao">
     <c:param name="baivietId" value="${BaiViet.id}" />  
 </c:url>
 
@@ -133,7 +139,6 @@
             </c:if>
 
         </c:forEach>
-
         <form:form method="post" action="${actionfl}" var="p" modelAttribute="follow" >
             <c:if test="${nguoidung.idLoaiTaiKhoan.id==3}">
                 <c:choose>
@@ -211,50 +216,121 @@
 
     <div >
         <c:forEach items="${binhluans}" var="b">
-            <c:url value="/api/thtin_bvietBinhLuan/${b.id}" var="apiDelete"/>
-            <div class="comtent row" style="border-width: 20px">
-                <div class="col-md-1">
+            <c:if test="${b.hoiDap eq null}">
 
-                    <img src="${b.idNguoiDung.avatar}" style="width:80px" />
-                </div>
-                <div>
-                    <p>${b.idNguoiDung.tenNguoiDung}</p>
-                    <p>
-                        <c:choose>
-                            <c:when test="${editingId eq b.id}">
-                            <form action="${pageContext.request.contextPath}/binhluan/thtin_bviet_edit" method="post">
-                                <input type="hidden" name="id" value="${b.id}" />
-                                <textarea name="editedNoiDung">${b.noiDung}</textarea>
-                                <button type="submit">Lưu thay đổi</button>
-                                <button type="button" onclick="cancelEditing()">Hủy</button>
-                            </form>
-                        </c:when>
-                        <c:otherwise>
-                            <div>
-                                ${b.noiDung}
+                <c:url value="/api/thtin_bvietBinhLuan/${b.id}" var="apiDelete"/>
+                <div class="comtent row" style="border-width: 20px">
+                    <div class="col-md-1" >
+                        <img src="${b.idNguoiDung.avatar}" style="width:80px" />
+                    </div>
+                    <div>
+                        <p>${b.id}</p>
+                        <p>${b.idNguoiDung.tenNguoiDung}</p>
+                        <div>
+                            ${b.noiDung}
+                        </div>
+                        <p class="commentDate">${b.ngayBinhLuan}</p>
+                        <c:if test="${nguoidung.id.toString() eq b.idNguoiDung.id}">
+                            <div class="edit-controls">
+                                <button class="btn btn-info text-center edit-button" onclick="enableEditModeUpdate('${b.id}')">Chỉnh sửa</button>
+                                <button class="btn btn-danger text-center" onclick="deleteBinhLuanwpr('${apiDelete}')">Xóa</button>
+                                <form:form id="updateForm_${b.id}" style="display: none;" method="post"  action="${action}" var="p" modelAttribute="binhluan" enctype="multipart/form-data">
+                                    <form:hidden path="id" value="${b.id}" />
+                                    <form:input type="text" path="noiDung" value="${b.noiDung}" />
+                                    <input type="submit" value="Cập nhật" class="btn btn-success" />
+                                </form:form>
+
                             </div>
-                            <c:if test="${nguoidung.id.toString() eq b.idNguoiDung.id}">
-                                <div class="edit-controls">
-                                    <button class="btn btn-info text-center edit-button" onclick="enableEditMode('${b.id}')">Chỉnh sửa</button>
-                                    <button class="btn btn-danger text-center" onclick="deleteBinhLuanwpr('${apiDelete}')">Xóa</button>
-                                </div>
-                            </c:if>
-                            <c:url value="/reply_comment" var="actionReply">
-                                <c:param name="binhLuanId" value="${b.id}" />  
-                            </c:url>
+                        </c:if>
+                        <button class="btn btn-primary" onclick="showReplyForm('${b.id}')">Trả lời</button>
+                        <form:form id="replyForm_${b.id}" style="display: none;" method="post" action="${action}" var="p" modelAttribute="binhluan" enctype="multipart/form-data" >
 
-                            <form:form modelAttribute="binhluan" action="${actionReply}" method="post">
-                                <form:input type="hidden"  path="hoiDap" value="${b.id}"  readonly="true"  cssClass="form -control"/>
-                                <form:input type="text"  path="noiDung" />
-                                <button type="submit">Gửi Trả Lời</button>
-                            </form:form>
-                        </c:otherwise>
-                    </c:choose>
-                    </p>
-                    <p class="commentDate">${b.ngayBinhLuan}</p>
+                            <form:input  type="hidden" id="file" path="tenNguoiDangBai" value="${pageContext.request.userPrincipal.name}"  readonly="true"  cssClass="form -control"/>
+                            <form:input type="hidden" id="file" path="idBaiVietBinhLuan" value="${BaiViet.id}"  readonly="true"  cssClass="form -control"/>
+                            <form:input path="hoiDap" type="hidden" value="${b.id}" />
+                            <form:input type="text" path="noiDung"/>
+                            <input type="submit" value="Bình Luận" class="btn btn-success"/>
+                        </form:form>
+                        <c:set var="parentId" value="${b.id}" />
+                        <c:forEach items="${binhluans}" var="reply">
+                            <c:if test="${reply.hoiDap eq parentId}">
+
+                                <div class="comtent row" style="border-width: 20px; margin-left: 30px;">
+
+                                    <div class="col-md-1" >
+                                        <img src="${reply.idNguoiDung.avatar}" style="width:80px" />
+                                    </div>
+                                    <p>${reply.idNguoiDung.tenNguoiDung}</p>
+                                    <div>
+                                        ${reply.noiDung}
+                                    </div>
+
+                                    <p class="commentDate">${reply.ngayBinhLuan}</p>
+                                    <c:if test="${nguoidung.id.toString() eq reply.idNguoiDung.id}">
+                                        <c:url value="/api/thtin_bvietBinhLuan/${reply.id}" var="apiDelete"/>
+                                        <div class="edit-controls">
+                                            <button class="btn btn-info text-center edit-button" onclick="enableEditModeUpdate('${reply.id}')">Chỉnh sửa</button>
+                                            <button class="btn btn-danger text-center" onclick="deleteBinhLuanwpr('${apiDelete}')">Xóa</button>
+                                            <form:form id="updateForm_${reply.id}" style="display: none;" method="post"  action="${action}" var="p" modelAttribute="binhluan" enctype="multipart/form-data">
+                                                <form:hidden path="id" value="${reply.id}" />
+                                                <form:input type="text" path="noiDung" value="${reply.noiDung}" />
+                                                <input type="submit" value="Cập nhật" class="btn btn-success" />
+                                            </form:form>
+
+                                        </div>
+                                    </c:if>
+                                    <button class="btn btn-primary" onclick="showReplyForm('${reply.id}')">Trả lời</button>
+                                    <form:form id="replyForm_${reply.id}" style="display: none;" method="post" action="${action}" var="p" modelAttribute="binhluan" enctype="multipart/form-data" >
+                                        <form:input  type="hidden" id="file" path="tenNguoiDangBai" value="${pageContext.request.userPrincipal.name}"  readonly="true"  cssClass="form -control"/>
+                                        <form:input type="hidden" id="file" path="idBaiVietBinhLuan" value="${BaiViet.id}"  readonly="true"  cssClass="form -control"/>
+                                        <form:input path="hoiDap" type="hidden" value="${reply.id}" />
+                                        <form:input type="text" path="noiDung"/>
+                                        <input type="submit" value="Bình Luận" class="btn btn-success"/>
+                                    </form:form>
+                                    <c:set var="grandparentId" value="${reply.id}" />
+                                    <c:forEach items="${binhluans}" var="grandreply">
+                                        <c:if test="${grandreply.hoiDap eq grandparentId}">
+                                            <div class="comtent row" style="border-width: 20px; margin-left: 60px;">
+                                                <div class="comtent row" style="border-width: 20px; margin-left: 30px;">
+
+                                                    <div class="col-md-1" >
+                                                        <img src="${grandreply.idNguoiDung.avatar}" style="width:80px" />
+                                                    </div>
+                                                    <p>${grandreply.idNguoiDung.tenNguoiDung}</p>
+                                                    <div>
+                                                        ${grandreply.noiDung}
+                                                    </div>
+                                                    <p class="commentDate">${grandreply.ngayBinhLuan}</p>
+
+                                                </div>
+                                                <c:url value="/api/thtin_bvietBinhLuan/${grandreply.id}" var="apiDelete"/>
+
+                                                <c:if test="${nguoidung.id.toString() eq grandreply.idNguoiDung.id}">
+                                                    <div class="edit-controls">
+                                                        <button class="btn btn-info text-center edit-button" onclick="enableEditModeUpdate('${grandreply.id}')">Chỉnh sửa</button>
+                                                        <button class="btn btn-danger text-center" onclick="deleteBinhLuanwpr('${apiDelete}')">Xóa</button>
+                                                        <form:form id="updateForm_${grandreply.id}" style="display: none;" method="post"  action="${action}" var="p" modelAttribute="binhluan" enctype="multipart/form-data">
+                                                            <form:hidden path="id" value="${grandreply.id}" />
+                                                            <form:input type="text" path="noiDung" value="${grandreply.noiDung}" />
+                                                            <input type="submit" value="Cập nhật" class="btn btn-success" />
+                                                        </form:form>
+                                                    </div>
+                                                </c:if>
+                                            </div>
+
+                                        </c:if>
+                                    </c:forEach>
+                                </div>
+
+                            </c:if> 
+                        </c:forEach>
+
+                    </div>
                 </div>
-            </div>
+            </c:if>
+
         </c:forEach>
+
     </div>
 
     <script>
@@ -266,7 +342,55 @@
                 dates[i].innerText = moment(dates[i].innerText).fromNow();
             }
         }
+
     </script>
+    <script>
+        var replyButtons = document.querySelectorAll('.reply-button');
+        var replyForms = document.querySelectorAll('.reply-form');
+
+        replyButtons.forEach(function (button, index) {
+            button.addEventListener('click', function () {
+
+                replyForms.forEach(function (form) {
+                    form.style.display = 'none';
+                });
+
+
+                replyForms[index].style.display = 'block';
+            });
+        });
+    </script>
+    
+    <script>
+        function showReplyForm(commentId) {
+            // Tìm form trả lời dựa trên commentId
+            var replyForm = document.getElementById("replyForm_" + commentId);
+
+           // Bật/tắt form trả lời
+            if (replyForm.style.display === "none" || replyForm.style.display === "") {
+                replyForm.style.display = "block";
+            } else {
+                replyForm.style.display = "none";
+            }
+        }
+    </script>
+    
+    <script>
+        function enableEditModeUpdate(commentId) {
+            // Tìm form trả lời dựa trên commentId
+            var replyForm = document.getElementById("updateForm_" + commentId);
+
+            // Bật/tắt form trả lời
+            if (replyForm.style.display === "none" || replyForm.style.display === "") {
+                replyForm.style.display = "block";
+            } else {
+                replyForm.style.display = "none";
+            }
+        }
+    </script>
+
+
+
     <script src="<c:url value="/js/main.js"/>"></script>
 
 

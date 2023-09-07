@@ -36,30 +36,35 @@
             }).addTo(map);
 
             <c:forEach items="${dsBaiViet}" var="baiViet">
-            var diaChiCt = "<c:out value='${baiViet.diaChiCt}' />"; 
+            var diaChiCt = "<c:out value='${baiViet.diaChiCt}' />";
 
             L.Control.Geocoder.nominatim().geocode(diaChiCt, function (results) {
-                var latlng = results[0].center;
-                var marker = L.marker(latlng).addTo(map);
-                marker.bindPopup("<c:out value='${baiViet.diaChiCt}' />").openPopup(); 
+                if (results && results.length > 0) {
+                    var latlng = results[0].center;
+                    var marker = L.marker(latlng).addTo(map);
+                    marker.bindPopup("<c:out value='${baiViet.diaChiCt}' />").openPopup();
+                } else {
+                    console.log('Không tìm thấy địa chỉ cho: ' + diaChiCt);
+                }
             });
             </c:forEach>
+
             var searchInput = document.getElementById('search-input');
             var searchButton = document.getElementById('search-button');
 
             searchButton.addEventListener('click', function () {
-                var query = searchInput.value; 
+                var query = searchInput.value;
 
-                
                 L.Control.Geocoder.nominatim().geocode(query, function (results) {
                     if (results && results.length > 0) {
                         var latlng = results[0].center;
-                        map.setView(latlng, 15); 
+                        map.setView(latlng, 15);
                     } else {
                         alert('Không tìm thấy địa điểm.');
                     }
                 });
             });
+
             var latlng = results[0].center;
             map.setView(latlng, 12);
         </script>

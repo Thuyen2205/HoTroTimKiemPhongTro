@@ -83,5 +83,17 @@ public class BinhLuanServiceImpl implements BinhLuanService{
     public void deleteBinhLuanByNguoiDung(NguoiDung nguoidung) {
         this.binhluan.deleteBinhLuanByNguoiDung(nguoidung);
     }
+
+    @Override
+    public BinhLuan themBinhLuan(BinhLuan binhluan) {
+        NguoiDung b = this.taikhoan.getTaiKhoan(binhluan.getTenNguoiDangBai()).get(0);
+        binhluan.setIdNguoiDung(b);
+        BaiViet v= (BaiViet) this.baiviet.getBaiVietById(binhluan.getIdBaiVietBinhLuan());
+        binhluan.setIdBaiViet(v);
+        return this.binhluan.themBinhLuan(binhluan);
+
+    }
     
+    
+
 }

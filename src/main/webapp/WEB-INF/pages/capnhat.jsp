@@ -32,8 +32,8 @@
                     <form:hidden path="id" />
                     <form:hidden path="loaiBaiViet.id"/>
                     <form:hidden path="idNguoiDung.id"/>
-                    <form:hidden path="hinhAnh"/>
-
+                    
+                    
 
                     <div class="dangbai-tinnhaplieu">
                         <div class="input-bigsize">
@@ -53,7 +53,7 @@
                         <c:if test="${BaiViet.idNguoiDung.idLoaiTaiKhoan.id==2}">
                             <div class="input-smallsize">
                                 <div class="input-smallsize1">                            
-                                    <p>Khu vực(quận/huyện/thành phố) </p>
+                                    <p>Khu vực(quận/huyện/thành phố)</p>
                                     <form:input type="text" id="khuvucbv" name="khuvucbv" path="phamViCanTim" placeholder="Nhập khu vực (VD: Gò Vấp)"/>
                                 </div>
 
@@ -72,9 +72,7 @@
                                     <p>Diện tích phòng (m2) </p>
                                     <form:input type="text" id="dientichbv" name="dientichbv" path="dienTich" placeholder="Nhập diện tích (VD: 30)"/>
                                 </div>
-
                             </div>
-
 
                             <div class="input-bigsize">                            
                                 <p>Địa chỉ chi tiết: </p>

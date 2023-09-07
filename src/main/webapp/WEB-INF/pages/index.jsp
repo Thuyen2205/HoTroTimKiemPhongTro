@@ -21,6 +21,7 @@
                     <input class="find" type="text" name="price" placeholder="Nhập giá tiền...">
                     <input class="find" type="text" name="soNguoi" placeholder="Nhập số người...">
                     <button class="find" type="submit" class="btn btn-danger">Tìm kiếm</button>
+                    
                 </form>
             </div>
         </c:if>

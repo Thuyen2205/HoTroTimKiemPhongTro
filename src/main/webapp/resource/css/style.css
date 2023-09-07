@@ -11,7 +11,12 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
 body{
     background-color: #F5F5F5;
 }
-
+.col-md-1 img{
+    border-radius: 30px;
+}
+.reply-form{
+    display: none; 
+}
 .bangtin{
     margin: 30px 100px;
     flex-wrap: wrap;
