@@ -57,14 +57,17 @@ public class IndexContext {
             model.addAttribute("taikhoan", u);
         }
         model.addAttribute("baiviet", this.baivietService.getBaiVietTK(address, price, soNguoi, params));
-    
+        if (address == null && price == null && soNguoi == null) {
+            model.addAttribute("error", "Vui lòng nhập ít nhất một tiêu chí tìm kiếm.");
+            return "index";
+        }
+     
         int count = this.baivietService.getCountOfBaiViet();
         int pageSize = Integer.parseInt(this.env.getProperty("PAGE_SIZE"));
-        model.addAttribute("pages", Math.ceil(count*1.0/pageSize));
+        model.addAttribute("pages", Math.ceil(count * 1.0 / pageSize));
         return "index";
 
     }
-
 
     @PostMapping("/")
     public String index(Model model, Authentication authen, @RequestParam("gia") int gia) {

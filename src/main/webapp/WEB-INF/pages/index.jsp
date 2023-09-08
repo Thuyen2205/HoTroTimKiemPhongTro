@@ -15,12 +15,15 @@
             <div style="text-align: center">
                 <c:url value="/" var="action"/>
                 <h1>TRANG CHỦ</h1>
+                <c:if test="${not empty error}">
+                    <p class="error">${error}</p>
+                </c:if>
                 <form action="${action}" method="GET">
 
-                    <input class="find" type="text" name="address" placeholder="Nhập địa chỉ...">
-                    <input class="find" type="text" name="price" placeholder="Nhập giá tiền...">
-                    <input class="find" type="text" name="soNguoi" placeholder="Nhập số người...">
-                    <button class="find" type="submit" class="btn btn-danger">Tìm kiếm</button>
+                    <input  class="find custom-input" type="text" name="address" placeholder="Nhập địa chỉ...">
+                    <input class="find custom-input" type="text" name="price" placeholder="Nhập giá tiền...">
+                    <input class="find custom-input" type="text" name="soNguoi" placeholder="Nhập số người...">
+                    <button class="find custom-button" type="submit" class="btn btn-danger">Tìm kiếm</button>
 
                 </form>
             </div>

@@ -10,10 +10,12 @@ import java.text.SimpleDateFormat;
 import java.util.Properties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.core.annotation.Order;
 import org.springframework.core.env.Environment;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -25,6 +27,8 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.validation.Validator;
+import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.web.servlet.handler.HandlerMappingIntrospector;
 
 /**
@@ -96,7 +100,6 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 "api_key", "515925565185764",
                 "api_secret", "htAoHniRW5N34DQkcBo2Jh_5-XM",
                 "secure", true));
-
         return c;
     }
 
@@ -122,20 +125,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
         return new SimpleDateFormat("yyyy-MM-dd");
     }
 
-//    @Bean
-//    public JavaMailSender javaMailSender() {
-//        JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
-//        mailSender.setHost("smtp.gmail.com");
-//        mailSender.setPort(587);
-//        mailSender.setUsername("2051050488thuyen@ou.edu.vn");
-//        mailSender.setPassword("thuyen22052002##");
-//
-//        Properties properties = new Properties();
-//        properties.put("mail.smtp.auth", "true");
-//        properties.put("mail.smtp.starttls.enable", "true");
-//        mailSender.setJavaMailProperties(properties);
-//
-//        return mailSender;
-//
-//    }
+
+
+    
 }

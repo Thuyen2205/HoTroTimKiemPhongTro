@@ -61,11 +61,15 @@ public class BaiVietServiceImpl implements BaiVietService {
         try {
 
             if (baiviet.getIdNguoiDung().getIdLoaiTaiKhoan().getId() == 2) {
+                if (!baiviet.getFile().isEmpty()) {
 
-                Map res = this.cloudinary.uploader().upload(baiviet.getFile().getBytes(),
-                        ObjectUtils.asMap("resource_type", "auto"));
-                baiviet.setHinhAnh(res.get("secure_url").toString());
+                    Map res = this.cloudinary.uploader().upload(baiviet.getFile().getBytes(),
+                            ObjectUtils.asMap("resource_type", "auto"));
+                    baiviet.setHinhAnh(res.get("secure_url").toString());
+                    
+                }
                 baiviet.setNgayDang(new Date());
+
             }
             if (baiviet.getIdNguoiDung().getIdLoaiTaiKhoan().getId() == 3) {
                 baiviet.setNgayDang(new Date());

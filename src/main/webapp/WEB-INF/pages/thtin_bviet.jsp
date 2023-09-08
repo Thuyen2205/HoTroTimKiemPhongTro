@@ -45,7 +45,7 @@
 <section class="chitiettin" >
     <div class="chitiettin-col1">
         <c:if test="${BaiViet.loaiTrangThai.id==1}">
-            <input class="btn btn-info"  placeholder="Đã xác nhận" readonly="true"/>
+            <input class="btn btn-info  custom-button"  placeholder="Đã xác nhận" readonly="true"/>
         </c:if>
         <div class="ct-anh">
 
@@ -111,7 +111,7 @@
                     <form:input type="hidden" id="file" path="tenNguoiDangBai" value="${pageContext.request.userPrincipal.name}"  readonly="true"  cssClass="form -control"/>
                     <form:input type="hidden" id="file" path="idBaiVietBinhLuan" value="${BaiViet.id}"  readonly="true"  cssClass="form -control"/>
 
-                    <form:input type="text" path="noiDung"/>
+                    <form:input class="custom-input" type="text" path="noiDung"/>
                     <input type="submit" value="Bình Luận" class="btn btn-danger"/>
                 </form:form>
             </c:if>
@@ -171,8 +171,8 @@
         </form:form>
         <br></br>   
         <div id="search-bar">
-            <input type="text" id="search-input" placeholder="Nhập địa chỉ hoặc tên địa điểm">
-            <button class="btn-danger" id="search-button">Tìm kiếm</button>
+            <input type="text" id="search-input" class="custom-input" placeholder="Nhập địa chỉ hoặc tên địa điểm">
+            <button class="btn-info btn" id="search-button">Tìm kiếm</button>
         </div>
         <div id="map" style="width: 700px; height: 600px;"></div>
         <script>
@@ -234,21 +234,22 @@
                             <div class="edit-controls">
                                 <button class="btn btn-info text-center edit-button" onclick="enableEditModeUpdate('${b.id}')">Chỉnh sửa</button>
                                 <button class="btn btn-danger text-center" onclick="deleteBinhLuanwpr('${apiDelete}')">Xóa</button>
+                                <button class="btn btn-primary" onclick="showReplyForm('${b.id}')">Trả lời</button>
                                 <form:form id="updateForm_${b.id}" style="display: none;" method="post"  action="${action}" var="p" modelAttribute="binhluan" enctype="multipart/form-data">
                                     <form:hidden path="id" value="${b.id}" />
-                                    <form:input type="text" path="noiDung" value="${b.noiDung}" />
+                                    <form:input class="custom-input" type="text" path="noiDung" value="${b.noiDung}" />
                                     <input type="submit" value="Cập nhật" class="btn btn-success" />
                                 </form:form>
 
                             </div>
                         </c:if>
-                        <button class="btn btn-primary" onclick="showReplyForm('${b.id}')">Trả lời</button>
+
                         <form:form id="replyForm_${b.id}" style="display: none;" method="post" action="${action}" var="p" modelAttribute="binhluan" enctype="multipart/form-data" >
 
                             <form:input  type="hidden" id="file" path="tenNguoiDangBai" value="${pageContext.request.userPrincipal.name}"  readonly="true"  cssClass="form -control"/>
                             <form:input type="hidden" id="file" path="idBaiVietBinhLuan" value="${BaiViet.id}"  readonly="true"  cssClass="form -control"/>
                             <form:input path="hoiDap" type="hidden" value="${b.id}" />
-                            <form:input type="text" path="noiDung"/>
+                            <form:input class="custom-input" type="text" path="noiDung"/>
                             <input type="submit" value="Bình Luận" class="btn btn-success"/>
                         </form:form>
                         <c:set var="parentId" value="${b.id}" />
@@ -271,20 +272,21 @@
                                         <div class="edit-controls">
                                             <button class="btn btn-info text-center edit-button" onclick="enableEditModeUpdate('${reply.id}')">Chỉnh sửa</button>
                                             <button class="btn btn-danger text-center" onclick="deleteBinhLuanwpr('${apiDelete}')">Xóa</button>
+                                            <button class="btn btn-primary" onclick="showReplyForm('${reply.id}')">Trả lời</button>
+
                                             <form:form id="updateForm_${reply.id}" style="display: none;" method="post"  action="${action}" var="p" modelAttribute="binhluan" enctype="multipart/form-data">
                                                 <form:hidden path="id" value="${reply.id}" />
-                                                <form:input type="text" path="noiDung" value="${reply.noiDung}" />
+                                                <form:input class="custom-input" type="text" path="noiDung" value="${reply.noiDung}" />
                                                 <input type="submit" value="Cập nhật" class="btn btn-success" />
                                             </form:form>
 
                                         </div>
                                     </c:if>
-                                    <button class="btn btn-primary" onclick="showReplyForm('${reply.id}')">Trả lời</button>
                                     <form:form id="replyForm_${reply.id}" style="display: none;" method="post" action="${action}" var="p" modelAttribute="binhluan" enctype="multipart/form-data" >
                                         <form:input  type="hidden" id="file" path="tenNguoiDangBai" value="${pageContext.request.userPrincipal.name}"  readonly="true"  cssClass="form -control"/>
                                         <form:input type="hidden" id="file" path="idBaiVietBinhLuan" value="${BaiViet.id}"  readonly="true"  cssClass="form -control"/>
                                         <form:input path="hoiDap" type="hidden" value="${reply.id}" />
-                                        <form:input type="text" path="noiDung"/>
+                                        <form:input class="custom-input" type="text" path="noiDung"/>
                                         <input type="submit" value="Bình Luận" class="btn btn-success"/>
                                     </form:form>
                                     <c:set var="grandparentId" value="${reply.id}" />
@@ -311,7 +313,7 @@
                                                         <button class="btn btn-danger text-center" onclick="deleteBinhLuanwpr('${apiDelete}')">Xóa</button>
                                                         <form:form id="updateForm_${grandreply.id}" style="display: none;" method="post"  action="${action}" var="p" modelAttribute="binhluan" enctype="multipart/form-data">
                                                             <form:hidden path="id" value="${grandreply.id}" />
-                                                            <form:input type="text" path="noiDung" value="${grandreply.noiDung}" />
+                                                            <form:input class="custom-input" type="text" path="noiDung" value="${grandreply.noiDung}" />
                                                             <input type="submit" value="Cập nhật" class="btn btn-success" />
                                                         </form:form>
                                                     </div>
@@ -360,13 +362,13 @@
             });
         });
     </script>
-    
+
     <script>
         function showReplyForm(commentId) {
             // Tìm form trả lời dựa trên commentId
             var replyForm = document.getElementById("replyForm_" + commentId);
 
-           // Bật/tắt form trả lời
+            // Bật/tắt form trả lời
             if (replyForm.style.display === "none" || replyForm.style.display === "") {
                 replyForm.style.display = "block";
             } else {
@@ -374,7 +376,7 @@
             }
         }
     </script>
-    
+
     <script>
         function enableEditModeUpdate(commentId) {
             // Tìm form trả lời dựa trên commentId

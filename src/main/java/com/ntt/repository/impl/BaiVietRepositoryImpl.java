@@ -72,7 +72,6 @@ public class BaiVietRepositoryImpl implements BaiVietRepository {
                 predicates.add(b.equal(root.get("soNguoi"), soNguoi));
             }
 
-//            Predicate finalPredicate = b.and(predicates.toArray(new Predicate[0]));
             q.where(predicates.toArray(Predicate[]::new));
 
         }

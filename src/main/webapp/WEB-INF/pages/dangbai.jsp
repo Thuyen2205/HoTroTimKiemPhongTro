@@ -15,6 +15,15 @@
     <section class="body-dangbai">
         <h1 class="text-center text-danger">Đăng bài </h1>
         <c:url value="/dangbai" var="action"/>
+        <c:if test="${not empty errors}">
+            <div class="alert alert-danger">
+                <ul>
+                    <c:forEach items="${errors}" var="error">
+                        <li>${error.defaultMessage}</li>
+                        </c:forEach>
+                </ul>
+            </div>
+        </c:if>
         <div class="dangbai">
             <!-- PHẦN ĐĂNG BÀI -->
 
@@ -44,6 +53,7 @@
                         <div class="input-bigsize">
                             <p>Tiêu đề bài đăng </p>
                             <form:input type="text" id="tenbv" name="tenbv" path="tenBaiViet" placeholder="Tiêu đề bài đăng"/>
+                            <form:errors path="tenBaiViet" element="div" cssClass="text-danger" />
                         </div>
 
                         <div class="input-bigsize">
@@ -62,7 +72,6 @@
                                 <div class="input-smallsize1">
                                     <p>Giá cho thuê </p>
                                     <form:input type="text" id="giathuebv" name="giathuebv" path="giaThue" placeholder="Nhập giá cho thuê (VD: 3000000)"  /> 
-
                                 </div>
                             </div>
                             <div class="input-smallsize">

@@ -26,6 +26,7 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import javax.validation.constraints.Past;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -35,6 +36,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -146,7 +148,7 @@ public class BaiVietController {
 
     @PostMapping("/thtin_bviet_fl")
     public String addFollow(Model model, @ModelAttribute(value = "follow") Follow follow, Authentication authen,
-             @RequestParam Map<String, String> params
+            @RequestParam Map<String, String> params
     ) {
         String ms = "";
         if (authen.getName() != null) {
@@ -162,7 +164,7 @@ public class BaiVietController {
 
     @PostMapping("/thtin_bviet_xn")
     public String xacNhan(Model model, Authentication authen,
-             @RequestParam Map<String, String> params
+            @RequestParam Map<String, String> params
     ) {
         String ms = "";
         int id = Integer.parseInt(params.get("baivietId"));
@@ -179,18 +181,24 @@ public class BaiVietController {
     }
 
     @PostMapping("/dangbai")
-    public String add(Model model, @ModelAttribute(value = "baiviet") BaiViet baiviet, @RequestParam Map<String, String> params, Authentication authen
+    public String add(Model model, @ModelAttribute(value = "baiviet") @Valid BaiViet baiviet,
+            @RequestParam Map<String, String> params,
+            Authentication authen, BindingResult rs
     ) {
         String errMsg = "";
+        if (!rs.hasErrors()) {
+            if (authen.getName() != null) {
 
-        if (authen.getName() != null) {
+                if (this.baivietService.addBaiViet(baiviet) == true) {
 
-            if (this.baivietService.addBaiViet(baiviet) == true) {
-
-                return "redirect:/";
-            } else {
-                errMsg = "?� c� l?i x�y ra";
+                    return "redirect:/";
+                } else {
+                    errMsg = "?� c� l?i x�y ra";
+                }
             }
+
+        }else{
+            model.addAttribute("errors", rs.getAllErrors());
         }
 
         return "baiviet";
@@ -236,8 +244,8 @@ public class BaiVietController {
                 SimpleMailMessage message = new SimpleMailMessage();
                 for (Follow fl : fls) {
                     message.setTo(fl.getIdKhachHang().getEmail());
-                    message.setSubject("Xong mail r � (S�i Mail API)");
-                    message.setText("Nguoi dung ?� ??ng bai m?i!!! V�o Xem");
+                    message.setSubject("Có bài viet moi!! vào xem");
+                    message.setText(fl.getIdChuTro().getTenNguoiDung()+" da dang bai viet moi");
                     emailSender.send(message);
                 }
 

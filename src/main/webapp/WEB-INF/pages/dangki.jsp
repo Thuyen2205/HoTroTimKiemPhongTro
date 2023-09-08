@@ -37,26 +37,6 @@
             <div class="input-box">
                 <form:input type="password" placeholder="Xác nhận lại mật khẩu" path="xacNhanMatKhau" />           
             </div>
-
-            <!--            <div class="input-box">
-            <%--<form:input type="hidden" path="ngayTao" value="<%= new java.util.Date()%>" />--%>           
-        </div>-->
-
-            <!--            <div class="input-box btn-danger">
-            <%--<form:select class="role" name="role" id="role" path="idLoaiTaiKhoan">--%>
-            <%--<c:forEach items="${user_role}" var="c" >--%>
-                <option value="${c.id}" selected>${c.tenLoaiTaiKhoan}</option>
-            <%--</c:forEach>--%>
-            <%--</form:select>--%>
-        </div>
-        <div class="upload-avatar">
-            <%--<form:input type="file" id="file" path="file" placeholder="Upload Avatar"/>--%>
-        </div>
-        <p>Nếu bạn là chủ trọ</p>
-        <p>Hãy cho chúng tôi biết thêm hình ảnh về phòng trọ của bạn</p>
-        <div class="upload-avatar">
-            <%--<form:input type="file" id="file2" path="file2" placeholder="Upload ảnh phòng trọ"/>--%>
-        </div>-->
             <div class="input-box btn-danger">
                 <form:select class="role" name="role" id="role" path="idLoaiTaiKhoan">
                     <c:forEach items="${user_role}" var="c">

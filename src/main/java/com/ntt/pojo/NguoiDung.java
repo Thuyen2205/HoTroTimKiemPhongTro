@@ -129,7 +129,6 @@ public class NguoiDung implements Serializable {
     @Size(max = 100)
     @Column(name = "ten_nguoi_dung")
     private String tenNguoiDung;
-    // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
     @Size(max = 45)
     @Column(name = "email")
     private String email;
@@ -184,7 +183,6 @@ public class NguoiDung implements Serializable {
     
     
     @Transient
-    @Null
     private MultipartFile file;
     @Transient
     private String xacNhanMatKhau;

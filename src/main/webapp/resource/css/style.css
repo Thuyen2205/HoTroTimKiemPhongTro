@@ -29,10 +29,20 @@ body{
     margin: 10px;
     background-color: white;
     display: flex;
+    transition: transform 0.2s ease-in-out;
+    
+}
+.bviet:hover {
+    transform: scale(1.05); 
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
 }
 .bviet_anh{
     margin: 10px;
     width: 40%;
+}
+.bviet_anh img:hover {
+    transform: scale(1.1); 
+    transition: transform 0.2s ease-in-out; 
 }
 .bviet_ndung{
     margin: 10px;
@@ -256,4 +266,42 @@ input{
     justify-content: space-between;
 
 }
+.custom-input {
+    width: 200px; 
+    padding: 10px; 
+    border: 1px solid #ccc; 
+    border-radius: 5px; 
+    font-size: 16px; 
+    margin: 10px;
+}
+.custom-button {
+    
+    padding: 10px 20px; 
+    font-size: 16px; 
+    background-color: #f4511e; 
+    color: #f45ee; 
+    border: none; 
+    border-radius: 5px; 
+
+  
+    transition: background-color 0.3s ease-in-out;
+}
+
+.custom-button:hover {
+    background-color: #333; 
+    color: #fff; 
+    text-decoration: none; 
+    cursor: pointer; 
+}
+
+
+.custom-button:focus {
+    outline: none;
+}
+
+
+
+
+
+
 /*ADMIN*/
