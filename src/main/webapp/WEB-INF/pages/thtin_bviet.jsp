@@ -8,6 +8,9 @@
 <%@page import="com.ntt.pojo.BaiViet"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.34/moment-timezone-with-data.min.js"></script>
+
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ page import="java.util.Objects" %>
 <link href="<c:url value="/css/style.css" />" rel="stylesheet" />
@@ -161,10 +164,49 @@
             <form:input type="hidden" id="file" path="tenNguoiDangBai" value="${pageContext.request.userPrincipal.name}"  readonly="true"  cssClass="form -control"/>
             <form:input type="hidden" id="file" path="idChuBaiViet" value="${BaiViet.idNguoiDung.id}"  readonly="true"   cssClass="form -control"/>
         </form:form>
+        <br></br>   
+        <div id="search-bar">
+            <input type="text" id="search-input" placeholder="Nhập địa chỉ hoặc tên địa điểm">
+            <button class="btn-danger" id="search-button">Tìm kiếm</button>
+        </div>
+        <div id="map" style="width: 700px; height: 6 00px;"></div>
+        <script>
+            var map = L.map('map').setView([10.7769, 106.7009], 12);
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            }).addTo(map);
 
+            var diaChiCt = "<c:out value='${BaiViet.diaChiCt}' />";
+
+            L.Control.Geocoder.nominatim().geocode(diaChiCt, function (results) {
+                if (results && results.length > 0) {
+                    var latlng = results[0].center;
+                    var marker = L.marker(latlng).addTo(map);
+                    marker.bindPopup("<c:out value='${BaiViet.diaChiCt}' />").openPopup();
+                }
+            });
+
+            var searchInput = document.getElementById('search-input');
+            var searchButton = document.getElementById('search-button');
+
+            searchButton.addEventListener('click', function () {
+                var query = searchInput.value;
+
+                L.Control.Geocoder.nominatim().geocode(query, function (results) {
+                    if (results && results.length > 0) {
+                        var latlng = results[0].center;
+                        map.setView(latlng, 25);
+                    } else {
+                        alert('Không tìm thấy địa điểm.');
+                    }
+                });
+            });
+        </script>
 
 
     </div>
+
+
 
 
     <div>
@@ -172,6 +214,7 @@
             <c:url value="/api/thtin_bvietBinhLuan/${b.id}" var="apiDelete"/>
             <div class="comtent row" style="border-width: 20px">
                 <div class="col-md-1">
+                    <p>${b.id}</p>
                     <img src="${b.idNguoiDung.avatar}" style="width:80px" />
                 </div>
                 <div>
@@ -182,6 +225,7 @@
                             <form action="${pageContext.request.contextPath}/binhluan/thtin_bviet_edit" method="post">
                                 <input type="hidden" name="id" value="${b.id}" />
                                 <textarea name="editedNoiDung">${b.noiDung}</textarea>
+
                                 <button type="submit">Lưu thay đổi</button>
                                 <button type="button" onclick="cancelEditing()">Hủy</button>
                             </form>
@@ -190,10 +234,21 @@
                             <div>
                                 ${b.noiDung}
                             </div>
-                            <div class="edit-controls">
-                                <button class="btn btn-info text-center edit-button" onclick="enableEditMode('${b.id}')">Chỉnh sửa</button>
-                                <button class="btn btn-danger text-center" onclick="deleteBinhLuanwpr('${apiDelete}')">Xóa</button>
-                            </div>
+                            <c:if test="${nguoidung.id.toString() eq b.idNguoiDung.id}">
+                                <div class="edit-controls">
+                                    <button class="btn btn-info text-center edit-button" onclick="enableEditMode('${b.id}')">Chỉnh sửa</button>
+                                    <button class="btn btn-danger text-center" onclick="deleteBinhLuanwpr('${apiDelete}')">Xóa</button>
+                                </div>
+                            </c:if>
+                            <c:url value="/reply_comment" var="actionReply">
+                                <c:param name="binhLuanId" value="${b.id}" />  
+                            </c:url>
+
+                            <form:form modelAttribute="binhluan" action="${actionReply}" method="post">
+                                <form:input type="hidden"  path="hoiDap" value="${b.id}"  readonly="true"  cssClass="form -control"/>
+                                <form:input type="text"  path="noiDung" />
+                                <button type="submit">Gửi Trả Lời</button>
+                            </form:form>
                         </c:otherwise>
                     </c:choose>
                     </p>
@@ -204,14 +259,14 @@
     </div>
 
     <script>
+        moment.tz.setDefault("Asia/Ho_Chi_Minh");
+
         window.onload = function () {
-            let dates = document.getElementsByClassName("commentDate")
-            for (let i = 0; i < dates.length; i++)
-            {
-                dates[i].innerText = moment(dates[i].innerText).fromNow()
+            let dates = document.getElementsByClassName("commentDate");
+            for (let i = 0; i < dates.length; i++) {
+                dates[i].innerText = moment(dates[i].innerText).fromNow();
             }
         }
-
     </script>
     <script src="<c:url value="/js/main.js"/>"></script>
 

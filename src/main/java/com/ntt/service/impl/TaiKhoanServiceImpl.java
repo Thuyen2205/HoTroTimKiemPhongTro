@@ -26,6 +26,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
@@ -141,4 +142,37 @@ public class TaiKhoanServiceImpl implements TaiKhoanService {
     public boolean updateTrangThaiTaiKhoan(NguoiDung nguoidung) {
         return this.taikhoanRepository.updateTrangThaiTaiKhoan(nguoidung);
     }
+
+    @Override
+    public boolean updateNguoiDung(NguoiDung nguoidung) {
+        try {
+            Map res = this.cloudinary.uploader().upload(nguoidung.getFile().getBytes(),
+                    ObjectUtils.asMap("resource_type", "auto"));
+            nguoidung.setAvatar(res.get("secure_url").toString());
+
+        } catch (IOException ex) {
+            System.err.println("== UPDATE BaiViet ==" + ex.getMessage());
+        }
+        nguoidung.setHinhAnh(null);
+        return this.taikhoanRepository.updateNguoiDung(nguoidung);
+    }
+
+    @Override
+    public boolean updateTaiKhoan(NguoiDung nguoiDung) {
+        Date current = new Date();
+        try {
+            MultipartFile file = nguoiDung.getFile();
+            if (file != null && !file.isEmpty()) {
+                Map res = this.cloudinary.uploader().upload(nguoiDung.getFile().getBytes(),
+                        ObjectUtils.asMap("resource_type", "auto"));
+                nguoiDung.setAvatar(res.get("secure_url").toString());
+            }
+        } catch (IOException ex) {
+            System.err.println("== UPDATE BaiViet ==" + ex.getMessage());
+        }
+        nguoiDung.setNgayTao(current);
+        return this.taikhoanRepository.updateNguoiDung(nguoiDung);
+    }
+
+
 }

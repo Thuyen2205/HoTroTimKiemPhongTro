@@ -15,9 +15,7 @@
     <section class="body-dangbai">
         <h1 class="text-center text-danger">Đăng bài </h1>
         <c:url value="/dangbai" var="action"/>
-
         <div class="dangbai">
-
             <!-- PHẦN ĐĂNG BÀI -->
 
             <div class="dangbai-col1">
@@ -119,7 +117,7 @@
 
                         </div>
                     </div>    
-                    <div class="input-box btn-danger">
+                    <div class="input-box btn-danger" hidden="true">
                         <form:select class="role" name="role" id="role" path="loaiTrangThai">
                             <c:forEach items="${trangThai_role}" var="c" >
                                 <option value="${c.id}" selected>${c.tenLoaiTrangThai}</option>

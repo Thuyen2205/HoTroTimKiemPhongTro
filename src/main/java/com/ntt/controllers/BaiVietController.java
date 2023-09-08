@@ -95,14 +95,12 @@ public class BaiVietController {
             model.addAttribute("follows", this.followService.getFollowsKhachHang(nd).get(0));
             model.addAttribute("followlist", this.followService.getFollowsKhachHang(nd));
             model.addAttribute("nguoidung", this.taikhoan.getTaiKhoan(authen.getName()).get(0));
-
         }
         model.addAttribute("BaiViet", this.baivietService.getBaiVietById(id));
         model.addAttribute("binhluan", new BinhLuan());
         model.addAttribute("binhluans", this.binhluanService.getBinhLuan(id));
         model.addAttribute("flChuTro", this.followService.getFollowsChuTro(bv.getIdNguoiDung()));
         model.addAttribute("follow", new Follow());
-
         return "thtin_bviet";
     }
 
@@ -112,10 +110,11 @@ public class BaiVietController {
         String ms = "";
         int id = Integer.parseInt(params.get("baivietId"));
         if (authen.getName() != null) {
+            
             if (this.binhluanService.addBinhLuan(binhluan) == true) {
                 return "forward:/thtin_bviet";
             } else {
-                ms = "?ã có l?i xãy ra";
+                ms = "?ï¿½ cï¿½ l?i xï¿½y ra";
             }
         }
         return "thtin_bviet";
@@ -129,7 +128,7 @@ public class BaiVietController {
 
                 return "redirect:/";//redirect:/
             } else {
-                ms = "?ã có l?i xãy ra";
+                ms = "?ï¿½ cï¿½ l?i xï¿½y ra";
             }
         }
         return "index";
@@ -144,7 +143,7 @@ public class BaiVietController {
             if (this.baivietService.updateTrangThai(idBaiViet) == true) {
                 return "forward:/thtin_bviet";
             } else {
-                ms = "?ã có l?i xãy ra";
+                ms = "?ï¿½ cï¿½ l?i xï¿½y ra";
             }
 
         }
@@ -161,7 +160,7 @@ public class BaiVietController {
 //
 //            return "redirect:/";
 //        } else {
-//            errMsg = "?ã có l?i xãy ra";
+//            errMsg = "?ï¿½ cï¿½ l?i xï¿½y ra";
 //=======
         if (authen.getName() != null) {
 
@@ -169,7 +168,7 @@ public class BaiVietController {
 
                 return "redirect:/";
             } else {
-                errMsg = "?ã có l?i xãy ra";
+                errMsg = "?ï¿½ cï¿½ l?i xï¿½y ra";
             }
         }
 
@@ -191,12 +190,11 @@ public class BaiVietController {
     public String update(Model model, @ModelAttribute(value = "baiviet") BaiViet baiviet
     ) {
         String errMsg = "";
-        System.out.println(baiviet.getId());
-        System.out.println(baiviet.getHinhAnh());
+
         if (this.baivietService.updateBaiViet(baiviet) == true) {
             return "redirect:/canhan";
         } else {
-            errMsg = "?ã có l?i xãy ra";
+            errMsg = "?ï¿½ cï¿½ l?i xï¿½y ra";
         }
 
         return "capnhat";
@@ -217,8 +215,8 @@ public class BaiVietController {
                 SimpleMailMessage message = new SimpleMailMessage();
                 for (Follow fl : fls) {
                     message.setTo(fl.getIdKhachHang().getEmail());
-                    message.setSubject("Xong mail r á (Sài Mail API)");
-                    message.setText("Nguoi dung ?ã ??ng bai m?i!!! Vào Xem");
+                    message.setSubject("Xong mail r ï¿½ (Sï¿½i Mail API)");
+                    message.setText("Nguoi dung ?ï¿½ ??ng bai m?i!!! Vï¿½o Xem");
                     emailSender.send(message);
                 }
 
@@ -269,8 +267,8 @@ public class BaiVietController {
 //                SimpleMailMessage message = new SimpleMailMessage();
 //                for (Follow fl : fls) {
 //                    message.setTo(fl.getIdKhachHang().getEmail());
-//                    message.setSubject("Xong mail r á (Sài Mail API)");
-//                    message.setText("Nguoi dung ?ã ??ng bai m?i!!! Vào Xem");
+//                    message.setSubject("Xong mail r ï¿½ (Sï¿½i Mail API)");
+//                    message.setText("Nguoi dung ?ï¿½ ??ng bai m?i!!! Vï¿½o Xem");
 //                    emailSender.send(message);
 //                }
 //
@@ -306,6 +304,7 @@ public class BaiVietController {
 //        binhluanService.saveBinhLuan(binhLuan);
 //        return "thtin_bviet";
 //    }
+    
 //    @PostMapping("/thtin_bviet_edit")
 //    public String editBinhLuan(@RequestParam Map<String, String> params) {
 //        String idParam = params.get("id");
@@ -317,11 +316,12 @@ public class BaiVietController {
 //            
 //            if (binhLuan != null) {
 //                binhLuan.setNoiDung(editedNoiDung);
-//                binhluanService.updateBinhLuan(binhLuan); // G?i service ?? c?p nh?t bình lu?n
+//                binhluanService.updateBinhLuan(binhLuan); // G?i service ?? c?p nh?t bï¿½nh lu?n
 //            }
 //        }
 //        editingId = null; // T?t ch? ?? ch?nh s?a
 //
-//        return "thtin_bviet"; // ?i?u h??ng v? danh sách bình lu?n
+//        return "thtin_bviet"; // ?i?u h??ng v? danh sï¿½ch bï¿½nh lu?n
 //    }
+    
 }

@@ -6,6 +6,7 @@ import { authApi } from "../configs/Apis";
 import { MyUserContext } from "../App";
 import { Navigate } from "react-router-dom";
 import "../layout/style.scss"
+import DangNhap2 from "../DangNhap2";
 
 const DangNhap = () => {
     const [user, dispatch] = useContext(MyUserContext);
@@ -13,6 +14,7 @@ const DangNhap = () => {
     const [matKhau, setMatKhau] = useState();
     // const [pass, setPass] = useState(true);
     const [validated, setValidated] = useState(false);
+    
 
     const dangnhap = (evt) => {
         const Form = evt.currentTarget;
@@ -27,9 +29,10 @@ const DangNhap = () => {
                 let res = await Apis.post(endpoints['dangnhap'],
                     {
                         "tenTaiKhoan": tenTaiKhoan,
-                        "matKhau": matKhau
+                        "matKhau": matKhau,
+                        // "kiemDuyet": kiemDuyet
                     })
-                // console.info(res.data);
+
                 cookie.save("token", res.data);
 
                 let { data } = await authApi().get(endpoints['current-user']);
@@ -45,12 +48,12 @@ const DangNhap = () => {
             }
         }
         process();
+
     }
+
 
     if (user !== null)
         return <Navigate to="/" />
-    // return <Navigate to="/thtin-ngdung/{user.id}" />
-
     return <>
         <Container className="container-dangnhap">
             <div className="form-dangnhap">
@@ -84,6 +87,8 @@ const DangNhap = () => {
                     <Form.Group className="mb-3" controlId="exampleForm.ControlInput3">
                         <Button variant="info" type="submit">Đăng nhập</Button>
                     </Form.Group>
+
+
                 </Form>
             </div>
         </Container>

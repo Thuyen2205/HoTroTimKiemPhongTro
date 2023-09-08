@@ -201,4 +201,30 @@ public class TaiKhoanRepositoryImpl implements TaiKhoanRepository {
         return false;
     }
 
+    @Override
+    public boolean updateNguoiDung(NguoiDung nguoidung) {
+        Session s = this.sessionFactory.getObject().getCurrentSession();
+        try {
+            s.update(nguoidung);
+            return true;
+        } catch (HibernateException e) {
+            System.err.println(e.getMessage());
+        }
+        return false;
+    }
+
+    @Override
+    public boolean updateTaiKhoan(NguoiDung nguoiDung) {
+          Session s = this.sessionFactory.getObject().getCurrentSession();
+        try {
+
+            s.update(nguoiDung);
+            return true;
+        } catch (HibernateException e) {
+            System.err.println(e.getMessage());
+        }
+        return false;
+        
+    }
+
 }

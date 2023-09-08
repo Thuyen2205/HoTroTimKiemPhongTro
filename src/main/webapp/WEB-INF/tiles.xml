@@ -101,4 +101,16 @@ Click nbfs://nbhost/SystemFileSystem/Templates/XML/XMLDocument.xml to edit this 
                        value="/WEB-INF/pages/thtin_taiKhoan.jsp" />
     </definition>
     
+    
+    <definition name="doimatkhau"
+                    template="/WEB-INF/pages/doimatkhau.jsp">
+    </definition>
+    
+     <definition name="capnhattaikhoan" extends="baseLayout">
+        <put-attribute name="title" value="Trang cập nhật" />
+        <put-attribute name="content"
+                       value="/WEB-INF/pages/capnhattaikhoan.jsp" />
+    </definition>
+   
+    
 </tiles-definitions>

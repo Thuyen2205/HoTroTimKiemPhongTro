@@ -71,31 +71,17 @@ public class BinhLuanRepositoryImpl implements BinhLuanRepository {
         return false;
     }
 
-    @Override
-    public List<Object> getBinhLuanByBV(int bvId) {
-        Session s = this.factory.getObject().getCurrentSession();
-        CriteriaBuilder b = s.getCriteriaBuilder();
-        CriteriaQuery<Object[]> q = b.createQuery(Object[].class);
-        List<Predicate> predicates = new ArrayList<>();
-        Root rComment = q.from(BinhLuan.class);
-        q.select(rComment);
-
-        Predicate p = b.equal(rComment.get("bvId"), bvId);
-        predicates.add(p);
-        q.where(predicates.toArray(Predicate[]::new));
-
-        Query query = s.createQuery(q);
-        return query.getResultList();
-
-    }
-
+    
     @Override
     public BinhLuan addOrUpdateBinhLuan(BinhLuan binhluan) {
         Session s = this.factory.getObject().getCurrentSession();
         try {
             if (binhluan.getId() == null) {
+                Date current = new Date();
+                binhluan.setNgayBinhLuan(current);
                 s.save(binhluan);
                 System.out.println("Thêm bình luận thành công!!");
+
             } else {
                 s.update(binhluan);
                 System.out.println("Thêm bình luận thất bại!!");
@@ -105,7 +91,26 @@ public class BinhLuanRepositoryImpl implements BinhLuanRepository {
             System.out.println(ex.getMessage());
             return null;
         }
+    }    
+    
+    @Override
+    public List<Object> getBinhLuanByBV(int idBaiViet) {
+        Session s = this.factory.getObject().getCurrentSession();
+        CriteriaBuilder b = s.getCriteriaBuilder();
+        CriteriaQuery<Object[]> q = b.createQuery(Object[].class);
+        List<Predicate> predicates = new ArrayList<>();
+        Root rComment = q.from(BinhLuan.class);
+        q.select(rComment);
+
+        Predicate p = b.equal(rComment.get("idBaiViet"), idBaiViet);
+        predicates.add(p);
+        q.where(predicates.toArray(Predicate[]::new));
+
+        Query query = s.createQuery(q);
+        return query.getResultList();
+
     }
+
 
     @Override
     public List<Object> getBinhLuanByReply(int reply) {
@@ -161,8 +166,6 @@ public class BinhLuanRepositoryImpl implements BinhLuanRepository {
         Session s = this.factory.getObject().getCurrentSession();
         s.save(binhLuan);
     }
-
-    
 
     @Override
     public void deleteBinhLuanByBaiViet(BaiViet baiViet) {

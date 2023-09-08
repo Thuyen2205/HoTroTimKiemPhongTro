@@ -18,7 +18,8 @@ const DangKy = () => {
     const [err, setErr] = useState(null);
     const [loading, setLoading] = useState(false);
     const avatar = useRef();
-    
+    const hinhAnh = useRef();
+
     const nav = useNavigate();
 
     const register = (evt) => {
@@ -32,11 +33,12 @@ const DangKy = () => {
                     form.append(field, user[field]);
 
             form.append("avatar", avatar.current.files[0]);
-            
+            // form.append("hinhAnh", hinhAnh.current.files[0]);
+
             setLoading(true)
             let res = await Apis.post(endpoints['register'], form);
             if (res.status === 201) {
-                nav("/login");
+                nav("/dangnhap");
             } else
                 setErr("Hệ thống bị lỗi!");
         }
@@ -93,7 +95,12 @@ const DangKy = () => {
                     <option>ROLE_CHUTRO</option>
                     <option>ROLE_KHACHHANG</option>
                 </Form.Control>
-
+                {/* {user.usertype === "ROLE_CHUTRO" ? <>
+                    <Form.Group className="mb-3">
+                        <Form.Label>Ảnh phòng trọ</Form.Label>
+                        <Form.Control type="file" ref={hinhAnh} />
+                    </Form.Group>
+                </> : <></>} */}
             </Form.Group>
             <Form.Group className="mb-3">
                 <Form.Label>Ảnh đại diện</Form.Label>

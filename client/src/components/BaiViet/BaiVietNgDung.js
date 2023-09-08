@@ -8,20 +8,29 @@ import { MyUserContext } from "../../App";
 const BaiVietNgDung = ({ idNgdung }) => {
     const [bvietngdung, setBvietngdung] = useState(null);
     const [user] = useContext(MyUserContext);
-    
+    const [listComment, setListCmt] = useState([]);
+
     useEffect(() => {
 
         const loadBvietngdung = async () => {
             let { data } = await Apis.get(endpoints['bviet-ngdung'](idNgdung));
             setBvietngdung(data);
-            console.log(data);
         }
         loadBvietngdung();
-        console.log(bvietngdung);
 
-    });
+    }, [idNgdung]);
 
-
+    const deleteBaiViet = async (baiVietId) => {
+        try {
+            // Send an API request to delete the baiViet
+            await Apis.delete(endpoints['xoabv'](baiVietId));
+            
+            // Update the bvietngdung state by removing the deleted baiViet
+            setBvietngdung((prevBvietngdung) => prevBvietngdung.filter((c) => c.id !== baiVietId));
+        } catch (error) {
+            console.error("Error deleting baiViet: ", error);
+        }
+    };
 
     if (!bvietngdung)
         return <MySpinner />;
@@ -31,7 +40,9 @@ const BaiVietNgDung = ({ idNgdung }) => {
                 {bvietngdung.map(c => {
                     return <>
                         <div className="tin">
-                            <div className="tin-anh"><Image width={"100%"} src={c.hinhAnh}></Image></div>
+                            <div className="tin-anh">
+                                <Image src={c.hinhAnh} style={{ width: '100%' }}></Image>
+                            </div>
                             <div className="tin-thongtin">
                                 <h5><Link style={{ textDecoration: 'none' }} className='text-danger' to={`/thtin_bviet/${c.id}`}>{c.tenBaiViet}</Link></h5>
                                 <Table >
@@ -53,9 +64,8 @@ const BaiVietNgDung = ({ idNgdung }) => {
                                     </tr>
                                 </Table>
                                 <div className="">
-
                                     <button><Link style={{ textDecoration: 'none' }} className='text-danger' to={`/capnhatbv/${c.id}`}>Cập nhật</Link></button>
-                                    <button>Xóa</button>
+                                    <button onClick={() => deleteBaiViet(c.id)}>Delete</button>
                                 </div>
                             </div>
 

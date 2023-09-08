@@ -45,8 +45,8 @@ public class BinhLuanServiceImpl implements BinhLuanService{
     }
 
     @Override
-    public List<Object> getBinhLuanByBV(int bvId) {
-        return this.binhluan.getBinhLuanByBV(bvId);
+    public List<Object> getBinhLuanByBV(int idBaiViet) {
+        return this.binhluan.getBinhLuanByBV(idBaiViet);
     }
 
     @Override
@@ -82,6 +82,11 @@ public class BinhLuanServiceImpl implements BinhLuanService{
     @Override
     public void deleteBinhLuanByNguoiDung(NguoiDung nguoidung) {
         this.binhluan.deleteBinhLuanByNguoiDung(nguoidung);
+    }
+
+    @Override
+    public BinhLuan addOrUpdateBinhLuan(BinhLuan binhluan) {
+        return this.binhluan.addOrUpdateBinhLuan(binhluan);
     }
     
 }

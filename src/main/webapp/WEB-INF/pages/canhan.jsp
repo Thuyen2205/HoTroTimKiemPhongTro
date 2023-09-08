@@ -12,6 +12,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <link href="<c:url value="/css/style.css" />" rel="stylesheet" />
 <!DOCTYPE html>
+
 <html>
 
     <section class="body-trangcanhan">
@@ -27,10 +28,9 @@
                         <p><c:if test="${taikhoan.idLoaiTaiKhoan.id == 3}">KHÁCH HÀNG</c:if></p>
                         <p>${taikhoan.tenNguoiDung}</p>
                         <p>${taikhoan.sdt}</p>
-
                         <div class="canhanhoa">
-                            <a href="#">Cập nhật</a>
-                            <a href="#">Đổi mật khẩu</a>
+                            <a href="<c:url value ="/capnhattaikhoan"/> ">Cập nhật</a>
+                            <a href="<c:url value ="/doimatkhau"/> "/>Đổi mật khẩu</a>
                         </div>
                     </center>
                 </div>
@@ -42,54 +42,102 @@
                 <div>
                     <c:forEach items="${baiviet}" var="p">
                         <c:if test="${p.loaiTrangThai.id==1}">
-                            <c:url value="/canhan/${p.id}" var="apiDe"/>
-                            <div class="tincanhan">
-                                <div class="tincanhan-anh">
-                                    <img src="${p.hinhAnh}"/>
-                                </div>
-                                <div class="tincanhan-noidung">
-                                    <table style="width:100%">
-                                        <c:url value="/thtin_bviet" var="bvietAction">
-                                            <c:param name="baivietId" value="${p.id}" />  
-                                        </c:url>
+                            <c:if test="${p.loaiBaiViet.id==1}">
+                                <c:url value="/canhan/${p.id}" var="apiDe"/>
+                                <div class="tincanhan">
+                                    <div class="tincanhan-anh">
+                                        <img src="${p.hinhAnh}"/>
+                                    </div>
+                                    <div class="tincanhan-noidung">
+                                        <table style="width:100%">
+                                            <c:url value="/thtin_bviet" var="bvietAction">
+                                                <c:param name="baivietId" value="${p.id}" />  
+                                            </c:url>
 
-                                        <a href="${bvietAction}" >${p.tenBaiViet}</a>
-                                        <tr>
-                                            <th>Khu vực:</th>
-                                            <td>${p.phamViCanTim}</td>
-                                        </tr>
-                                        <tr>
-                                            <th>Giá thuê:</th>
-                                            <td>${p.giaThue}/tháng</td>
-                                        </tr>
-                                        <tr>
-                                            <th>Ngày đăng:</th>
-                                            <td>${p.ngayDang}</td>
-                                        </tr>
-                                        <tr>
-                                            <th>Địa chỉ:</th>
-                                            <td>${p.diaChiCt}</td>
-                                        </tr>
-                                        <tr>
-                                            <th></th>
-                                            <td>   
-                                                <c:url value="/capnhat" var="bvietAction">
-                                                    <c:param name="baivietId" value="${p.id}" />  
-                                                </c:url>
-                                                <a href="${bvietAction}" class="btn btn-success" style="vertical-align:middle"> Cập nhật</a>
-                                            </td>
-                                            <td>   
-                                                <c:url value="/canhan_xoa" var="actionXoa">
-                                                    <c:param name="idBaiVietXoa" value="${p.id}" />  
-                                                </c:url>
-                                                <form:form method="post" action="${actionXoa}">
-                                                    <button class="btn btn-danger" type="submit">Xóa</button>
-                                                </form:form>
-                                            </td>
-                                        </tr>
-                                    </table>
+                                            <a href="${bvietAction}" >${p.tenBaiViet}</a>
+                                            <tr>
+                                                <th>Khu vực:</th>
+                                                <td>${p.phamViCanTim}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Giá thuê:</th>
+                                                <td>${p.giaThue}/tháng</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Ngày đăng:</th>
+                                                <td>${p.ngayDang}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Địa chỉ:</th>
+                                                <td>${p.diaChiCt}</td>
+                                            </tr>
+                                            <tr>
+                                                <th></th>
+                                                <td>   
+                                                    <c:url value="/capnhat" var="bvietAction">
+                                                        <c:param name="baivietId" value="${p.id}" />  
+                                                    </c:url>
+                                                    <a href="${bvietAction}" class="btn btn-success" style="vertical-align:middle"> Cập nhật</a>
+                                                </td>
+                                                <td>   
+                                                    <c:url value="/canhan_xoa" var="actionXoa">
+                                                        <c:param name="idBaiVietXoa" value="${p.id}" />  
+                                                    </c:url>
+                                                    <form:form method="post" action="${actionXoa}">
+                                                        <button class="btn btn-danger" type="submit">Xóa</button>
+                                                    </form:form>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
                                 </div>
-                            </div>
+                            </c:if>
+                            <c:if test="${p.loaiBaiViet.id==2}">
+                                <c:url value="/canhan/${p.id}" var="apiDe"/>
+                                <div class="tincanhan">
+                                  
+                                    <div class="tincanhan-noidung">
+                                        <table style="width:100%">
+                                            <c:url value="/thtin_bviet" var="bvietAction">
+                                                <c:param name="baivietId" value="${p.id}" />  
+                                            </c:url>
+
+                                            <a href="${bvietAction}" >${p.tenBaiViet}</a>
+                                            <tr>
+                                                <th>Khu vực:</th>
+                                                <td>${p.phamViCanTim}</td>
+                                            </tr>
+
+                                            <tr>
+                                                <th>Ngày đăng:</th>
+                                                <td>${p.ngayDang}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Địa chỉ:</th>
+                                                <td>${p.diaChiCt}</td>
+                                            </tr>
+                                            <tr>
+                                                <th></th>
+                                                <td>   
+                                                    <c:url value="/capnhat" var="bvietAction">
+                                                        <c:param name="baivietId" value="${p.id}" />  
+                                                    </c:url>
+                                                    <a href="${bvietAction}" class="btn btn-success" style="vertical-align:middle"> Cập nhật</a>
+                                                </td>
+                                                <td>   
+                                                    <c:url value="/canhan_xoa" var="actionXoa">
+                                                        <c:param name="idBaiVietXoa" value="${p.id}" />  
+                                                    </c:url>
+                                                    <form:form method="post" action="${actionXoa}">
+                                                        <button class="btn btn-danger" type="submit">Xóa</button>
+                                                    </form:form>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </c:if>
+
                         </c:if>
                     </c:forEach>
                 </div>

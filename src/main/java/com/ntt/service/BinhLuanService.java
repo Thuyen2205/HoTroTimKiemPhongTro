@@ -17,7 +17,9 @@ public interface BinhLuanService {
     List<BinhLuan> getBinhLuan(int idBaiViet);
     boolean addBinhLuan(BinhLuan binhluan);
     //PHAT
-    List<Object> getBinhLuanByBV(int bvId);
+    List<Object> getBinhLuanByBV(int idBaiViet);
+    BinhLuan addOrUpdateBinhLuan(BinhLuan binhluan);
+
     //THUYEN
     BinhLuan getBinhLuanById(int idBinhLuan);
     boolean deleteBinhLuan(int id);

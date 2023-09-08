@@ -23,6 +23,7 @@ import javax.persistence.criteria.Root;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
@@ -42,6 +43,8 @@ public class BaiVietRepositoryImpl implements BaiVietRepository {
     private TaiKhoanRepository taikhoan;
     @Autowired
     private BaiVietRepository baivietRepo;
+    @Autowired
+    private Environment env;
 
     @Override
     public List<BaiViet> getBaiViet2(String tenBaiViet) {
@@ -100,7 +103,6 @@ public class BaiVietRepositoryImpl implements BaiVietRepository {
         Session s = this.factory.getObject().getCurrentSession();
 
         try {
-
             s.save(baiviet);
             HinhAnh hinhanh = new HinhAnh();
             hinhanh.setIdBaiViet(baiviet);
@@ -118,9 +120,7 @@ public class BaiVietRepositoryImpl implements BaiVietRepository {
         Session s = this.factory.getObject().getCurrentSession();
         TrangThaiBaiViet newTT = new TrangThaiBaiViet();
         newTT.setId(1);
-
         try {
-
             baiviet.setLoaiTrangThai(newTT);
             s.update(baiviet);
             return true;
@@ -159,7 +159,6 @@ public class BaiVietRepositoryImpl implements BaiVietRepository {
         s.save(baiviet);
 
         return baiviet;
-
     }
 
     @Override
@@ -308,5 +307,98 @@ public class BaiVietRepositoryImpl implements BaiVietRepository {
         Query q = s.createQuery(query);
         return q.getResultList();
     }
+
+    @Override
+    public int getCountOfBaiViet() {
+        Session s = this.factory.getObject().getCurrentSession();
+        Query q = s.createQuery("SELECT COUNT(*) FROM BaiViet");
+
+        List<Long> resultList = q.getResultList();
+
+        if (resultList != null && !resultList.isEmpty()) {
+            Long count = resultList.get(0);
+            if (count != null) {
+                return count.intValue();
+            }
+        }
+
+        return 0;
+
+    }
+
+    @Override
+    public List<BaiViet> getBBByTen(Map<String, String> params) {
+        Session session = this.factory.getObject().getCurrentSession();
+        CriteriaBuilder b = session.getCriteriaBuilder();
+        CriteriaQuery<BaiViet> q = b.createQuery(BaiViet.class);
+        Root root = q.from(BaiViet.class);
+        q.select(root);
+
+        if (params != null) {
+            List<Predicate> predicates = new ArrayList<>();
+
+            String kw = params.get("kw");
+            if (kw != null && !kw.isEmpty()) {
+                predicates.add(b.like(root.get("tenBaiViet"), String.format("%%%s%%", kw)));
+            }
+
+//            String fromPrice = params.get("fromPrice");
+//            if (fromPrice != null && !fromPrice.isEmpty()) {
+//                predicates.add(b.greaterThanOrEqualTo(root.get("price"), Double.parseDouble(fromPrice)));
+//            }
+//
+//            String toPrice = params.get("toPrice");
+//            if (toPrice != null && !toPrice.isEmpty()) {
+//                predicates.add(b.lessThanOrEqualTo(root.get("price"), Double.parseDouble(toPrice)));
+//            }
+//
+//            String cateId = params.get("cateId");
+//            if (cateId != null && !cateId.isEmpty()) {
+//                predicates.add(b.equal(root.get("categoryId"), Integer.parseInt(cateId)));
+//            }
+
+            q.where(predicates.toArray(Predicate[]::new));
+        }
+
+        q.orderBy(b.desc(root.get("id")));
+
+        Query query = session.createQuery(q);
+
+//        if (params != null) {
+//            String page = params.get("page");
+//            if (page != null && !page.isEmpty()) {
+//                int p = Integer.parseInt(page);
+//                int pageSize = Integer.parseInt(this.env.getProperty("PAGE_SIZE"));
+//
+//                query.setMaxResults(pageSize);
+//                query.setFirstResult((p - 1) * pageSize);
+//            }
+//        }
+
+        return query.getResultList();
+    }
+
+    @Override
+    public BaiViet updateBaiVietAPI(BaiViet baiviet) {
+        Session s = this.factory.getObject().getCurrentSession();
+        s.update(baiviet);
+
+        return baiviet;
+    }
+
+//    @Override
+//    public boolean deleteBaiVietAPI(int id) {
+//        Session s = this.factory.getObject().getCurrentSession();
+//        BaiViet c = this.getBaiVietById(id);
+//        List<Object> list = getBaiViet2Type(id);
+//        try {
+//            list.forEach(action -> {s.delete(action);});
+//            s.delete(c);
+//            return true;
+//        } catch (HibernateException ex) {
+//            ex.printStackTrace();
+//            return false;
+//        }
+//    }
 
 }

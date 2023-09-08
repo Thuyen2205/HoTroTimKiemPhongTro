@@ -1,6 +1,6 @@
 import { Button, Form, Alert } from "react-bootstrap";
 import { useContext, useState } from "react";
-import Apis, { authApi, endpoints } from "../configs/Apis";
+import { authApi, endpoints } from "../configs/Apis";
 import MySpinner from "../layout/MySpinner";
 import { MyUserContext } from "../App";
 

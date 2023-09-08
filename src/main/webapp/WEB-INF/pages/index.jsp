@@ -23,6 +23,23 @@
             </div>
         </c:if>
 
+        <c:if test="${pages > 1}">
+            <ul class="pagination mt-1">
+                <c:url value="/" var="pageUrl">
+                    <c:param name="page" value="0" /> 
+                </c:url>
+                <li class="page-item"><a class="page-link" href="${pageUrl}">Tất cả</a></li>
+
+
+                <c:forEach begin="1" end="${pages}" var="i">
+                    <c:url value="/" var="pageAction">
+                        <c:param name="page" value="${i}" /> 
+                    </c:url>
+                    <li class="page-item"><a class="page-link" href="${pageAction}">${i}</a></li>
+                    </c:forEach>
+            </ul>
+
+        </c:if>
 
 
 

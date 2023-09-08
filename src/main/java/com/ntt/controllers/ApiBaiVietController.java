@@ -4,7 +4,6 @@
  */
 package com.ntt.controllers;
 
-
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ntt.pojo.BaiViet;
@@ -29,6 +28,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
@@ -43,30 +43,19 @@ import org.springframework.web.multipart.MultipartFile;
  */
 @RestController
 @RequestMapping("/api")
-@CrossOrigin
+
 public class ApiBaiVietController {
 
     @Autowired
     private BaiVietService baivietService;
     @Autowired
     private TaiKhoanService taikhoanService;
-
-
-//    @DeleteMapping("/capnhat1")
-//    @ResponseStatus(HttpStatus.NO_CONTENT)
-//    public String deleteBViet(@RequestParam Map<String, String> params) {
-//        int id = Integer.parseInt(params.get("baivietId").toString());
-//        this.baivietService.deleteBaiViet(id);
-//        return "capnhat1";
-//    }
-
     @Autowired
     private LoaiBaiVietService loaibaivietService;
     @Autowired
     private BinhLuanService binhLuanService;
     @Autowired
     private HinhAnhService HinhAnhService;
-
 
     @DeleteMapping("/canhan/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
@@ -78,10 +67,25 @@ public class ApiBaiVietController {
 
     }
 
+    @DeleteMapping("/baiviet/{id}")
+    @CrossOrigin
+    public void deletePost(@PathVariable(value = "id") int id) {
+        this.baivietService.deleteBaiViet(id);
+    }
+
     @GetMapping("/baiviet/")
     @CrossOrigin
     public ResponseEntity<List<BaiViet>> list() {
         return new ResponseEntity<>(this.baivietService.getBaiViet(), HttpStatus.OK);
+    }
+
+    @GetMapping("/listBV/")
+    @CrossOrigin
+    public ResponseEntity<List<BaiViet>> listBV(@RequestParam Map<String, String> params) {
+//        List<BaiViet> listBV = this.baivietService.getBBByTen(params);
+//        return new ResponseEntity<>(listBV, HttpStatus.OK);
+
+        return new ResponseEntity<>(this.baivietService.getBBByTen(params), HttpStatus.OK);
     }
 
     @GetMapping("/getBaiViet2Type/{id}")
@@ -131,17 +135,28 @@ public class ApiBaiVietController {
         System.out.println(bv);
         return new ResponseEntity<>(bv, HttpStatus.CREATED);
     }
+    
 
-    @PostMapping(path = "/capnhatbaiviet/{id}",
-            consumes = {MediaType.MULTIPART_FORM_DATA_VALUE},
-            produces = {MediaType.APPLICATION_JSON_VALUE})
+    @PostMapping("/updateBaiVietAPI/{id}")
     @CrossOrigin
-    public ResponseEntity<BaiViet> updateBaiVietAPI(Model model, @RequestParam Map<String, String> params,
-            @RequestPart MultipartFile hinhanh, @PathVariable(value = "id") int id) {
-        BaiViet bv = this.baivietService.addBaiVietAPI(params, hinhanh);
-        String i = String.valueOf(id);
-        BaiViet b = (BaiViet) this.baivietService.getBaiVietById(id);
-        return new ResponseEntity<>(bv, HttpStatus.CREATED);
+    public ResponseEntity<Object> updateBaiVietAPI(@PathVariable(value = "id") int id, @RequestBody BaiViet baiviet) {
+        BaiViet c = this.baivietService.getBaiVietById(id);
+        c.setTenBaiViet(baiviet.getTenBaiViet());
+        c.setNoiDung(baiviet.getNoiDung());
+        c.setPhamViCanTim(baiviet.getPhamViCanTim());
+        c.setSoNguoi(baiviet.getSoNguoi());
+        c.setGiaThue(baiviet.getGiaThue());
+        c.setDienTich(baiviet.getDienTich());
+        c.setDiaChiCt(baiviet.getDiaChiCt());
+
+        return new ResponseEntity<>(this.baivietService.updateBaiVietAPI(c), HttpStatus.OK);
     }
+    
+//    @DeleteMapping("/deleteBaiViet/{id}")
+//    @ResponseStatus(HttpStatus.NO_CONTENT)
+//    public void deleteBaiViet(@PathVariable(value = "id") int id) {
+//        this.binhLuanService.deleteBinhLuan(id);
+//    }
+    
 
 }

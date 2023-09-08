@@ -8,7 +8,6 @@ import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 import com.ntt.pojo.BaiViet;
 import com.ntt.pojo.LoaiBaiViet;
-import com.ntt.pojo.LoaiTaiKhoan;
 import com.ntt.pojo.NguoiDung;
 import com.ntt.repository.BaiVietRepository;
 import com.ntt.repository.LoaiBaiVietRepository;
@@ -18,15 +17,9 @@ import com.ntt.service.BaiVietService;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -62,7 +55,7 @@ public class BaiVietServiceImpl implements BaiVietService {
 
             if (baiviet.getIdNguoiDung().getIdLoaiTaiKhoan().getId() == 2) {
 
-                Map res = this.cloudinary.uploader().upload(baiviet.getFile2().getBytes(),
+                Map res = this.cloudinary.uploader().upload(baiviet.getFile().getBytes(),
                         ObjectUtils.asMap("resource_type", "auto"));
                 baiviet.setHinhAnh(res.get("secure_url").toString());
                 baiviet.setNgayDang(new Date());
@@ -112,7 +105,7 @@ public class BaiVietServiceImpl implements BaiVietService {
 
     @Override
     public boolean updateBaiViet(BaiViet baiviet) {
-        if (baiviet.getLoaiBaiViet().getId()== 1) {
+        if (baiviet.getLoaiBaiViet().getId() == 1) {
             try {
                 Map res = this.cloudinary.uploader().upload(baiviet.getFile().getBytes(),
                         ObjectUtils.asMap("resource_type", "auto"));
@@ -205,17 +198,43 @@ public class BaiVietServiceImpl implements BaiVietService {
         this.baivietRepo.deleteBaiVietByNguoiDung(nguoidung);
     }
 
-
     @Override
     public BaiViet getBaiVietById(int id) {
         return this.baivietRepo.getBaiVietById(id);
     }
+
     public boolean deleteBaiViet(int id) {
         return this.baivietRepo.deleteBaiViet(id);
     }
 
     public List<BaiViet> getBaiViet() {
         return this.baivietRepo.getBaiViet();
+    }
+
+    @Override
+    public List<BaiViet> getBaiVietTK(String address, BigDecimal price, Integer soNguoi, Map<String, String> params) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public List<BaiViet> getBaiViet(String tenBaiViet) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public int getCountOfBaiViet() {
+        return this.baivietRepo.getCountOfBaiViet();
+    }
+
+    @Override
+    public List<BaiViet> getBBByTen(Map<String, String> params) {
+        return this.baivietRepo.getBBByTen(params);
 
     }
+
+    @Override
+    public BaiViet updateBaiVietAPI(BaiViet baiviet) {
+        return this.baivietRepo.updateBaiVietAPI(baiviet);
+    }
+
 }

@@ -3,32 +3,46 @@
     Created on : Sep 4, 2023, 10:41:51 PM
     Author     : Admins
 --%>
-
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<div class="change-password">
-    <p class="change-password-title">Thay Đổi Mật Khẩu</p>
-    <form action="/action_page.php" class="change-password-form">
-        <div class="mb-3 mt-3">
-            <label for="email" class="form-label">Nhập Mật Khẩu Cũ:</label>
-            <input type="email" class="form-control" id="email" placeholder="Nhập Mật Khẩu Cũ" name="email"
-                   required>
-        </div>
-        <div class="mb-3">
-            <label for="pwd" class="form-label">Nhập Mật Khẩu Mới:</label>
-            <input type="password" class="form-control" id="pwd" placeholder="Nhập Mật Khẩu Mới" name="pswd"
-                   required>
-        </div>
-        <div class="mb-3">
-            <label for="pwd" class="form-label">Nhập Lại Mật Khẩu:</label>
-            <input type="password" class="form-control" id="pwd" placeholder="Nhập Lại Mật Khẩu" name="pswd"
-                   required>
-        </div>
-        <div class="btn-change-password-div">
-            <button type="submit" class="btn btn-primary btn-change-password ">Thay Đổi</button>
-        </div>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<link href="<c:url value="/css/trangchu.css"/>"rel="stylesheet">
+<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+<c:url value="/doimatkhau" var="actionDoiMatKhau">
+    <c:param name="idNguoiDung" value="${taikhoan.id}" />
+</c:url>
+<div class="wrapper">
+    <c:if test="${not empty error}">
+        <p style="color: red">${error}</p>
+    </c:if>
+
+    <c:if test="${not empty success}">
+        <p style="color: green">${success}</p>
+    </c:if>
+    <div class="change-password">
+        <p class="change-password-title">Thay Đổi Mật Khẩu</p>
+
+        <form action="${actionDoiMatKhau}" method="post">
+            <div class="input-box">
+                <label for="matKhauCu">Mật Khẩu Cũ:</label>
+                <input type="password" id="matKhauCu" name="matKhauCu" required><br><br>
+            </div>
+
+            <div class="input-box">
+                <label for="matKhauMoi">Mật Khẩu Mới:</label>
+                <input type="password" id="matKhauMoi" name="matKhauMoi" required><br><br>
+            </div>
+
+            <div class="input-box">
+                <label for="xacNhanMatKhauMoi">Xác Nhận Mật Khẩu Mới:</label>
+                <input type="password" id="xacNhanMatKhauMoi" name="xacNhanMatKhauMoi" required><br><br>
+            </div>
+
+            <input type="submit" class="btn btn-danger" value="Đổi Mật Khẩu">
+        </form>
+
+    </div>
 
 
-    </form>
+
 </div>
-

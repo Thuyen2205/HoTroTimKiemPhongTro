@@ -15,9 +15,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
  * @author ThanhThuyen
  */
 public interface TaiKhoanService extends UserDetailsService {
-
     boolean addTaiKhoan(NguoiDung nguoidung);
-
     List<NguoiDung> getTaiKhoan(String username);
     LoaiTaiKhoan getLoaiTaiKhoan(String tenLoaiTaiKhoan);
     NguoiDung getTaiKhoanbyTenTK(String tenTK);
@@ -30,4 +28,6 @@ public interface TaiKhoanService extends UserDetailsService {
     void deleteBaiVietById(int baiVietId);
     List<NguoiDung> getTaiKhoanAll();
     boolean updateTrangThaiTaiKhoan(NguoiDung nguoidung);
+    boolean updateTaiKhoan(NguoiDung nguoiDung);
+    boolean updateNguoiDung(NguoiDung nguoidung);
 }

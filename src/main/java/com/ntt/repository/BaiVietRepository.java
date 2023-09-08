@@ -25,14 +25,12 @@ public interface BaiVietRepository {
     List<Object> getBaiVietByType (String loaiBViet);
     List<Object> getBaiViet2Type (int loaiBViet);
 
-    //Lấy bài viết theo id bài viết
     BaiViet getBaiVietById(int id);
-    //Lấy bài viết theo id ngư�?i dùng
     List<Object> getBaiVietByIdNgDung(NguoiDung idNgDung);
     BaiViet addBaiVietAPI(BaiViet baiviet);
+    BaiViet updateBaiVietAPI(BaiViet baiviet);
+//    public boolean deleteBaiVietAPI(int id);
     //THUYỀN MỚI PUSH
-    
-    
     List<BaiViet> getBaiVietByGiaThue(BigDecimal gia);
     List<BaiViet> getBaiVietAll();
     List<BaiViet> getBaiVietGia(Map<String, String> params);
@@ -40,5 +38,8 @@ public interface BaiVietRepository {
     boolean updateTrangThai(BaiViet idBaiViet);
     void saveBaiViet(BaiViet baiviet);
     void deleteBaiVietByNguoiDung(NguoiDung nguoidung);
+    int getCountOfBaiViet(); 
     
+    List<BaiViet> getBBByTen(Map<String, String> params);
+
 }

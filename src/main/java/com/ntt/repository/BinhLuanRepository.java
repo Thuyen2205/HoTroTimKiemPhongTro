@@ -17,10 +17,11 @@ public interface BinhLuanRepository {
     List<BinhLuan> getBinhLuan(int idBaiViet);
     boolean addBinhLuan(BinhLuan binhluan);
     //PHAT
-    List<Object> getBinhLuanByBV(int bvId);
+    List<Object> getBinhLuanByBV(int idBaiViet);
     BinhLuan addOrUpdateBinhLuan(BinhLuan binhluan);
     List<Object> getBinhLuanByReply(int reply);
     boolean deleteBinhLuan(int id);
+
     //THUYEN
     List<BinhLuan> getBinhLuanByNguoiDung(NguoiDung idNguoiDung);
     BinhLuan getBinhLuanById(int idBinhLuan);

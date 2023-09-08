@@ -17,6 +17,7 @@ import java.util.Map;
 import javax.persistence.Query;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -40,33 +41,41 @@ public class IndexContext {
     private TaiKhoanService taikhoan;
     @Autowired
     private BaiVietService baivietService;
+    @Autowired
+    private Environment env;
 
     @RequestMapping("/")
-    public String index(Model model, Authentication authen) {
+    public String index(Model model, Authentication authen,
+            @RequestParam Map<String, String> params,
+            @RequestParam(name = "address", required = false) String address,
+            @RequestParam(name = "price", required = false) BigDecimal price,
+            @RequestParam(name = "soNguoi", required = false) Integer soNguoi) {
 
-        model.addAttribute("baiviet", this.baivietService.getBaiVietAll());
         if (authen != null) {
             UserDetails user = this.taikhoan.loadUserByUsername(authen.getName());
             NguoiDung u = this.taikhoan.getTaiKhoanbyTenTK(user.getUsername());
             model.addAttribute("taikhoan", u);
         }
+        model.addAttribute("baiviet",this.baivietService.getBaiVietAll());
+
         return "index";
 
-    }
+    }   
 
     @RequestMapping("/timkiem")
     public String timKiem(Model model, NguoiDung nguoidung, Authentication authen, @RequestParam(name = "address", required = false) String address,
             @RequestParam(name = "price", required = false) BigDecimal price,
-            @RequestParam(name = "soNguoi", required = false) Integer soNguoi) {
+            @RequestParam(name = "soNguoi", required = false) Integer soNguoi, @RequestParam Map<String, String> params) {
 
         if (authen != null) {
             model.addAttribute("taikhoan", this.taikhoan.getTaiKhoan(authen.getName()).get(0));
             if (address != null || price != null || soNguoi != null) {
-                model.addAttribute("baiviet", this.baivietService.getBaiVietTK(address, price, soNguoi));
+                model.addAttribute("baiviet", this.baivietService.getBaiVietTK(address, price, soNguoi, params));
             } else {
                 model.addAttribute("baiviet", this.baivietService.getBaiVietAll());
             }
         }
+      
 
         model.addAttribute("baiviet_1", this.baivietService.getBaiVietByType("1"));
         model.addAttribute("baiviet_2", this.baivietService.getBaiVietByType("2"));
@@ -77,7 +86,6 @@ public class IndexContext {
     public String index(Model model, Authentication authen, @RequestParam("gia") int gia) {
         BigDecimal giaBigDecimal = new BigDecimal(gia);
         model.addAttribute("baiviet_1", this.baivietService.getBaiVietByGiaThue(giaBigDecimal));
-//        model.addAttribute("baiviet_2", this.baivietService.getBaiVietByGiaThue(giaBigDecimal));
         UserDetails user = this.taikhoan.loadUserByUsername(authen.getName());
         NguoiDung u = this.taikhoan.getTaiKhoanbyTenTK(user.getUsername());
         model.addAttribute("taikhoan", u);
@@ -93,4 +101,6 @@ public class IndexContext {
         model.addAttribute("taikhoan", u);
         return "bando";
     }
+    
+    
 }

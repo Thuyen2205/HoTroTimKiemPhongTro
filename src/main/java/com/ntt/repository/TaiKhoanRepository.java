@@ -26,4 +26,7 @@ public interface TaiKhoanRepository{
     void deleteBaiVietById(int baiVietId);
     List<NguoiDung> getTaiKhoanAll();
     boolean updateTrangThaiTaiKhoan(NguoiDung nguoidung);
+    boolean updateTaiKhoan(NguoiDung nguoiDung);
+    boolean updateNguoiDung(NguoiDung nguoidung);
+    
 }

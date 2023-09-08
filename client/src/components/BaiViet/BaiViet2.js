@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Card, Row, Col, Button, Container, Image, Table } from "react-bootstrap";
+import { Container, Image, Table } from "react-bootstrap";
 import MySpinner from "../../layout/MySpinner";
 import Apis, { endpoints } from "../../configs/Apis";
 import "./BViet.scss"

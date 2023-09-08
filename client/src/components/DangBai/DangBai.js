@@ -7,7 +7,7 @@ import { Button, Form } from "react-bootstrap";
 
 const DangBai = () => {
     const [user, dispatch] = useContext(MyUserContext);
-
+    
     const [baiviet, setBaiViet] = useState({
         "ten": "",
         "noidung": "",
@@ -19,6 +19,7 @@ const DangBai = () => {
         "userid": user.id,
         "usertypeId": user.idLoaiTaiKhoan.id
     });
+
     const [err, setErr] = useState(null);
     const hinhanh = useRef();
     const nav = useNavigate();
@@ -36,7 +37,7 @@ const DangBai = () => {
                 } else {
                     nav("/");
                 }
-            }         
+            }
 
             let res = await Apis.post(endpoints['dangbai'], form);
 
@@ -54,7 +55,9 @@ const DangBai = () => {
             return { ...current, [field]: evt.target.value }
         })
     }
-    // console.log(baiviet);
+
+    
+
     return <>
         <h1 className="text-center text-info">ĐĂNG BÀI VIẾT</h1>
         <div className="dangbai">
@@ -131,9 +134,6 @@ const DangBai = () => {
                             <Button variant="info" type="submit">Đăng bài</Button>
                         </Form>
                     </>}
-
-
-
                 </div>
             </div>
             <div className="container2"></div>

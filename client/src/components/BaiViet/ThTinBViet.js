@@ -1,27 +1,32 @@
 import { Container, Image } from "react-bootstrap";
 import Apis, { endpoints } from "../../configs/Apis";
 import MySpinner from "../../layout/MySpinner";
-import { useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { Link, useParams } from "react-router-dom";
+import { useContext, useEffect, useState } from "react";
 import "./BViet.scss";
+import BinhLuan from "../BinhLuan/BinhLuan";
+import { MyUserContext } from "../../App";
 
 const ThTinBViet = ({ baivietId }) => {
     const [thtinbviet, setThtinBviet] = useState(null);
     const { id } = useParams();
+    const [user] = useContext(MyUserContext);
 
     useEffect(() => {
         const loadThtinBviet = async () => {
-            let { data } = await  Apis.get(`${endpoints['thtin-bviet']} + ${id}`)
+            let { data } = await Apis.get(`${endpoints['thtin-bviet']} + ${id}`)
             setThtinBviet(data);
 
         }
         loadThtinBviet();
 
-    });    
+    });
 
     if (!thtinbviet) {
         return <MySpinner />
     }
+    // console.log(thtinbviet.id)
+    let url = "http://192.168.1.4:3000/thtin_bviet/" + id;
 
     return (
         <>
@@ -29,7 +34,7 @@ const ThTinBViet = ({ baivietId }) => {
                 <div className="thtinbviet">
                     <div className="thtin-col1">
                         <div className="thtin-anh">
-                            <Image src={thtinbviet.hinhAnh} /> 
+                            <Image src={thtinbviet.hinhAnh} />
                         </div>
                         <div className="thtin-ndung">
                             <h3 className="bv-ten">{thtinbviet.tenBaiViet}</h3>
@@ -67,7 +72,26 @@ const ThTinBViet = ({ baivietId }) => {
                                 </table>
                             </div>
                         </div>
+                        <div className="thtin-binhluan">
+                            <div className="chia-bl"></div>
+                            <div className="danhsach-bl">
+                                
+                            </div>
+                            {user !== null ?
+                                <BinhLuan idBaiViet={thtinbviet.id} />
+                                : <>
+                                    <div style={{ fontSize: 50 }}>
+                                        Bình luận
+                                    </div>
+                                    <div>Vui lòng <Link to="/"> Đăng nhập</Link> để xem bình luận và bình luận
+                                    </div>
+                                </>
+                            }
+                        </div>
+
                     </div>
+
+
                     <div className="thtin-col2"></div>
                     <div className="thtin-col3">
                         <div className="thtin-tacgia">
