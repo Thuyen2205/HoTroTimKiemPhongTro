@@ -71,6 +71,8 @@ public class DangNhapController {
             model.addAttribute("taikhoan", u);
             model.addAttribute("baiviet", this.baiviet.getBaiVietByIdNgDung(u));
         }
+        model.addAttribute("nguoidung", this.taikhoan.getTaiKhoan(authen.getName()).get(0));
+
         return "canhan";
     }
 
@@ -95,6 +97,8 @@ public class DangNhapController {
             NguoiDung u = this.taikhoan.getTaiKhoanbyTenTK(user.getUsername());
             model.addAttribute("taikhoan", this.taikhoan.getTaiKhoan(authen.getName()).get(0));
             model.addAttribute("taikhoan", u);
+            model.addAttribute("nguoidung", this.taikhoan.getTaiKhoan(authen.getName()).get(0));
+
         }
         model.addAttribute("user", new NguoiDung());
 
@@ -139,6 +143,7 @@ public class DangNhapController {
         if (authen != null) {
             UserDetails user = this.taikhoan.loadUserByUsername(authen.getName());
             NguoiDung u = this.taikhoan.getTaiKhoanbyTenTK(user.getUsername());
+            model.addAttribute("nguoidung", this.taikhoan.getTaiKhoan(authen.getName()).get(0));
 
             model.addAttribute("taikhoan", u);
         }
@@ -153,12 +158,11 @@ public class DangNhapController {
         String errMsg = "";
         if (authen != null) {
             if (this.taikhoan.updateNguoiDung(taikhoan) == true) {
-                  return "redirect:/capnhattaikhoan";
+                return "redirect:/capnhattaikhoan";
             } else {
                 errMsg = "ra";
             }
         }
         return "capnhattaikhoan";
     }
-
 }

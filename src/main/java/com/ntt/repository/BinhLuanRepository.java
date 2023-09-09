@@ -29,4 +29,7 @@ public interface BinhLuanRepository {
     void saveBinhLuan(BinhLuan binhLuan);
     void deleteBinhLuanByBaiViet(BaiViet baiviet);
     void deleteBinhLuanByNguoiDung(NguoiDung nguoidung);
+    
+    BinhLuan themBinhLuan(BinhLuan binhluan);
+
 }

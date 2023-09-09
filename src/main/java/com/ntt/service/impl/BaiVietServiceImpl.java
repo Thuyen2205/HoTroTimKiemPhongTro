@@ -42,10 +42,7 @@ public class BaiVietServiceImpl implements BaiVietService {
     @Autowired
     private LoaiTaiKhoanRepository LoaiTaiKhoanRepository;
 
-    @Override
-    public List<BaiViet> getBaiVietTK(String address, BigDecimal price, Integer soNguoi) {
-        return this.baivietRepo.getBaiVietTK(address, price, soNguoi);
-    }
+    
 
     @Override
     public boolean addBaiViet(BaiViet baiviet) {
@@ -54,11 +51,14 @@ public class BaiVietServiceImpl implements BaiVietService {
         try {
 
             if (baiviet.getIdNguoiDung().getIdLoaiTaiKhoan().getId() == 2) {
+                if (!baiviet.getFile().isEmpty()) {
+                    Map res = this.cloudinary.uploader().upload(baiviet.getFile().getBytes(),
+                            ObjectUtils.asMap("resource_type", "auto"));
+                    baiviet.setHinhAnh(res.get("secure_url").toString());
 
-                Map res = this.cloudinary.uploader().upload(baiviet.getFile().getBytes(),
-                        ObjectUtils.asMap("resource_type", "auto"));
-                baiviet.setHinhAnh(res.get("secure_url").toString());
+                }
                 baiviet.setNgayDang(new Date());
+
             }
             if (baiviet.getIdNguoiDung().getIdLoaiTaiKhoan().getId() == 3) {
                 baiviet.setNgayDang(new Date());
@@ -107,9 +107,11 @@ public class BaiVietServiceImpl implements BaiVietService {
     public boolean updateBaiViet(BaiViet baiviet) {
         if (baiviet.getLoaiBaiViet().getId() == 1) {
             try {
-                Map res = this.cloudinary.uploader().upload(baiviet.getFile().getBytes(),
-                        ObjectUtils.asMap("resource_type", "auto"));
-                baiviet.setHinhAnh(res.get("secure_url").toString());
+                if (!baiviet.getFile().isEmpty()) {
+                    Map res = this.cloudinary.uploader().upload(baiviet.getFile().getBytes(),
+                            ObjectUtils.asMap("resource_type", "auto"));
+                    baiviet.setHinhAnh(res.get("secure_url").toString());
+                }
 
             } catch (IOException ex) {
                 System.err.println("== UPDATE BaiViet ==" + ex.getMessage());
@@ -199,6 +201,11 @@ public class BaiVietServiceImpl implements BaiVietService {
     }
 
     @Override
+    public int getCountOfBaiViet() {
+        return this.baivietRepo.getCountOfBaiViet();
+    }
+
+    @Override
     public BaiViet getBaiVietById(int id) {
         return this.baivietRepo.getBaiVietById(id);
     }
@@ -212,18 +219,8 @@ public class BaiVietServiceImpl implements BaiVietService {
     }
 
     @Override
-    public List<BaiViet> getBaiVietTK(String address, BigDecimal price, Integer soNguoi, Map<String, String> params) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    @Override
     public List<BaiViet> getBaiViet(String tenBaiViet) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    @Override
-    public int getCountOfBaiViet() {
-        return this.baivietRepo.getCountOfBaiViet();
+        return this.baivietRepo.getBaiViet(tenBaiViet);
     }
 
     @Override
@@ -237,4 +234,18 @@ public class BaiVietServiceImpl implements BaiVietService {
         return this.baivietRepo.updateBaiVietAPI(baiviet);
     }
 
+//    @Override
+//    public List<BaiViet> getBaiVietTK(String address, BigDecimal price, Integer soNguoi) {
+//        return this.baivietRepo.getBaiVietTK(address, price, soNguoi);
+//    }
+    
+    @Override
+    public List<BaiViet> getBaiVietTK(String address, BigDecimal price, Integer soNguoi, Map<String, String> params) {
+        return this.baivietRepo.getBaiVietTK(address, price, soNguoi, params);
+    }
+
+    @Override
+    public List<BaiViet> getBaiVietDaDuyet() {
+        return this.baivietRepo.getBaiVietDaDuyet();
+    }
 }

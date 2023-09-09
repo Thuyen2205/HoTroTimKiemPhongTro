@@ -16,7 +16,6 @@ import org.springframework.web.multipart.MultipartFile;
  * @author ThanhThuyen
  */
 public interface BaiVietService  {
-    List<BaiViet> getBaiVietTK(String address, BigDecimal price, Integer soNguoi,Map<String, String> params);
     List<BaiViet> getBaiViet(String tenBaiViet);
     List<BaiViet> getBaiViet();
     List<BaiViet> getBaiViet2(String tenBaiViet);
@@ -43,7 +42,8 @@ public interface BaiVietService  {
     void saveBaiViet(BaiViet baiviet);
     void deleteBaiVietByNguoiDung(NguoiDung nguoidung);
     int getCountOfBaiViet();
-    List<BaiViet> getBaiVietTK(String address, BigDecimal price, Integer soNguoi);
-
-
+    
+    List<BaiViet> getBaiVietTK(String address, BigDecimal price, Integer soNguoi,Map<String, String> params);
+//    List<BaiViet> getBaiVietTK(String address, BigDecimal price, Integer soNguoi);
+    List<BaiViet> getBaiVietDaDuyet();
 }

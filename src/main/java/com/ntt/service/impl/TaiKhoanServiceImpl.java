@@ -143,36 +143,39 @@ public class TaiKhoanServiceImpl implements TaiKhoanService {
         return this.taikhoanRepository.updateTrangThaiTaiKhoan(nguoidung);
     }
 
-    @Override
-    public boolean updateNguoiDung(NguoiDung nguoidung) {
-        try {
-            Map res = this.cloudinary.uploader().upload(nguoidung.getFile().getBytes(),
-                    ObjectUtils.asMap("resource_type", "auto"));
-            nguoidung.setAvatar(res.get("secure_url").toString());
+//    @Override
+//    public boolean updateTaiKhoan(NguoiDung nguoiDung) {
+//        Date current = new Date();
+//        try {
+//            MultipartFile file = nguoiDung.getFile();
+//            if (file != null && !file.isEmpty()) {
+//                Map res = this.cloudinary.uploader().upload(nguoiDung.getFile().getBytes(),
+//                        ObjectUtils.asMap("resource_type", "auto"));
+//                nguoiDung.setAvatar(res.get("secure_url").toString());
+//            }
+//        }
+//    }
 
-        } catch (IOException ex) {
-            System.err.println("== UPDATE BaiViet ==" + ex.getMessage());
-        }
-        nguoidung.setHinhAnh(null);
-        return this.taikhoanRepository.updateNguoiDung(nguoidung);
+    public boolean updateTaiKhoan(NguoiDung nguoiDung) {
+        return this.taikhoanRepository.updateTaiKhoan(nguoiDung);
     }
 
     @Override
-    public boolean updateTaiKhoan(NguoiDung nguoiDung) {
+    public boolean updateNguoiDung(NguoiDung nguoidung) {
+
         Date current = new Date();
         try {
-            MultipartFile file = nguoiDung.getFile();
+            MultipartFile file = nguoidung.getFile();
             if (file != null && !file.isEmpty()) {
-                Map res = this.cloudinary.uploader().upload(nguoiDung.getFile().getBytes(),
+                Map res = this.cloudinary.uploader().upload(nguoidung.getFile().getBytes(),
                         ObjectUtils.asMap("resource_type", "auto"));
-                nguoiDung.setAvatar(res.get("secure_url").toString());
+                nguoidung.setAvatar(res.get("secure_url").toString());
             }
         } catch (IOException ex) {
             System.err.println("== UPDATE BaiViet ==" + ex.getMessage());
         }
-        nguoiDung.setNgayTao(current);
-        return this.taikhoanRepository.updateNguoiDung(nguoiDung);
+        nguoidung.setNgayTao(current);
+        return this.taikhoanRepository.updateNguoiDung(nguoidung);
+
     }
-
-
 }

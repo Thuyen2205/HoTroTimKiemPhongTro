@@ -20,11 +20,13 @@ import com.ntt.service.NguoiDungService;
 import com.ntt.service.TaiKhoanService;
 import com.ntt.service.impl.LoaiTrangThaiServiceImpl;
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import javax.validation.constraints.Past;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -34,6 +36,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -42,6 +45,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 /**
  *
@@ -67,7 +71,6 @@ public class BaiVietController {
     private JavaMailSender emailSender;
     @Autowired
     private LoaiTrangThaiService loaiTrangThaiService;
-    private Long editingId;
 
     @GetMapping("/dangbai")
     public String list(Model model, Authentication authen, @RequestParam Map<String, String> params) {
@@ -75,10 +78,12 @@ public class BaiVietController {
         model.addAttribute("baiviet_role", this.loaiBaiViet.getLoaiBaiViet());
         model.addAttribute("taikhoan", this.taikhoan.getTaiKhoan(authen.getName()).get(0));
         model.addAttribute("baiviet", new BaiViet());
+        Date date = new Date();
+        model.addAttribute("date", date);
         return "dangbai";
 
     }
-    
+
     @ModelAttribute
     public void commonAttr(Model model) {
         model.addAttribute("trangThai_role", this.loaiTrangThaiService.getLoaiTrangThai());
@@ -87,11 +92,14 @@ public class BaiVietController {
     @RequestMapping("/thtin_bviet")
     public String bvietThTin(Model model, @RequestParam Map<String, String> params, Authentication authen) {
         String errMsg = "";
+
         int id = Integer.parseInt(params.get("baivietId"));
+
         BaiViet bv = (BaiViet) this.baivietService.getBaiVietById(id);
         if (authen != null) {
-            model.addAttribute("taikhoan", this.taikhoan.getTaiKhoan(authen.getName()).get(0));
+
             NguoiDung nd = this.taikhoan.getTaiKhoan(authen.getName()).get(0);
+            model.addAttribute("taikhoan", this.taikhoan.getTaiKhoan(authen.getName()).get(0));
             model.addAttribute("follows", this.followService.getFollowsKhachHang(nd).get(0));
             model.addAttribute("followlist", this.followService.getFollowsKhachHang(nd));
             model.addAttribute("nguoidung", this.taikhoan.getTaiKhoan(authen.getName()).get(0));
@@ -105,37 +113,61 @@ public class BaiVietController {
     }
 
     @PostMapping("/thtin_bviet_bl")
-    public String addBinhLuan(Model model, @ModelAttribute(value = "binhluan") BinhLuan binhluan, Authentication authen, @RequestParam Map<String, String> params) {
+    public String handleBinhLuan(@ModelAttribute("binhluan") BinhLuan binhluan,
+            Authentication authen,
+            @RequestParam Map<String, String> params,
+            RedirectAttributes redirectAttributes) {
         String errMsg = "";
-        String ms = "";
-        int id = Integer.parseInt(params.get("baivietId"));
+        String baivietIdParam = params.get("baivietId");
+
+        // Kiểm tra xem người dùng đã đăng nhập chưa
         if (authen.getName() != null) {
-            
-            if (this.binhluanService.addBinhLuan(binhluan) == true) {
-                return "forward:/thtin_bviet";
+            // Nếu binhluan có id, đây là trường hợp cập nhật bình luận
+            if (binhluan.getId() != null) {
+                BinhLuan existingBinhLuan = binhluanService.getBinhLuanById(binhluan.getId());
+                if (existingBinhLuan != null) {
+                    existingBinhLuan.setNoiDung(binhluan.getNoiDung());
+                    binhluanService.updateBinhLuan(existingBinhLuan);
+                } else {
+                    errMsg = "Không tìm thấy bình luận cần cập nhật.";
+                }
             } else {
-                ms = "?� c� l?i x�y ra";
+                // Đây là trường hợp thêm bình luận mới
+                binhluanService.addBinhLuan(binhluan);
             }
+
+            // Chuyển hướng đến trang hiển thị bài viết hoặc trang khác tùy vào yêu cầu của bạn
+            redirectAttributes.addAttribute("baivietId", baivietIdParam);
+            return "redirect:/thtin_bviet";
         }
+
+        // Nếu người dùng chưa đăng nhập, bạn có thể xử lý lỗi hoặc điều hướng đến trang đăng nhập
+        errMsg = "Bạn cần đăng nhập để thực hiện thao tác này.";
+        // Xử lý lỗi hoặc chuyển hướng đến trang đăng nhập tại đây
+
         return "thtin_bviet";
     }
 
     @PostMapping("/thtin_bviet_fl")
-    public String addFollow(Model model, @ModelAttribute(value = "follow") Follow follow, Authentication authen, @RequestParam Map<String, String> params) {
+    public String addFollow(Model model, @ModelAttribute(value = "follow") Follow follow, Authentication authen,
+            @RequestParam Map<String, String> params
+    ) {
         String ms = "";
         if (authen.getName() != null) {
             if (this.followService.addFollow(follow) == true) {
 
-                return "redirect:/";//redirect:/
+                return "redirect:/";
             } else {
                 ms = "?� c� l?i x�y ra";
             }
         }
         return "index";
     }
-    
+
     @PostMapping("/thtin_bviet_xn")
-    public String xacNhan(Model model, Authentication authen, @RequestParam Map<String, String> params) {
+    public String xacNhan(Model model, Authentication authen,
+            @RequestParam Map<String, String> params
+    ) {
         String ms = "";
         int id = Integer.parseInt(params.get("baivietId"));
         BaiViet idBaiViet = (BaiViet) this.baivietService.getBaiVietById(id);
@@ -150,26 +182,25 @@ public class BaiVietController {
         return "index";
     }
 
-    
     @PostMapping("/dangbai")
-    public String add(Model model, @ModelAttribute(value = "baiviet") BaiViet baiviet, @RequestParam Map<String, String> params, Authentication authen) {
+    public String add(Model model, @ModelAttribute(value = "baiviet") @Valid BaiViet baiviet,
+            @RequestParam Map<String, String> params,
+            Authentication authen, BindingResult rs
+    ) {
         String errMsg = "";
+        if (!rs.hasErrors()) {
+            if (authen.getName() != null) {
 
-//<<<<<<< HEAD
-//        if (this.baivietService.addBaiViet(baiviet) == true) {
-//
-//            return "redirect:/";
-//        } else {
-//            errMsg = "?� c� l?i x�y ra";
-//=======
-        if (authen.getName() != null) {
+                if (this.baivietService.addBaiViet(baiviet) == true) {
 
-            if (this.baivietService.addBaiViet(baiviet) == true) {
-
-                return "redirect:/";
-            } else {
-                errMsg = "?� c� l?i x�y ra";
+                    return "redirect:/";
+                } else {
+                    errMsg = "?� c� l?i x�y ra";
+                }
             }
+
+        } else {
+            model.addAttribute("errors", rs.getAllErrors());
         }
 
         return "baiviet";
@@ -183,6 +214,8 @@ public class BaiVietController {
             model.addAttribute("taikhoan", this.taikhoan.getTaiKhoan(authen.getName()).get(0));
         }
         model.addAttribute("BaiViet", this.baivietService.getBaiVietById(id));
+        model.addAttribute("nguoidung", this.taikhoan.getTaiKhoan(authen.getName()).get(0));
+
         return "capnhat";
     }
 
@@ -200,11 +233,11 @@ public class BaiVietController {
         return "capnhat";
     }
 
-    
     @PostMapping("/thtin_bviet_tt")
-    public String capNhatTrangThai(@RequestParam Map<String, String> params, Authentication authen) {
+    public String capNhatTrangThai(@RequestParam Map<String, String> params, Authentication authen
+    ) {
         int id = Integer.parseInt(params.get("baivietId").toString());
-        BaiViet baiviet = (BaiViet)this.baivietService.getBaiVietById(id);
+        BaiViet baiviet = (BaiViet) this.baivietService.getBaiVietById(id);
         NguoiDung ndChuTro = this.taikhoan.getTaiKhoanId(baiviet.getIdNguoiDung().getId());
         List<Follow> fls = this.followService.getFollowsChuTro(ndChuTro);
         List<TrangThaiBaiViet> lsts = this.loaiTrangThaiService.getLoaiTrangThaiAll();
@@ -215,8 +248,8 @@ public class BaiVietController {
                 SimpleMailMessage message = new SimpleMailMessage();
                 for (Follow fl : fls) {
                     message.setTo(fl.getIdKhachHang().getEmail());
-                    message.setSubject("Xong mail r � (S�i Mail API)");
-                    message.setText("Nguoi dung ?� ??ng bai m?i!!! V�o Xem");
+                    message.setSubject("Có bài viet moi!! vào xem");
+                    message.setText(fl.getIdChuTro().getTenNguoiDung() + " da dang bai viet moi");
                     emailSender.send(message);
                 }
 
@@ -228,7 +261,8 @@ public class BaiVietController {
     }
 
     @PostMapping("/thtin_bviet_tuchoi")
-    public String capNhatTrangThaiTuChoi(@RequestParam Map<String, String> params) {
+    public String capNhatTrangThaiTuChoi(@RequestParam Map<String, String> params
+    ) {
         int id = Integer.parseInt(params.get("baivietId").toString());
         System.out.println(id);
         BaiViet baiviet = (BaiViet) this.baivietService.getBaiVietById(id);
@@ -245,83 +279,4 @@ public class BaiVietController {
         return "thtin_bviet";
     }
 
-
-
-
-//    
-//    @RequestMapping(value = "DeleteBViet/{baivietId}")
-//    public String deleteBViet(HttpServletRequest request, Http)
-
-
-//    @PostMapping("/thtin_bviet_tt")
-//    public String capNhatTrangThai(@RequestParam Map<String, String> params, Authentication authen) {
-//        int id = Integer.parseInt(params.get("baivietId").toString());
-//        BaiViet baiviet = this.baivietService.getBaiVietById(id);
-//        NguoiDung ndChuTro = this.taikhoan.getTaiKhoanId(baiviet.getIdNguoiDung().getId());
-//        List<Follow> fls = this.followService.getFollowsChuTro(ndChuTro);
-//        List<TrangThaiBaiViet> lsts = this.loaiTrangThaiService.getLoaiTrangThaiAll();
-//        for (TrangThaiBaiViet lst : lsts) {
-//            if (lst.getId() == 1) {
-//                baiviet.setLoaiTrangThai(lst);
-//                baivietService.saveBaiViet(baiviet);
-//                SimpleMailMessage message = new SimpleMailMessage();
-//                for (Follow fl : fls) {
-//                    message.setTo(fl.getIdKhachHang().getEmail());
-//                    message.setSubject("Xong mail r � (S�i Mail API)");
-//                    message.setText("Nguoi dung ?� ??ng bai m?i!!! V�o Xem");
-//                    emailSender.send(message);
-//                }
-//
-//                return "redirect:/admin";
-//            }
-//        }
-//
-//        return "thtin_bviet";
-//    }
-//
-//    @PostMapping("/thtin_bviet_tuchoi")
-//    public String capNhatTrangThaiTuChoi(@RequestParam Map<String, String> params) {
-//        int id = Integer.parseInt(params.get("baivietId").toString());
-//        System.out.println(id);
-//        BaiViet baiviet = this.baivietService.getBaiVietById(id);
-//        System.out.println(baiviet.getTenBaiViet());
-//        List<TrangThaiBaiViet> lsts = this.loaiTrangThaiService.getLoaiTrangThaiAll();
-//        for (TrangThaiBaiViet lst : lsts) {
-//            if (lst.getId() == 3) {
-//                baiviet.setLoaiTrangThai(lst);
-//                baivietService.saveBaiViet(baiviet);
-//                return "redirect:/admin";
-//            }
-//        }
-//
-//        return "thtin_bviet";
-//    }
-//
-//    @PostMapping("/thtin_bviet_chinhsua")
-//    public String chinhsuaBinhLuan(@RequestParam Map<String, String> params, @ModelAttribute("binhLuanForm") BinhLuan binhLuanForm) {
-//        BinhLuan binhLuan = binhluanService.getBinhLuanById(binhLuanForm.getId());
-//        binhLuan.setNoiDung(binhLuanForm.getNoiDungMoi());
-//        binhluanService.saveBinhLuan(binhLuan);
-//        return "thtin_bviet";
-//    }
-    
-//    @PostMapping("/thtin_bviet_edit")
-//    public String editBinhLuan(@RequestParam Map<String, String> params) {
-//        String idParam = params.get("id");
-//        String editedNoiDung = params.get("editedNoiDung");
-//
-//        if (idParam != null && editedNoiDung != null) {
-//            Integer id = Integer.parseInt(idParam);
-//            BinhLuan binhLuan = binhluanService.getBinhLuanById(id);
-//            
-//            if (binhLuan != null) {
-//                binhLuan.setNoiDung(editedNoiDung);
-//                binhluanService.updateBinhLuan(binhLuan); // G?i service ?? c?p nh?t b�nh lu?n
-//            }
-//        }
-//        editingId = null; // T?t ch? ?? ch?nh s?a
-//
-//        return "thtin_bviet"; // ?i?u h??ng v? danh s�ch b�nh lu?n
-//    }
-    
 }

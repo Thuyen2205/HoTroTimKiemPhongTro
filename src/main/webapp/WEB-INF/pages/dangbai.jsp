@@ -13,15 +13,25 @@
 <html>
 
     <section class="body-dangbai">
-        <h1 class="text-center text-danger">Đăng bài </h1>
+        <h1 class="text-center text-danger">ĐĂNG BÀI VIẾT</h1>
         <c:url value="/dangbai" var="action"/>
+        <c:if test="${not empty errors}">
+            <div class="alert alert-danger">
+                <ul>
+                    <c:forEach items="${errors}" var="error">
+                        <li>${error.defaultMessage}</li>
+                        </c:forEach>
+                </ul>
+            </div>
+        </c:if>
         <div class="dangbai">
             <!-- PHẦN ĐĂNG BÀI -->
 
             <div class="dangbai-col1">
                 <form:form method="post" action="${action}" var="p" modelAttribute="baiviet" enctype="multipart/form-data" >
+                   <form:errors path="*" element="div" cssClass="alert alert-danger" />
                     <div class="catngang">
-                        <h4 style="color: white; padding: 10px;">THÔNG TIN CƠ BẢN</h4>
+                        <h5 style="color: white; padding: 10px;">THÔNG TIN CƠ BẢN</h5>
                     </div>
                     <div class="dangbai-tincodinh">
                         <c:if test="${nguoidung.idLoaiTaiKhoan.id==2}">
@@ -44,11 +54,12 @@
                         <div class="input-bigsize">
                             <p>Tiêu đề bài đăng </p>
                             <form:input type="text" id="tenbv" name="tenbv" path="tenBaiViet" placeholder="Tiêu đề bài đăng"/>
+                            <form:errors path="tenBaiViet" element="div" cssClass="text-danger" />
                         </div>
 
                         <div class="input-bigsize">
                             <p>Ngày đăng: </p>
-                            <form:input type="text" id="ngaydangbv" name="ngaydangbv" path="ngayDang"  placeholder="Format yyyy/mm/dd (VD: 2023-05-22)" disabled="true"/>
+                            <form:input type="text" id="ngaydangbv" name="ngaydangbv" path="ngayDang"  placeholder="${date}" disabled="true"/>
                         </div>
 
                         <!--BÀI CỦA CHỦ TRỌ-->
@@ -62,7 +73,6 @@
                                 <div class="input-smallsize1">
                                     <p>Giá cho thuê </p>
                                     <form:input type="text" id="giathuebv" name="giathuebv" path="giaThue" placeholder="Nhập giá cho thuê (VD: 3000000)"  /> 
-
                                 </div>
                             </div>
                             <div class="input-smallsize">
@@ -97,10 +107,13 @@
                                 }
 
                             </script>
-                            <div>  
-                                <p for="file">Hình ảnh phòng trọ: </p>
+                            <div class="dangbai-anhphongtro">  
+                                <div style="display: flex">
+                                    <p style="margin-right: 20%" for="file">Hình ảnh phòng trọ: </p>
+                                    <form:input path="file" multiple="multiple" type="file" id="imageFile" name="imageFile" onchange=   "chooseFile(this)" accept="image/jpg, image/jpeg, image/png"/>
+                                </div>
                                 <img src =""  id="image" width="200" height="200"/>
-                                <form:input path="file" multiple="multiple" type="file" id="imageFile" name="imageFile" onchange=   "chooseFile(this)" accept="image/jpg, image/jpeg, image/png"/>
+
                             </div>
                         </c:if>
 
@@ -111,8 +124,8 @@
                                 <form:input type="text" id="khuvucbv" name="khuvucbv" path="phamViCanTim"/>
                             </div>
                         </c:if>
-                        <div class="input-bigsize">
-                            <p>Mô tả chi tiết </p>     
+                        <div class="input-bigsize" style="margin-top: 10px">
+                            <p style="font-size:18px; ">Mô tả chi tiết </p>     
                             <form:textarea  type="text" id="motabv" name="motabv"  path="noiDung" placeholder="Mô tả chi tiết"/>
 
                         </div>
@@ -126,7 +139,7 @@
                     </div>
                     <br></br>
                     <div class="form-group">
-                        <input type="submit" value="Đăng tải" class="btn btn-danger"/>
+                        <center><input type="submit" value="Đăng bài" class="btn custom-button4"/></center>
                     </div>
                 </form:form>
             </div>
@@ -134,26 +147,19 @@
             <!-- PHẦN HƯỚNG DẪN -->
             <div class="dangbai-col2">
                 <div class="catngang">
-                    <h4 style="color: white; padding: 10px;">HƯỚNG DẪN</h4>
+                    <h5 style="color: white; padding: 10px;">HƯỚNG DẪN</h5>
                 </div>
-                <div class="">
-
-                    <pre>Để đăng tin bán nhà trên mạng hay cách đăng tin cho thuê nhà, nội dung tin của bạn cần đầy đủ nội dung sau:
-
-- Tiêu đề.
-
-- Nội dung
-
-- Thông tin liên hệ
-
-- Hình ảnh
-
-Làm thế nào để đăng tin thuê nhà nội dung tốt nhất? Bạn cần chỉ rõ những ưu điểm vị trí của ngôi nhà, gần những tiện ích công cộng nào (trường học, trung tâm thương mại, bệnh viện, công viên, tuyến đường lớn, …).
-
-Cung cấp đầy đủ thông số nhà như diện tích thực, diện tích xây dựng, hướng nhà, mặt tiền, cách đường cái bao nhiêu m, số tầng, số phòng, giá bán (bao gồm phí sang tên hay không).
-
-Đồng thời thông tin giấy tờ pháp lý có sổ đỏ, sổ hồng, …
-                    </pre>
+                <div class="huongdandangtin">
+                    <ul>
+                        <li><strong>Nội dung phải viết bằng tiếng Việt có dấu.</strong></li>
+                        <li><strong>Tiêu đề tin không dài quá 100 kí tự.</strong></li>
+                        <li>Để tin đăng có hiệu quả hơn các bạn cần điền đầy đủ thông tin vào các mục.</li>
+                        <li>Để tăng độ tin cậy và tin đăng được nhiều người quan tâm hơn, hãy sửa vị trí tin rao của bạn trên bản đồ
+                            bằng cách kéo điểm đỏ tới đúng vị trí của tin rao.
+                        </li>
+                        <li>Tin đăng phải có ít nhất một hình ảnh rõ ràng.
+                        </li>
+                    </ul>
                 </div>
             </div>
         </div>

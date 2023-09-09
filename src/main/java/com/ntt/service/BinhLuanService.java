@@ -28,4 +28,7 @@ public interface BinhLuanService {
     List<BinhLuan> getBinhLuanByNguoiDung(NguoiDung idNguoiDung);
     void deleteBinhLuanByBaiViet(BaiViet baiviet);
     void deleteBinhLuanByNguoiDung(NguoiDung nguoidung);
+        
+    BinhLuan themBinhLuan(BinhLuan binhluan);
+
 }

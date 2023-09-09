@@ -19,36 +19,28 @@
 
     <div class="wrapper">
         <c:if test="${param.error!=null}">
-            <div class="alert alert-danger" >
-                Da co loi xay ra! vui long quay lai sau
-            </div>
+            <div class="alert alert-danger" >ĐANG CÓ MỘT VÀI SỰ CỐ XẢY RA! VUI LÒNG QUAY TRỞ LẠI SAU!!! </div>
         </c:if>
 
         <form method="post" action="${action}">
-            <h1>Đăng nhập</h1>
-            <c:if test="${param.accessDenied != null}">
-                <div>
-                    Bạn không có quyền truy cập vào trang này
+            <h1>ĐĂNG NHẬP</h1>
+            <center>
+                <c:if test="${param.accessDenied != null}">
+                    <!--<div>Bạn không có quyền truy cập vào trang này</div>-->
+                    <center><div style="margin-top: 15px; color: #45FFCA ">Tài khoản của bạn đang đợi được duyệt!</div></center>
+                    </c:if>
+                <div class="input-box">
+                    <input type="text" name="username" placeholder="Tên tài khoản" required>
                 </div>
-            </c:if>
-            <div class="input-box">
-                <input type="text" name="username" placeholder="Username" required>
-            </div>
-            <div class="input-box">
-                <input type="password" name="password" placeholder="Password" required>
-            </div>
+                <div class="input-box">
+                    <input type="password" name="password" placeholder="Mật khẩu" required>
+                </div>
+            </center>                
+            <button  class="btn" type="submit" >Đăng nhập</button>
 
-            <div class="remember-forgot">
-                <label>
-                    <input type="checkbox">
-                </label>
-                <a href="#">Ghi nhớ mật khẩu?</a>
-            </div>
-            <button class="btn" type="submit" >Đăng nhập</button>
-
-            <div class="register-link">
-                <p>
-                   Bạn chưa có tài khoản?<a href="<c:url value ="/dangki"/>"> Đăng kí </a>
+            <div  class="register-link">
+                <p class="register-link-p">
+                    Bạn chưa có tài khoản?  <a href="<c:url value ="/dangki"/>">  Đăng kí ngay </a>
                 </p>
 
             </div>

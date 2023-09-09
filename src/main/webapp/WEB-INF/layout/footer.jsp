@@ -8,7 +8,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 
-<footer class="py-3 my-4" style="background-color: white">
+<footer class="py-3 my-4" style="background-color: #005555">
     <ul class="nav justify-content-center border-bottom pb-3 mb-3" >
       <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Home</a></li>
       <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Features</a></li>

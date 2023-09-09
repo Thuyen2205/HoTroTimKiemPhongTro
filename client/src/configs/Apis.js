@@ -20,14 +20,13 @@ export const endpoints ={
     "bviet-ngdung" :(id) => `${SERVER_CONTEXT}/api/getBVietByIdNgDung/${id}`,
     "dangbai" :`${SERVER_CONTEXT}/api/dangbai/`,
     "capnhatbv" :(id) => `${SERVER_CONTEXT}/api/updateBaiVietAPI/${id}` ,
-    // "capnhatbv" :`${SERVER_CONTEXT}/api/updateBaiVietAPI/` ,
     "doimatkhau":`${SERVER_CONTEXT}/api/doimatkhau/`,
     "binhluanBybaiviet" : `${SERVER_CONTEXT}/api/listBinhLuanByBV/`,
     "thembl": `${SERVER_CONTEXT}/api/binhluan/`,
     "capnhatbl": (id) => `${SERVER_CONTEXT}/api/binhluan/${id}`,
     "xoabl": (id) => `${SERVER_CONTEXT}/api/binhluan/${id}`,
-    "listBV": `${SERVER_CONTEXT}/api/listBV/`
-    
+    "listBV": `${SERVER_CONTEXT}/api/listBV/`,
+
 }
 
 export const authApi = () => {

@@ -68,6 +68,17 @@ Click nbfs://nbhost/SystemFileSystem/Templates/XML/XMLDocument.xml to edit this 
                        value="/WEB-INF/pages/thtin_bviet.jsp" />
     </definition>
     
+    <definition name="doimatkhau" extends="baseLayout">
+        <put-attribute name="title" value="Đổi mật khẩu tài khoản"/>
+        <put-attribute name="content"
+                       value="/WEB-INF/pages/doimatkhau.jsp" />
+    </definition>
+    
+    <definition name="capnhattaikhoan" extends="baseLayout">
+        <put-attribute name="title" value="Cập nhật thông tin tài khoản"/>
+        <put-attribute name="content"
+                       value="/WEB-INF/pages/capnhattaikhoan.jsp" />
+    </definition>
     
     <definition name="adminmonth" extends="baseLayoutAdmin">
         <put-attribute name="title" value="Trang cập nhật" />
@@ -102,15 +113,19 @@ Click nbfs://nbhost/SystemFileSystem/Templates/XML/XMLDocument.xml to edit this 
     </definition>
     
     
-    <definition name="doimatkhau"
-                    template="/WEB-INF/pages/doimatkhau.jsp">
-    </definition>
+<!--    <definition name="doimatkhau" extends="baseLayout"
+                template="/WEB-INF/pages/doimatkhau.jsp">
+    </definition>-->
     
-     <definition name="capnhattaikhoan" extends="baseLayout">
+<!--    <definition name="capnhattaikhoan" extends="baseLayout">
         <put-attribute name="title" value="Trang cập nhật" />
         <put-attribute name="content"
                        value="/WEB-INF/pages/capnhattaikhoan.jsp" />
-    </definition>
-   
+    </definition>-->
+<!--    
+    <definition name="capnhattaikhoan" extends="baseLayout"
+                template="/WEB-INF/pages/capnhattaikhoan.jsp">
+    </definition>-->
     
 </tiles-definitions>
+

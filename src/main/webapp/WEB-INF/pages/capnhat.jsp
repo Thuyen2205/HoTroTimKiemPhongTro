@@ -1,5 +1,5 @@
 <%-- 
-    Document   : thtin_bviet
+Document   : thtin_bviet
     Created on : Aug 12, 2023, 2:34:35 PM
     Author     : Admins
 --%>
@@ -33,7 +33,6 @@
                     <form:hidden path="loaiBaiViet.id"/>
                     <form:hidden path="idNguoiDung.id"/>
 
-
                     <div class="dangbai-tinnhaplieu">
                         <div class="input-bigsize">
                             <p>Loại bài viết </p>
@@ -52,7 +51,7 @@
                         <c:if test="${BaiViet.idNguoiDung.idLoaiTaiKhoan.id==2}">
                             <div class="input-smallsize">
                                 <div class="input-smallsize1">                            
-                                    <p>Khu vực(quận/huyện/thành phố) </p>
+                                    <p>Khu vực(quận/huyện/thành phố)</p>
                                     <form:input type="text" id="khuvucbv" name="khuvucbv" path="phamViCanTim" placeholder="Nhập khu vực (VD: Gò Vấp)"/>
                                 </div>
 
@@ -71,9 +70,7 @@
                                     <p>Diện tích phòng (m2) </p>
                                     <form:input type="text" id="dientichbv" name="dientichbv" path="dienTich" placeholder="Nhập diện tích (VD: 30)"/>
                                 </div>
-
                             </div>
-
 
                             <div class="input-bigsize">                            
                                 <p>Địa chỉ chi tiết: </p>

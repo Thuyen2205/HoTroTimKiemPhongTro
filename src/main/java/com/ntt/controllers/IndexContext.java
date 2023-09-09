@@ -55,52 +55,42 @@ public class IndexContext {
             UserDetails user = this.taikhoan.loadUserByUsername(authen.getName());
             NguoiDung u = this.taikhoan.getTaiKhoanbyTenTK(user.getUsername());
             model.addAttribute("taikhoan", u);
+            model.addAttribute("nguoidung", this.taikhoan.getTaiKhoan(authen.getName()).get(0));
         }
-        model.addAttribute("baiviet",this.baivietService.getBaiVietAll());
+        if (params.isEmpty()) {
+            model.addAttribute("baiviet", this.baivietService.getBaiVietAll());
 
+        }
+        if (!params.isEmpty()) {
+            model.addAttribute("baiviet", this.baivietService.getBaiVietTK(address, price, soNguoi, params));
+        }
+
+        int count = this.baivietService.getCountOfBaiViet();
+        int pageSize = Integer.parseInt(this.env.getProperty("PAGE_SIZE"));
+        model.addAttribute("pages", Math.ceil(count * 1.0 / pageSize));
         return "index";
 
-    }   
-
-    @RequestMapping("/timkiem")
-    public String timKiem(Model model, NguoiDung nguoidung, Authentication authen, @RequestParam(name = "address", required = false) String address,
-            @RequestParam(name = "price", required = false) BigDecimal price,
-            @RequestParam(name = "soNguoi", required = false) Integer soNguoi, @RequestParam Map<String, String> params) {
-
-        if (authen != null) {
-            model.addAttribute("taikhoan", this.taikhoan.getTaiKhoan(authen.getName()).get(0));
-            if (address != null || price != null || soNguoi != null) {
-                model.addAttribute("baiviet", this.baivietService.getBaiVietTK(address, price, soNguoi, params));
-            } else {
-                model.addAttribute("baiviet", this.baivietService.getBaiVietAll());
-            }
-        }
-      
-
-        model.addAttribute("baiviet_1", this.baivietService.getBaiVietByType("1"));
-        model.addAttribute("baiviet_2", this.baivietService.getBaiVietByType("2"));
-        return "index";
     }
 
-    @PostMapping("/")
-    public String index(Model model, Authentication authen, @RequestParam("gia") int gia) {
-        BigDecimal giaBigDecimal = new BigDecimal(gia);
-        model.addAttribute("baiviet_1", this.baivietService.getBaiVietByGiaThue(giaBigDecimal));
-        UserDetails user = this.taikhoan.loadUserByUsername(authen.getName());
-        NguoiDung u = this.taikhoan.getTaiKhoanbyTenTK(user.getUsername());
-        model.addAttribute("taikhoan", u);
-        return "index";
-    }
-    
+//    @PostMapping("/")
+//    public String index(Model model, Authentication authen, @RequestParam("gia") int gia) {
+//        BigDecimal giaBigDecimal = new BigDecimal(gia);
+//        model.addAttribute("baiviet_1", this.baivietService.getBaiVietByGiaThue(giaBigDecimal));
+//        UserDetails user = this.taikhoan.loadUserByUsername(authen.getName());
+//        NguoiDung u = this.taikhoan.getTaiKhoanbyTenTK(user.getUsername());
+//        model.addAttribute("taikhoan", u);
+//        return "index";
+//    }
     @RequestMapping("/bando")
     public String bando(Model model, NguoiDung nguoidung, Authentication authen) {
 
-        model.addAttribute("dsBaiViet", this.baivietService.getBaiVietAll());
+        model.addAttribute("dsBaiViet", this.baivietService.getBaiVietDaDuyet());
         UserDetails user = this.taikhoan.loadUserByUsername(authen.getName());
         NguoiDung u = this.taikhoan.getTaiKhoanbyTenTK(user.getUsername());
         model.addAttribute("taikhoan", u);
+        model.addAttribute("nguoidung", this.taikhoan.getTaiKhoan(authen.getName()).get(0));
+
         return "bando";
     }
-    
-    
+
 }

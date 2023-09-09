@@ -78,6 +78,12 @@ public class ApiBaiVietController {
     public ResponseEntity<List<BaiViet>> list() {
         return new ResponseEntity<>(this.baivietService.getBaiViet(), HttpStatus.OK);
     }
+    
+    @GetMapping("/baivietdaduyet/")
+    @CrossOrigin
+    public ResponseEntity<List<BaiViet>> listbaivietdaduyet() {
+        return new ResponseEntity<>(this.baivietService.getBaiVietDaDuyet(), HttpStatus.OK);
+    }
 
     @GetMapping("/listBV/")
     @CrossOrigin

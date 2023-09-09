@@ -22,9 +22,8 @@ import sun.jvm.hotspot.oops.ObjArray;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-/**
- *
- * @author ThanhThuyen >>>>>>> 3920839a004168c57b3fefe5f804b02063b2013d
+/*
+ * @author ThanhThuyen
  */
 @RestController
 @RequestMapping("/api")
@@ -34,18 +33,17 @@ public class ApiBinhLuanController {
     @Autowired
     private BinhLuanService binhLuanService;
 
-    @DeleteMapping("/thtin_bvietBinhLuan/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteBinhLuanwpr(@PathVariable(value = "id") int id) {
-        this.binhLuanService.deleteBinhLuan(id);
-    }    
-    
     @GetMapping("/listBinhLuanByBV/{id}")
     public ResponseEntity<List<Object>> listComment(@PathVariable(value = "id") int id) {
         List<Object> binhluan = this.binhLuanService.getBinhLuanByBV(id);
         return new ResponseEntity<>(binhluan, HttpStatus.OK);
     }
-   
+
+    @DeleteMapping("/thtin_bvietBinhLuan/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteBinhLuanwpr(@PathVariable(value = "id") int id) {
+        this.binhLuanService.deleteBinhLuan(id);
+    }        
     
     @PostMapping("/binhluan/")
     public ResponseEntity<Object> addComment(@RequestBody BinhLuan binhluan){ 
@@ -66,5 +64,28 @@ public class ApiBinhLuanController {
         this.binhLuanService.deleteBinhLuan(id);
     }
     
+
+    @PostMapping("/replyToComment/{parentId}")
+    public ResponseEntity<String> replyToComment(
+            @PathVariable(value = "parentId") int parentId,
+            @RequestBody BinhLuan replyComment) {
+        try {
+            BinhLuan parentComment = binhLuanService.getBinhLuanById(parentId);
+
+            if (parentComment != null) {
+                
+                BinhLuan newReply = new BinhLuan();
+                newReply.setNoiDung(replyComment.getNoiDung());
+                newReply.setHoiDap(parentId); 
+                binhLuanService.saveBinhLuan(newReply);
+
+                return ResponseEntity.ok("Trả lời bình luận thành công");
+            } else {
+                return ResponseEntity.notFound().build();
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Lỗi khi trả lời bình luận: " + e.getMessage());
+        }
+    }
 
 }

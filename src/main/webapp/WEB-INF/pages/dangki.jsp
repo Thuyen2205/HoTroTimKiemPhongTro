@@ -17,64 +17,55 @@
 <body>
     <div class="wrapper">
         <form:form method="post" action="${action}" modelAttribute="user"  enctype="multipart/form-data">
-            <h1>Đăng kí</h1>
-            <div class="input-box">
-                <form:input type="text" placeholder="Họ và tên" path="tenNguoiDung" />
-            </div>
-            <div class="input-box">
-                <form:input type="text" placeholder="Email" path="email" />
-            </div>
-            <div class="input-box">
-                <form:input type="text" placeholder="Số điện thoại" path="sdt" />
-            </div>
+            <h1>ĐĂNG KÍ TÀI KHOẢN</h1>
+            <center>
+                <div class="input-box">
+                    <form:input type="text" placeholder="Họ và tên" path="tenNguoiDung" />
+                </div>
+                <div class="input-box">
+                    <form:input type="text" placeholder="Email" path="email" />
+                </div>
+                <div class="input-box">
+                    <form:input type="text" placeholder="Số điện thoại" path="sdt" />
+                </div>
 
-            <div class="input-box">
-                <form:input type="text" placeholder="Tên tài khoản" path="tenTaiKhoan" />
-            </div>
-            <div class="input-box">
-                <form:input type="password" placeholder="Mật khẩu" path="matKhau" />           
-            </div>
-            <div class="input-box">
-                <form:input type="password" placeholder="Xác nhận lại mật khẩu" path="xacNhanMatKhau" />           
-            </div>
+                <div class="input-box">
+                    <form:input type="text" placeholder="Tên tài khoản" path="tenTaiKhoan" />
+                </div>
+                <div class="input-box">
+                    <form:input type="password" placeholder="Mật khẩu" path="matKhau" />           
+                </div>
+                <div class="input-box">
+                    <form:input type="password" placeholder="Xác nhận lại mật khẩu" path="xacNhanMatKhau" />           
+                </div>
+                <div class="input-box chonloaiTK">
+                    <form:select class="role" name="role" id="role" path="idLoaiTaiKhoan">
+                        <c:forEach items="${user_role}" var="c">
+                            <option class="option" value="${c.id}" selected>${c.tenLoaiTaiKhoan}</option>
+                        </c:forEach>
+                    </form:select>
+                </div> 
 
-            <!--            <div class="input-box">
-            <%--<form:input type="hidden" path="ngayTao" value="<%= new java.util.Date()%>" />--%>           
-        </div>-->
+                <div class="upload-avatar" id="upload-avatar-div" style="display: none; margin: 0 auto;">
+                    <h4>Ảnh trọ</h4>                   
+                    <div class="upload-avatar-input" style=" margin: 0 auto; width: 100%; padding: 10px;">
+                        <form:input type="file" id="file2" path="file2" placeholder="Upload ảnh phòng trọ"/> 
+                    </div>
+                </div>
 
-            <!--            <div class="input-box btn-danger">
-            <%--<form:select class="role" name="role" id="role" path="idLoaiTaiKhoan">--%>
-            <%--<c:forEach items="${user_role}" var="c" >--%>
-                <option value="${c.id}" selected>${c.tenLoaiTaiKhoan}</option>
-            <%--</c:forEach>--%>
-            <%--</form:select>--%>
-        </div>
-        <div class="upload-avatar">
-            <%--<form:input type="file" id="file" path="file" placeholder="Upload Avatar"/>--%>
-        </div>
-        <p>Nếu bạn là chủ trọ</p>
-        <p>Hãy cho chúng tôi biết thêm hình ảnh về phòng trọ của bạn</p>
-        <div class="upload-avatar">
-            <%--<form:input type="file" id="file2" path="file2" placeholder="Upload ảnh phòng trọ"/>--%>
-        </div>-->
-            <div class="input-box btn-danger">
-                <form:select class="role" name="role" id="role" path="idLoaiTaiKhoan">
-                    <c:forEach items="${user_role}" var="c">
-                        <option value="${c.id}" selected>${c.tenLoaiTaiKhoan}</option>
-                    </c:forEach>
-                </form:select>
-            </div>
-            <h2 style="color: #333">Thêm avatar</h2>
-            <div class="upload-avatar">
-                <form:input type="file" id="file" path="file" placeholder="Upload Avatar"/>
-            </div>
-          
-            <div class="upload-avatar" id="upload-avatar-div" style="display: none;">
-                <h2 style="color: #333">Thêm Ảnh trọ của bạn</h2>
-                <form:input type="file" id="file2" path="file2" placeholder="Upload ảnh phòng trọ"/>
-            </div>
+                <div class="upload-avatar">
+                    <h4>Avatar</h4>                   
+
+                    <div class="upload-avatar-input">
+                        <form:input type="file" id="f<foile" path="file" placeholder="Upload Avatar"/>
+                    </div>
+                </div>
+
+            </center>
+
+
+
             <script>
-                
                 document.getElementById('role').addEventListener('change', function () {
                     var selectedValue = this.value;
                     var uploadAvatarDiv = document.getElementById('upload-avatar-div');
@@ -85,8 +76,13 @@
                     }
                 });
             </script>
-            <button class="btn" type="submit" >Đăng kí</button>
+            <button class="btn-dangki" type="submit" >Đăng kí tài khoản</button>
+            <div  class="register-link">
+                <p class="register-link-p">
+                    Bạn đã có tài khoản?  <a href="<c:url value ="/dangnhap"/>">  Đăng nhập ngay </a>
+                </p>
 
+            </div>
         </form:form>
 
     </div>

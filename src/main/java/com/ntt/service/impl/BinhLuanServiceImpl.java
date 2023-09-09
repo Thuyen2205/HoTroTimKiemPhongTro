@@ -20,14 +20,15 @@ import org.springframework.stereotype.Service;
  * @author ThanhThuyen
  */
 @Service
-public class BinhLuanServiceImpl implements BinhLuanService{
-  @Autowired
+public class BinhLuanServiceImpl implements BinhLuanService {
+
+    @Autowired
     private BinhLuanRepository binhluan;
     @Autowired
     private TaiKhoanRepository taikhoan;
     @Autowired
     private BaiVietRepository baiviet;
-    
+
     @Override
     public List<BinhLuan> getBinhLuan(int idBaiViet) {
         return this.binhluan.getBinhLuan(idBaiViet);
@@ -37,11 +38,10 @@ public class BinhLuanServiceImpl implements BinhLuanService{
     public boolean addBinhLuan(BinhLuan binhluan) {
         NguoiDung b = this.taikhoan.getTaiKhoan(binhluan.getTenNguoiDangBai()).get(0);
         binhluan.setIdNguoiDung(b);
-        BaiViet v= (BaiViet) this.baiviet.getBaiVietById(binhluan.getIdBaiVietBinhLuan());
+        BaiViet v = (BaiViet) this.baiviet.getBaiVietById(binhluan.getIdBaiVietBinhLuan());
         binhluan.setIdBaiViet(v);
-        
-        
-       return this.binhluan.addBinhLuan(binhluan);
+
+        return this.binhluan.addBinhLuan(binhluan);
     }
 
     @Override
@@ -88,5 +88,13 @@ public class BinhLuanServiceImpl implements BinhLuanService{
     public BinhLuan addOrUpdateBinhLuan(BinhLuan binhluan) {
         return this.binhluan.addOrUpdateBinhLuan(binhluan);
     }
-    
+
+    public BinhLuan themBinhLuan(BinhLuan binhluan) {
+        NguoiDung b = this.taikhoan.getTaiKhoan(binhluan.getTenNguoiDangBai()).get(0);
+        binhluan.setIdNguoiDung(b);
+        BaiViet v = (BaiViet) this.baiviet.getBaiVietById(binhluan.getIdBaiVietBinhLuan());
+        binhluan.setIdBaiViet(v);
+        return this.binhluan.themBinhLuan(binhluan);
+    }
+
 }

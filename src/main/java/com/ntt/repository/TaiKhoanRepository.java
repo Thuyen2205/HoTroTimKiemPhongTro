@@ -4,6 +4,7 @@
  */
 package com.ntt.repository;
 
+import com.ntt.pojo.BaiViet;
 import com.ntt.pojo.LoaiTaiKhoan;
 import com.ntt.pojo.NguoiDung;
 import java.util.Date;
@@ -28,5 +29,4 @@ public interface TaiKhoanRepository{
     boolean updateTrangThaiTaiKhoan(NguoiDung nguoidung);
     boolean updateTaiKhoan(NguoiDung nguoiDung);
     boolean updateNguoiDung(NguoiDung nguoidung);
-    
 }

@@ -6,40 +6,70 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     Created on : Aug 12, 2023, 2:31:26 PM
     Author     : Admins
 */
-
-
 body{
-    background-color: #F5F5F5;
+    /*background-color: #F5F5F5;*/
+    background-color: white;
 }
-
+.col-md-1 img{
+    border-radius: 30px;
+}
+.reply-form{
+    display: none;
+}
 .bangtin{
-    margin: 30px 100px;
+    margin: 20px 80px;
     flex-wrap: wrap;
     display: flex;
+
 }
 
 .bviet{
-    width: 45%;
+    width: 48%;
     margin: 10px;
     background-color: white;
     display: flex;
+    transition: transform 0.2s ease-in-out;
+    border: none;
+    box-shadow: 0px 1px 3px 0px black;
+    border-radius: 10px;
+}
+.bviet:hover {
+    transform: scale(1.05);
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
 }
 .bviet_anh{
     margin: 10px;
     width: 40%;
 }
+.bviet_anh img{
+    border-radius: 8px;
+    width: 100%;
+}
+.bviet_anh img:hover {
+    transform: scale(1.1);
+    transition: transform 0.2s ease-in-out;
+}
 .bviet_ndung{
     margin: 10px;
     width: 55%;
+    padding-right: 10px;
 }
 
-.bviet_anh img{
+.bviet_anh2{
+    margin: 10px;
+    width: 30%;
+}
+.bviet_anh2 img{
     width: 100%;
+    border-radius: 8px;
+
 }
 .bviet_ndung > a:first-child{
     text-decoration: none;
     text-align: center;
-    color:  lightcoral;
+    color:  #005555;
+    /*    text-underline-offset: 0.25em;
+        text-decoration: underline;*/
     font-size: 18px;
     font-weight: bold;
 }
@@ -91,46 +121,193 @@ body{
     flex-flow: nowrap;
     justify-content: space-between;
 }
-.bt-docthem {
-    display: inline-block;
-    border-radius: 4px;
-    background-color: #f4511e;
-    border: none;
-    color: #FFFFFF;
-    text-align: center;
-    font-size: 18px;
-    transition: all 0.5s;
-    cursor: pointer;
-    padding: 5px;
-}
 
-.bt-docthem span {
-    cursor: pointer;
-    display: inline-block;
-    position: relative;
-    transition: 0.5s;
-}
 
-.bt-docthem span:after {
-    content: '\00bb';
-    position: absolute;
-    opacity: 0;
-    top: 0;
-    right: -20px;
-    transition: 0.5s;
-}
-
-.bt-docthem:hover span {
-    padding-right: 25px;
-}
-
-.bt-docthem:hover span:after {
-    opacity: 1;
-    right: 0;
-}
 
 .dacdiemtin th{
     width: 35%;
+}
+
+/*-----TRANG CÁ NHÂN-----*/
+.body-trangcanhan{
+    background-color: #F5F5F5;
+    padding: 30px 100px;
+    width: 100%;
+}
+.trangcanhan{
+    display: flex;
+    justify-content: space-around;
+}
+.trangcanhan-col1{
+    width: 25%;
+}
+.trangcanhan-col2 {
+    width: 70%;
+    background-color: white;
+}
+.tincanhan{
+    width: 95%;
+    display: flex;
+    border-radius: 8px;
+    border: none;
+    padding: 5px;
+    box-shadow: 0px 1px 3px 0px black;
+    margin: 10px auto;
+
+}
+.tincanhan-anh{
+    width: 30%;
+}
+.tincanhan-anh img{
+    width: 100%;
+    border-radius: 8px;
+
+}
+.tincanhan-noidung{
+    width: 70%;
+    margin: 0px 15px;
+
+}
+.tincanhan-noidung th{
+    width:30%;
+}
+.tincanhan-noidung td{
+    width: 70%;
+}
+.thongtincanhan{
+    background-color: white;
+    padding: 20px 20px;
+    margin: 0 auto;
+    width: 100%;
+
+}
+.canhanhoa{
+    display: flex;
+    justify-content: space-around;
+}
+.custom-button2 {    
+    width: 100%;
+    margin: 0 2px;    
+    padding: 5px 10px;
+    font-size: 16px;
+    background-color: #005555;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    transition: all 0.5s;
+}
+
+
+/*HEADER VÀ TRANG CHỦ*/
+.navbar{
+    color: white;
+    background-color: #005555;
+}
+.custom-input {
+    width: 200px;
+    color: white;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    margin: 10px;
+}
+.custom-button {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #005555;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    transition: all 0.5s;
+}
+
+.input-timkiem{
+    justify-content: center;
+    border: 1px solid black;
+    display: flex;
+    margin: 20px auto;
+    background-color: white;
+    border-radius: 5px;
+    padding: 10px;
+    width: 70%;
+}
+.sotrang{
+    margin: 0 auto;
+    display: flex;
+}
+.tendanhmuctin{
+    display: flex;
+    justify-content: space-between;
+    padding: 5px;
+    border-radius: 5px;
+    color: #fafafa;
+    margin: 20px 90px;
+}
+.tendanhmuctin h5{
+    margin: auto 0;
+    color: black;
+}
+.groupbtn a{
+    text-decoration: none;
+    color: white;
+    display: inline-block;
+    border-radius: 4px;
+    background-color: #005555;
+    border: none;
+    text-align: center;
+    font-size: 16px;
+    padding: 6px 10px;
+    margin-top: 5px;
+}
+
+.pagination{
+    justify-content: center;
+}
+.page-link{
+    
+    color: black;
+}
+/*CẬP NHẬT THÔNG TIN - MẬT KHẨU*/
+.formcapnhat{
+    margin: 50px 400px;
+    border: 1px solid black;
+    border-radius: 8px;
+}
+.formdoimatkhau{
+    margin: 50px 350px;
+    border: 1px solid black;
+    border-radius: 8px;
+}
+.input-box{
+    padding: 10px 40px;
+    display: flex;
+    justify-content: space-between;
+}
+.input-box1{
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 30px;
+    padding-right: 10px;
+    display: flex;
+    justify-content: space-between;
+    
+}
+.input-file{
+    margin-left: 95px
+}
+
+.custom-button3{
+    width: 40%;
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #005555;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    transition: all 0.5s;
+    margin-bottom: 20px;
+    /*margin-top:*/ 
 }
 
 /*-----ĐĂNG BÀI-----*/
@@ -177,8 +354,12 @@ input{
     text-indent: 10px;
 }
 .catngang{
-    background-color: darkblue;
-    height: 50px;
+    /*background-color: #1450A3  ;*/
+    background-color: #005555 ;
+
+}
+.catngang h5{
+    margin-left: 5px;
 }
 .input-bigsize input{
     width: 100%;
@@ -195,58 +376,70 @@ input{
 .input-smallsize input{
     width: 100%;
 }
-
-
-/*-----TRANG CÁ NHÂN-----*/
-.body-trangcanhan{
-    background-color: #F5F5F5;
-    padding: 30px 100px;
-    width: 100%;
+.dangbai-anhphongtro input{
+    border: none;
 }
-.trangcanhan{
+.custom-button4{
+    width: 35%;
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #005555;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    transition: all 0.5s;
+    margin-bottom: 20px;
+    /*margin-top:*/ 
+}
+
+/*BẢN ĐỒ*/
+.map{
+    margin: 20px 20px;
+    border-radius: 10px;
+}
+.diadiemtim{
+    border-radius: 8px;
+    padding: 20px;
+    margin: 20px 30px;
+    width: 50%;
+}
+.search-bar{
     display: flex;
-    justify-content: space-around;
 }
-.trangcanhan-col1{
-    width: 25%;
+.custom-button1{
+    width: 20%;
+    padding: 20px;
+    font-size: 16px;
+    background-color: #005555;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    transition: all 0.5s;
 }
-.trangcanhan-col2 {
-    width: 70%;
+/*GO TO TOP*/
+.go-to-top-button {
+  position: fixed;
+    bottom: 20px;
+    right: 20px; /* Đặt vị trí bên phải dưới cùng */
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    background-color: black;
+    color: white;
+    border: none;
+    text-align: center;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    cursor: pointer;
+    z-index: 1000;
+    transition: all 0.5s;
+}
+
+.go-to-top-button:hover {
     background-color: white;
-
+    color: black;
+    border: 1px solid black;
 }
-.tincanhan{
-    display: flex;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    border: 1.5px solid grey;
-    padding: 5px;
-
-}
-.tincanhan-anh{
-    width: 30%;
-}
-.tincanhan-anh img{
-    width: 100%;
-    height: 100%;
-}
-.tincanhan-noidung{
-    width: 70%;
-    margin: 0px 15px;
-    
-}
-.tincanhan-noidung th{
-    width:30%;
-}
-.thongtincanhan{
-    background-color: white;
-    padding: 20px 20px;
-    margin: 0 auto;
-
-}
-.canhanhoa{
-    display: flex;
-    justify-content: space-between;
-
-}
-/*ADMIN*/

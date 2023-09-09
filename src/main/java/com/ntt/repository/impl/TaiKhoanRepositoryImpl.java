@@ -9,6 +9,7 @@ import com.ntt.pojo.BinhLuan;
 import com.ntt.pojo.Follow;
 import com.ntt.pojo.LoaiTaiKhoan;
 import com.ntt.pojo.NguoiDung;
+import com.ntt.pojo.TrangThaiBaiViet;
 import com.ntt.repository.BaiVietRepository;
 import com.ntt.repository.BinhLuanRepository;
 import com.ntt.repository.FollowRepository;
@@ -201,6 +202,22 @@ public class TaiKhoanRepositoryImpl implements TaiKhoanRepository {
         return false;
     }
 
+    
+
+    @Override
+    public boolean updateTaiKhoan(NguoiDung nguoiDung) {
+        Session s = this.sessionFactory.getObject().getCurrentSession();
+        try {
+
+            s.update(nguoiDung);
+            return true;
+        } catch (HibernateException e) {
+            System.err.println(e.getMessage());
+        }
+        return false;
+    }
+
+
     @Override
     public boolean updateNguoiDung(NguoiDung nguoidung) {
         Session s = this.sessionFactory.getObject().getCurrentSession();
@@ -212,19 +229,4 @@ public class TaiKhoanRepositoryImpl implements TaiKhoanRepository {
         }
         return false;
     }
-
-    @Override
-    public boolean updateTaiKhoan(NguoiDung nguoiDung) {
-          Session s = this.sessionFactory.getObject().getCurrentSession();
-        try {
-
-            s.update(nguoiDung);
-            return true;
-        } catch (HibernateException e) {
-            System.err.println(e.getMessage());
-        }
-        return false;
-        
-    }
-
 }
