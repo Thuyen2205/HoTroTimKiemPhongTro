@@ -7,7 +7,7 @@
 //HEADER
 .header{
     display: flex;
-    font-family: 'Faustina', serif;
+    // font-family: 'Faustina', serif;
     background-color: #005555;
     color: white;
     width: 100%;
@@ -80,5 +80,7 @@
     border: 1px solid gray;
 }
 .trangchu-search{
-    border: 1px solid gray;
+    display: flex;
+    justify-content: center;
+    margin: 10px;
 }

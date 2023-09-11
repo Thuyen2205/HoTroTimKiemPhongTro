@@ -12,19 +12,36 @@
 <link href="<c:url value="/css/style.css" />" rel="stylesheet" />
 <!DOCTYPE html>
 <html>
-    <div>
-        <h2>Thống kê theo năm: </h2>
-        <form action="${pageContext.request.contextPath}/admin" method="post">
-            <label for="year">Chọn năm:</label>
-            <select id="year" name="year">
-                <c:forEach var="y" begin="2010" end="2024">
-                    <option value="${y}">${y}</option>
-                </c:forEach>
-            </select>
-            <button type="submit" class="btn btn-danger">Thực hiện thống kê</button>
-            <p>Số lượng chủ trọ: ${countChuTro}</p>
-            <p>Số lượng khách hàng: ${countKhachHang}</p>
-        </form>
+
+    <div class="thongketheonam">
+        <center><h3 style="margin: 20px 0; color: #005555;">THỐNG KẾ SỐ LƯỢNG NGƯỜI DÙNG THEO NĂM</h3>
+            <form action="${pageContext.request.contextPath}/admin" method="post">
+
+                <label for="year">Chọn năm:</label>
+                <select style="padding: 6px" id="year" name="year" class="year-select">
+                    <c:forEach var="y" begin="2018" end="2024">
+                        <option value="${y}"  class="year-option">${y}</option>
+                    </c:forEach>
+                </select>
+                
+                <button type="submit" style="font-size: 18px" class="btn btn-danger custom-button5">Thực hiện thống kê</button>
+                <div class="ketquathongkenam">
+                    <h4 style="margin-top: 10px">Kết quả thống kê:</h4>
+                    <c:if test="${countChuTro==0}">
+                        <input class="custom-input2" value="Không có dữ liệu" readonly="true"/>
+                    </c:if>
+                    <c:if test="${countChuTro!=0}">
+                        <input class="custom-input2" value="Số lượng chủ trọ: ${countChuTro}" readonly="true"/>
+                    </c:if>
+                    <c:if test="${countKhachHang==0}">
+                        <input  class="custom-input2" value="Không có dữ liệu" readonly="true"/>
+                    </c:if>
+                    <c:if test="${countKhachHang!=0}">
+                        <input  class="custom-input2" value="Số lượng khách hàng: ${countKhachHang}" readonly="true"/>
+                    </c:if>
+                </div>
+            </form>
+        </center>
     </div>
     <!--    <div id="bieuDoContainer">
             <canvas id="myChart"></canvas>
@@ -83,43 +100,39 @@
         }
     </script>
 
-    <div id="chart_div" style="width: 100%; height: 500px;"></div>
-
-    <table class="table">
-
-        <thead>
-            <tr>
-                <th scope="col">#</th>
-                <th scope="col">First</th>
-                <th scope="col">Email</th>
-                <th scope="col">avatar</th>
-            </tr>
-        </thead>
-        <tbody class="bangtkngdung">
-            <c:forEach items="${listNg}" var="p">
-                
+    <center><div id="chart_div" style="width: 60%; height: 350px; margin: 10px; border: 1px solid gray; border-radius: 8px"></div></center>
+    <div class="tablethongke">
+        <table class="table">
+            <thead>
                 <tr>
-                    <th valign="middle"  scope="row">${p.id}</th>
-                    <td valign="middle">${p.tenNguoiDung}</td>
-                    <td valign="middle">${p.email}</td>
-                    <td valign="middle"><img src="${p.avatar}" class="rounded-circle" style="width: 150px;" alt="${pageContext.request.userPrincipal.name}" /></td>
-<!--                    <td>
-                       
-                        <c:url value="/api/deleteTaiKhoan/${p.id}" var="apiDelete"/>
-                        <button class="btn btn-danger text-center" onclick="deleteTaiKhoanpr('${apiDelete}')">xóa</button>
-                    </td>-->
-                        <td valign="middle" class="btn-info btn " style="border-radius: 20px">${p.ngayTao}</td>
+                    <th scope="col">ID</th>
+                    <th scope="col">Tên người dùng</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Avatar</th>
+                    <th scope="col">Ngày tạo tài khoản</th>
+                    <th scope="col">Loại tài khoản</th>
                 </tr>
-            </c:forEach>
+            </thead>
+            <tbody class="bangtkngdung">
+                <c:forEach items="${listNg}" var="p">
 
-        </tbody>
+                    <tr>
+                        <th valign="middle"  scope="row">#${p.id}</th>
+                        <td valign="middle">${p.tenNguoiDung}</td>
+                        <td valign="middle">${p.email}</td>
+                        <td valign="middle"><img src="${p.avatar}" class="rounded-circle" style="width: 50px; height: 50px; border-radius: 25px" alt="${pageContext.request.userPrincipal.name}" /></td>
 
-    </table>
+                                               
+                        <c:url value="/api/deleteTaiKhoan/${p.id}" var="apiDelete"/>
+                        
+                        <td valign="middle" >${p.ngayTao}</td>
+                        <td valign="middle">${p.idLoaiTaiKhoan.tenLoaiTaiKhoan}</td>
+                    </tr>
+                </c:forEach>
 
+            </tbody>
+
+        </table>
+    </div>
     <script src="<c:url value="/js/main.js"/>"></script>
-
-
-
-
-
 </html>

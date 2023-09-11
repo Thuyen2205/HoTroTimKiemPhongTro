@@ -18,7 +18,8 @@ Document   : thtin_bviet
 <c:url value="/capnhat" var="updateAction">
 </c:url>
 <html>
-    <h1>CAP NHAT</h1>
+    <center><h3 style="margin: 20px 0; color: #005555;">CẬP NHẬT BÀI VIẾT</h3></center>
+
 
     <section class="chitiettin" >
         <div class="chitiettin-col1">
@@ -115,19 +116,19 @@ Document   : thtin_bviet
 
                 </form:form>
 
-                <h4 style="color: tomato; font-weight: bold">${BaiViet.tenBaiViet}</h4>
-                <c:if test="${BaiViet.loaiBaiViet.id==1}">
-                    <p>Địa chỉ: ${BaiViet.diaChiCt}</p>
+<!--                <h4 style="color: tomato; font-weight: bold">${BaiViet.tenBaiViet}</h4>
+                <%--<c:if test="${BaiViet.loaiBaiViet.id==1}">--%>
+                    <p>Địa chỉ:<h ${BaiViet.diaChiCt}</p>
                     <div class="chitiet-3tt">
                         <p>Giá: ${BaiViet.giaThue}</p>
                         <p>Diện tích: ${BaiViet.dienTich}</p>
                         <p> #${BaiViet.id}</p>
                     </div>
-                </c:if>
+                <%--</c:if>--%>
                 <h4>Thông tin mô tả:</h4>
                 <p>${BaiViet.noiDung}</p>
 
-                <!--DAC DIEM TIN DANG-->
+                DAC DIEM TIN DANG
                 <h4>Đặc điểm tin đăng:</h4>
                 <div class="dacdiemtin">
                     <table style="width:100%">
@@ -135,26 +136,26 @@ Document   : thtin_bviet
                             <th>Mã tin:</th>
                             <td>#${BaiViet.id}</td>
                         </tr>
-                        <tr>
-                            <c:if test="${BaiViet.loaiBaiViet.id==1}">
-                                <th>Khu vực cho thuê trọ:</th>
+                        <tr>-->
+                <%--<c:if test="${BaiViet.loaiBaiViet.id==1}">--%>
+                <!--<th>Khu vực cho thuê trọ:</th>-->
 
-                            </c:if>
-                            <c:if test="${BaiViet.loaiBaiViet.id==2}">
-                                <th>Khu vực cần tìm trọ:</th>
-                                </c:if>
-                            <td>${BaiViet.phamViCanTim}</td>
-                        </tr>
-                        <tr>
-                            <th>Ngày đăng:</th>
-                            <td>${BaiViet.ngayDang}</td>
-                        </tr>
-                        <tr>
-                            <th>Ngày hết hạn:</th>
-                            <td>${BaiViet.ngayDang}</td>
-                        </tr>
-                    </table>
-                </div>
+                <%--</c:if>--%>
+                <%--<c:if test="${BaiViet.loaiBaiViet.id==2}">--%>
+                <!--<th>Khu vực cần tìm trọ:</th>-->
+                <%--</c:if>--%>
+            <!--<td>${BaiViet.phamViCanTim}</td>-->
+                <!--                        </tr>
+                                        <tr>
+                                            <th>Ngày đăng:</th>
+                                            <td>${BaiViet.ngayDang}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Ngày hết hạn:</th>
+                                            <td>${BaiViet.ngayDang}</td>
+                                        </tr>
+                                    </table>
+                                </div>-->
 
             </div>
         </div>
@@ -162,7 +163,7 @@ Document   : thtin_bviet
         <div class="chitiettin-col2">
             <div class="ct-thtinngdung">
                 <center>
-                    <img src="${BaiViet.idNguoiDung.avatar}" class="rounded-circle" style="width: 150px;" alt="${pageContext.request.userPrincipal.name}" />
+                    <img src="${BaiViet.idNguoiDung.avatar}" class="rounded-circle" style="width: 100px; height: 100px; border-radius: 50px" alt="${pageContext.request.userPrincipal.name}" />
                     <p>${BaiViet.idNguoiDung.tenNguoiDung}</p>
                     <p>${BaiViet.idNguoiDung.sdt}</p>
                 </center>

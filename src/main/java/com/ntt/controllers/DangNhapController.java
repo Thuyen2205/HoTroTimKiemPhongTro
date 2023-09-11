@@ -11,6 +11,8 @@ import com.ntt.service.BinhLuanService;
 import com.ntt.service.HinhAnhService;
 import com.ntt.service.NguoiDungService;
 import com.ntt.service.TaiKhoanService;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.Map;
 import javax.persistence.Query;
 import javax.servlet.http.HttpSession;
@@ -90,7 +92,7 @@ public class DangNhapController {
     }
 
     @GetMapping("/doimatkhau")
-    public String doiMatKhau(Model model, @RequestParam Map<String, String> params, Authentication authen) {
+    public String doiMatKhau(Model model, @RequestParam Map<String, String> params, Authentication authen, @RequestParam(name = "errMsg", required = false) String errMsg) {
 
         if (authen != null) {
             UserDetails user = this.taikhoan.loadUserByUsername(authen.getName());
@@ -100,6 +102,7 @@ public class DangNhapController {
             model.addAttribute("nguoidung", this.taikhoan.getTaiKhoan(authen.getName()).get(0));
 
         }
+        model.addAttribute("errMsg", errMsg);
         model.addAttribute("user", new NguoiDung());
 
         return "doimatkhau";
@@ -110,15 +113,15 @@ public class DangNhapController {
             @RequestParam("matKhauCu") String matKhauCu,
             @RequestParam("matKhauMoi") String matKhauMoi,
             @RequestParam("xacNhanMatKhauMoi") String xacNhanMatKhauMoi,
-            HttpSession session) {
-
+            HttpSession session) throws UnsupportedEncodingException {
+        String errMsg = "";
         Integer id = Integer.parseInt(params.get("idNguoiDung"));
         NguoiDung nguoiDung = this.taikhoan.getTaiKhoanId(id);
 
         if (authen != null) {
             if (!matKhauMoi.equals(xacNhanMatKhauMoi)) {
-                session.setAttribute("error", "Mật khẩu mới không khớp.");
-                return "redirect:/doimatkhau";
+                errMsg = "Mat moi khong khop";
+                return "redirect:/doimatkhau?errMsg=" + URLEncoder.encode(errMsg, "UTF-8");
             }
             if (passwordEncoder.matches(matKhauCu, nguoiDung.getMatKhau())) {
                 String hashedPassword = passwordEncoder.encode(matKhauMoi);
@@ -128,23 +131,25 @@ public class DangNhapController {
                     session.setAttribute("success", "Đổi mật khẩu thành công.");
                     return "redirect:/";
                 } else {
-                    session.setAttribute("error", "Lỗi khi cập nhật mật khẩu.");
+                    errMsg = "Loi cap nhat";
+                    return "redirect:/doimatkhau?errMsg=" + URLEncoder.encode(errMsg, "UTF-8");
                 }
             } else {
-                session.setAttribute("error", "Mật khẩu cũ không đúng.");
+                errMsg = "Mat khau cu khong dung";
+                return "redirect:/doimatkhau?errMsg=" + URLEncoder.encode(errMsg, "UTF-8");
             }
         }
-        return "redirect:/doimatkhau";
+        return "redirect:/doimatkhau?errMsg=" + URLEncoder.encode(errMsg, "UTF-8");
     }
 
     @GetMapping("/capnhattaikhoan")
-    public String capNhatTaiKhoan(Model model, @RequestParam Map<String, String> params, Authentication authen) {
+    public String capNhatTaiKhoan(Model model, @RequestParam Map<String, String> params, Authentication authen,
+            @RequestParam(name = "errMsg", required = false) String errMsg) {
 
         if (authen != null) {
             UserDetails user = this.taikhoan.loadUserByUsername(authen.getName());
             NguoiDung u = this.taikhoan.getTaiKhoanbyTenTK(user.getUsername());
             model.addAttribute("nguoidung", this.taikhoan.getTaiKhoan(authen.getName()).get(0));
-
             model.addAttribute("taikhoan", u);
         }
 
@@ -154,15 +159,23 @@ public class DangNhapController {
     @PostMapping("/capnhattaikhoan")
     public String capnhatTaiKhoan(Model model, Authentication authen,
             @RequestParam Map<String, String> params,
-            @ModelAttribute(value = "taikhoan") NguoiDung taikhoan) {
+            @ModelAttribute(value = "taikhoan") NguoiDung taikhoan) throws UnsupportedEncodingException {
         String errMsg = "";
+         if (taikhoan.getTenTaiKhoan()== null || taikhoan.getTenTaiKhoan().isEmpty()) {
+            errMsg = "Vui lòng nhập tên nguoi dung";
+            return "redirect:/capnhattaikhoan?errMsg=" + URLEncoder.encode(errMsg, "UTF-8");
+        }
+           if (taikhoan.getEmail()== null || taikhoan.getEmail().isEmpty()) {
+            errMsg = "Vui lòng nhập tên nguoi dung";
+            return "redirect:/capnhattaikhoan?errMsg=" + URLEncoder.encode(errMsg, "UTF-8");
+        }
         if (authen != null) {
             if (this.taikhoan.updateNguoiDung(taikhoan) == true) {
-                return "redirect:/capnhattaikhoan";
+                return "redirect:/canhan";
             } else {
                 errMsg = "ra";
             }
         }
-        return "capnhattaikhoan";
+         return "redirect:/capnhattaikhoan?errMsg=" + URLEncoder.encode(errMsg, "UTF-8");
     }
 }

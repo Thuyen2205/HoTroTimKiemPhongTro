@@ -27,53 +27,55 @@
         <script src="https://unpkg.com/leaflet-control-geocoder@1.13.0/dist/Control.Geocoder.js"></script>
     </head>
     <body>
+    <center>
         <div id="search-bar">
             <input class="diadiemtim" type="text" id="search-input" placeholder="Nhập địa chỉ hoặc tên địa điểm">
             <button class="custom-button1" id="search-button">Tìm kiếm ngay</button>
         </div>
-        <div class="map" id="map" style="width: 2000px; height: 800px;">
-            <script>
-                var map = L.map('map').setView([10.7769, 106.7009], 12);
-                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                }).addTo(map);
+    </center>
+    <center><div class="map" id="map" style="width: 80%; height: 500px;"></center>
+    <script>
+        var map = L.map('map').setView([10.7769, 106.7009], 12);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
 
-                <c:forEach items="${dsBaiViet}" var="baiViet">
-                    <%--<c:if test="${baiviet.loaiTrangThai.id.toString() eq '1'}">--%>
-                var diaChiCt = "<c:out value='${baiViet.diaChiCt}' />";
+        <c:forEach items="${dsBaiViet}" var="baiViet">
+            <%--<c:if test="${baiviet.loaiTrangThai.id.toString() eq '1'}">--%>
+        var diaChiCt = "<c:out value='${baiViet.diaChiCt}' />";
 
-                L.Control.Geocoder.nominatim().geocode(diaChiCt, function (results) {
-                    if (results && results.length > 0) {
-                        var latlng = results[0].center;
-                        var marker = L.marker(latlng).addTo(map);
-                        marker.bindPopup("<c:out value='${baiViet.diaChiCt}' />").openPopup();
-                    } else {
-                        console.log('Không tìm thấy địa chỉ cho: ' + diaChiCt);
-                    }
-                });
-                    <%--</c:if>--%>
-
-                </c:forEach>
-
-                var searchInput = document.getElementById('search-input');
-                var searchButton = document.getElementById('search-button');
-
-                searchButton.addEventListener('click', function () {
-                    var query = searchInput.value;
-
-                    L.Control.Geocoder.nominatim().geocode(query, function (results) {
-                        if (results && results.length > 0) {
-                            var latlng = results[0].center;
-                            map.setView(latlng, 15);
-                        } else {
-                            alert('Không tìm thấy địa điểm.');
-                        }
-                    });
-                });
-
+        L.Control.Geocoder.nominatim().geocode(diaChiCt, function (results) {
+            if (results && results.length > 0) {
                 var latlng = results[0].center;
-                map.setView(latlng, 12);
-            </script>
-        </div>
-    </body>
+                var marker = L.marker(latlng).addTo(map);
+                marker.bindPopup("<c:out value='${baiViet.diaChiCt}' />").openPopup();
+            } else {
+                console.log('Không tìm thấy địa chỉ cho: ' + diaChiCt);
+            }
+        });
+            <%--</c:if>--%>
+
+        </c:forEach>
+
+        var searchInput = document.getElementById('search-input');
+        var searchButton = document.getElementById('search-button');
+
+        searchButton.addEventListener('click', function () {
+            var query = searchInput.value;
+
+            L.Control.Geocoder.nominatim().geocode(query, function (results) {
+                if (results && results.length > 0) {
+                    var latlng = results[0].center;
+                    map.setView(latlng, 15);
+                } else {
+                    alert('Không tìm thấy địa điểm.');
+                }
+            });
+        });
+
+        var latlng = results[0].center;
+        map.setView(latlng, 12);
+    </script>
+</div>
+</body>
 </html>

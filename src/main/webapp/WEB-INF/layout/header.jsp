@@ -11,7 +11,7 @@ Author     : ThanhThuyen
 
 <nav class="navbar navbar-expand-sm navbar-dark">
     <div class="container-fluid">
-        <a class="navbar-brand" href="<c:url value ="/" />">Phòng Trọ Sinh Viên</a>
+        <a class="navbar-brand" href="<c:url value ="/" />">PHÒNG TRỌ SINH VIÊN</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar">
             <span class="navbar-toggler-icon"></span>
         </button>

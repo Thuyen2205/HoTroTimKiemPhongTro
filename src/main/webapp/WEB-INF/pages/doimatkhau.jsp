@@ -16,6 +16,11 @@
         </c:url>
         <center><h5 style="padding: 20px">THAY ĐỔI MẬT KHẨU</h5></center>
         <div class="wrapper">
+            <c:if test="${not empty errMsg}">
+                <div class="error-message">
+                    ${errMsg}
+                </div>
+            </c:if>
             <c:if test="${not empty error}">
                 <p style="color: red">${error}</p>
             </c:if>

@@ -29,7 +29,7 @@
                         <p>${taikhoan.tenNguoiDung}</p>
                         <p>${taikhoan.sdt}</p>
                         <div class="canhanhoa">
-                            
+
                             <button class="btn btn-success"><a style="color:white; text-decoration: none" href="<c:url value ="/capnhattaikhoan"/> ">Cập nhật</a></button>
                             <button class="btn btn-success"><a style="color:white; text-decoration: none" href="<c:url value ="/doimatkhau"/> ">Đổi mật khẩu</a></button>
                         </div>
@@ -69,7 +69,7 @@
                                                 <th>Ngày đăng:</th>
                                                 <td>${p.ngayDang}</td>
                                             </tr>
-                                            
+
                                             <tr>
                                                 <th></th>
                                                 <td>   
@@ -140,10 +140,12 @@
                         </c:if>
                     </c:forEach>
                 </div>
+                <c:if test="${taikhoan.idLoaiTaiKhoan.id==2}">
+                    <div class="catngang">
+                        <h5 style="color: white; padding: 10px;">TIN ĐANG CHỜ DUYỆT</h5>
+                    </div>
+                </c:if>
 
-                <div class="catngang">
-                    <h5 style="color: white; padding: 10px;">TIN ĐANG CHỜ DUYỆT</h5>
-                </div>
                 <div>
                     <c:forEach items="${baiviet}" var="p">
                         <c:if test="${p.loaiTrangThai.id==2}">
@@ -173,10 +175,7 @@
                                                 <th>Ngày đăng:</th>
                                                 <td>${p.ngayDang}</td>
                                             </tr>
-                                            <!--                                            <tr>
-                                                                                            <th>Địa chỉ:</th>
-                                                                                            <td>${p.diaChiCt}</td>
-                                                                                        </tr>-->
+                                           
                                             <tr>
                                                 <th></th>
                                                 <td>   
@@ -189,9 +188,7 @@
                                                     <c:url value="/canhan_xoa" var="actionXoa">
                                                         <c:param name="idBaiVietXoa" value="${p.id}" />  
                                                     </c:url>
-                                                    <form:form method="post" action="${actionXoa}">
-                                                        <button class="btn btn-danger" type="submit">Xóa</button>
-                                                    </form:form>
+                                                  
                                                 </td>
                                             </tr>
                                         </table>
@@ -247,9 +244,12 @@
                         </c:if>
                     </c:forEach>
                 </div>
-                <div class="catngang">
-                    <h5 style="color: white; padding: 10px;">TIN BỊ TỪ CHỐI</h5>
-                </div>
+                <c:if test="${taikhoan.idLoaiTaiKhoan.id==2}">
+                    <div class="catngang">
+                        <h5 style="color: white; padding: 10px;">TIN BỊ TỪ CHỐI</h5>
+                    </div>
+                </c:if>
+
                 <div>
                     <c:forEach items="${baiviet}" var="p">
                         <c:if test="${p.loaiTrangThai.id==3}">
@@ -279,18 +279,10 @@
                                                 <th>Ngày đăng:</th>
                                                 <td>${p.ngayDang}</td>
                                             </tr>
-                                            <!--                                            <tr>
-                                                                                            <th>Địa chỉ:</th>
-                                                                                            <td>${p.diaChiCt}</td>
-                                                                                        </tr>-->
+                                            
                                             <tr>
                                                 <th></th>
-                                                <td>   
-                                                    <c:url value="/capnhat" var="bvietAction">
-                                                        <c:param name="baivietId" value="${p.id}" />  
-                                                    </c:url>
-                                                    <a href="${bvietAction}" class="btn btn-success" style="vertical-align:middle"> Cập nhật</a>
-                                                </td>
+                                                
                                                 <td>   
                                                     <c:url value="/canhan_xoa" var="actionXoa">
                                                         <c:param name="idBaiVietXoa" value="${p.id}" />  

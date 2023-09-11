@@ -13,7 +13,13 @@
 <html>
 
     <section class="body-dangbai">
-        <h1 class="text-center text-danger">ĐĂNG BÀI VIẾT</h1>
+        <center><h3 style="margin: 20px 0; color: #005555;">ĐĂNG BÀI VIẾT</h3></center>
+        
+        <c:if test="${not empty errMsg}">
+            <div class="error-message">
+                ${errMsg}
+            </div>
+        </c:if>
         <c:url value="/dangbai" var="action"/>
         <c:if test="${not empty errors}">
             <div class="alert alert-danger">
@@ -35,12 +41,12 @@
                     </div>
                     <div class="dangbai-tincodinh">
                         <c:if test="${nguoidung.idLoaiTaiKhoan.id==2}">
-                            <p>Danh mục tin đăng: Tin cho thuê</p>
+                            <p class="text-danger">Danh mục tin đăng: Tin cho thuê</p>
                             <form:input type="hidden" path="loaiBaiViet" value="1" readonly="true"  cssClass="form -control"/>
                         </c:if>
 
                         <c:if test="${nguoidung.idLoaiTaiKhoan.id==3}">
-                            <p>Danh mục tin đăng: Tin tìm trọ</p>
+                            <p class="text-danger">Danh mục tin đăng: Tin tìm trọ</p>
                             <form:input type="hidden" path="loaiBaiViet" value="2" readonly="true"  cssClass="form -control"/>
                         </c:if>
 
@@ -170,3 +176,13 @@
 
 
 </html>
+<script>
+        document.querySelector("form").addEventListener("submit", function (e) {
+            const fileInput = document.getElementById("imageFile");
+
+            if (fileInput.files.length === 0) {
+                e.preventDefault(); // Ngăn chặn gửi yêu cầu nếu không có tệp nào được chọn
+                alert("Vui lòng chọn một tệp hình ảnh.");
+            }
+        });
+    </script>

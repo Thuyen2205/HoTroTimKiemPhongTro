@@ -43,12 +43,6 @@ const TrangChu = () => {
                         <BaiViet2 />
                     </div>
                 </div>
-
-
-
-                <div className="trangchu-timkiem">
-                    <h1 className="text-info text-center">TÌM KIẾM</h1>
-                </div>
             </Container>
 
         </>

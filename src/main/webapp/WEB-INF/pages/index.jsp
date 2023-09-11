@@ -8,9 +8,6 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <link href="<c:url value="/css/style.css"/>" rel="stylesheet" />
 
-
-
-
 <!DOCTYPE html>
 <html>
     <body>
@@ -50,17 +47,26 @@
     <div class="bangtin">
         <c:forEach items="${baiviet}" var="t" >
             <c:if test="${t.loaiTrangThai.id==1}">
-
                 <div class="bviet">
                     <div class="bviet_anh">
-                        <img src="${t.hinhAnh}"/>
+                        <c:if test="${t.loaiBaiViet.id==1}">
+                            <img src="${t.hinhAnh}"/>
+                        </c:if>
+                        <c:if test="${t.loaiBaiViet.id==2}">
+                            <img src="https://res.cloudinary.com/dpp5kyfae/image/upload/v1694280790/timtro2_k6dbqd.jpg"/>
+                        </c:if>
                     </div>
                     <div class="bviet_ndung">
                         <table class="table_bv" style="width:100%">
                             <c:url value="/thtin_bviet" var="bvietAction">
                                 <c:param name="baivietId" value="${t.id}" />  
                             </c:url>
-                            <a  href="${bvietAction}" >${t.tenBaiViet}</a>
+                            <c:if test="${t.loaiBaiViet.id==1}">
+                                <a  href="${bvietAction}"><h5 class="text-danger">TIN CHO THUÊ</h5>${t.tenBaiViet}</a>
+                            </c:if>
+                            <c:if test="${t.loaiBaiViet.id==2}">
+                                <a  href="${bvietAction}"><h5 class="text-warning">TIN TÌM TRỌ</h5>${t.tenBaiViet}</a>
+                            </c:if>
                             <tr>
                                 <th>Khu vực:</th>
                                 <td>${t.phamViCanTim}</td>

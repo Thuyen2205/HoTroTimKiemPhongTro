@@ -19,6 +19,11 @@
         <form:form method="post" action="${action}" modelAttribute="user"  enctype="multipart/form-data">
             <h1>ĐĂNG KÍ TÀI KHOẢN</h1>
             <center>
+                <c:if test="${not empty errMsg}">
+                    <div class="error-message">
+                        ${errMsg}
+                    </div>
+                </c:if>
                 <div class="input-box">
                     <form:input type="text" placeholder="Họ và tên" path="tenNguoiDung" />
                 </div>
@@ -57,7 +62,7 @@
                     <h4>Avatar</h4>                   
 
                     <div class="upload-avatar-input">
-                        <form:input type="file" id="f<foile" path="file" placeholder="Upload Avatar"/>
+                        <form:input type="file" id="fileInput" path="file" placeholder="Upload Avatar"/>
                     </div>
                 </div>
 
@@ -88,3 +93,13 @@
     </div>
 
 </body>
+<script>
+    document.querySelector("form").addEventListener("submit", function (e) {
+        const fileInput = document.getElementById("fileInput");
+
+        if (fileInput.files.length === 0) {
+            e.preventDefault(); // Ngăn chặn gửi yêu cầu nếu không có tệp nào được chọn
+            alert("Vui lòng chọn một tệp hình ảnh.");
+        }
+    });
+</script>

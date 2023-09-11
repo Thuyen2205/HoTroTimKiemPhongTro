@@ -28,7 +28,11 @@
             <form:hidden path="matKhau" />
             <center><h5 style="padding: 20px">CẬP NHẬT THÔNG TIN</h5></center>
             <div class="wrapper">
-                
+                <c:if test="${not empty errMsg}">
+                    <div class="error-message">
+                        ${errMsg}
+                    </div>
+                </c:if>
                 <div class="input-box">
                     <p>Email </p>
                     <form:input type="text" id="email" name="email" path="email" placeholder="email"/>
@@ -48,8 +52,8 @@
                         <form:input path="file" type="file" id="imageFile" name="imageFile" onchange="chooseFile(this)"  accept="image/jpg, image/jpeg, image/png"/>
                     </div>
                 </div>
-                    <center>
-                <button class="btn custom-button3" type="sumit">Cập nhật</button>
+                <center>
+                    <button class="btn custom-button3" type="sumit">Cập nhật</button>
                 </center>
             </div>
         </form:form>

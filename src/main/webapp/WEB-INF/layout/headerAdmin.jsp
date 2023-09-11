@@ -8,14 +8,14 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<nav class=" navbar navbar-expand-sm navbar-dark bg-dark">
+<nav class=" navbar navbar-expand-sm navbar-dark">
     <div class="container-fluid">
-        <a class="navbar-brand" href="<c:url value ="/" />">Phòng Trọ Sinh Viên</a>
+        <a class="navbar-brand" href="<c:url value ="/" />">PHÒNG TRỌ SINH VIÊN</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar">
             <span class="navbar-toggler-icon"></span>
         </button>
         <a class="navbar-brand" href="<c:url value ="/admin" />">
-            <img src="${taikhoan.avatar}" alt="${pageContext.request.userPrincipal.name}" style="width:80px;" class="rounded-pill"> 
+            <img src="${taikhoan.avatar}" alt="${pageContext.request.userPrincipal.name}" style="width:50px;" class="rounded-pill"> 
         </a>
         <div class="collapse navbar-collapse" id="mynavbar">
 
@@ -33,21 +33,20 @@
                     <li class="nav-item">
                         <a style="color: red" class="nav-link" href="<c:url value ="/admin" />">Xin chào, ${pageContext.request.userPrincipal.name} </a>                       
                     </li>
-<!--                    <li class="nav-item">
-                        <a class="nav-link" href="<c:url value ="/canhan"/> ">Trang cá nhân</a>
-                    </li>-->
-                    <li class="nav-item">
-                        <a class="nav-link" href="<c:url value ="/adminduyetbai"/> ">Duyệt bài viết</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="<c:url value ="/adminduyettaikhoan"/> ">Duyệt tài khoản chủ trọ</a>
-                    </li>
                     <li class="nav-item">
                         <a class="nav-link" href="<c:url value ="/adminmonth"/> ">Thông kê theo tháng</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="<c:url value ="/adminquarter"/> ">Thông kê theo quý</a>
                     </li>
+                    
+                    <li class="nav-item">
+                        <a class="nav-link" href="<c:url value ="/adminduyetbai"/> ">Duyệt bài viết</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="<c:url value ="/adminduyettaikhoan"/> ">Duyệt tài khoản chủ trọ</a>
+                    </li>
+
                     <li class="nav-item">
                         <a class="nav-link" href="<c:url value ="/logout" />"> Đăng xuất </a>                       
                     </li>
@@ -59,7 +58,7 @@
 
             </ul>
 
-            
+
         </div>
     </div>
 </nav>

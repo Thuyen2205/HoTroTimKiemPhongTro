@@ -25,7 +25,7 @@ const Header = () => {
             <div className='header'>
                 <Navbar style={{ color: 'white' }} expand="lg" className="header">
                     <div className="nav-title">
-                        <div><Navbar.Brand href="#home" className="brand">
+                        {/* <div><Navbar.Brand href="#home" className="brand">
                             <img
                                 src="https://res.cloudinary.com/dpp5kyfae/image/upload/v1694192001/_e4154a4b-519b-4344-b0a5-5baa8b22e03a_wqccd6.jpg"
                                 width="50"
@@ -34,7 +34,7 @@ const Header = () => {
                                 alt="React Bootstrap logo"
                             />
                         </Navbar.Brand>
-                        </div>
+                        </div> */}
                         <div>  <Nav style={{ color: 'white', alignItems: 'center' }} className="mx-auto" href="/">MY WEBSITE</Nav></div>
                     </div>
                     <div className="nav-links">

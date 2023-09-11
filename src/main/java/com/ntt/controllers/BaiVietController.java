@@ -20,6 +20,9 @@ import com.ntt.service.NguoiDungService;
 import com.ntt.service.TaiKhoanService;
 import com.ntt.service.impl.LoaiTrangThaiServiceImpl;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.math.BigDecimal;
+import java.net.URLEncoder;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -73,13 +76,15 @@ public class BaiVietController {
     private LoaiTrangThaiService loaiTrangThaiService;
 
     @GetMapping("/dangbai")
-    public String list(Model model, Authentication authen, @RequestParam Map<String, String> params) {
+    public String list(Model model, Authentication authen, @RequestParam Map<String, String> params,
+            @RequestParam(name = "errMsg", required = false) String errMsg) {
         model.addAttribute("nguoidung", this.taikhoan.getTaiKhoan(authen.getName()).get(0));
         model.addAttribute("baiviet_role", this.loaiBaiViet.getLoaiBaiViet());
         model.addAttribute("taikhoan", this.taikhoan.getTaiKhoan(authen.getName()).get(0));
         model.addAttribute("baiviet", new BaiViet());
         Date date = new Date();
         model.addAttribute("date", date);
+        model.addAttribute("errMsg", errMsg);
         return "dangbai";
 
     }
@@ -186,24 +191,63 @@ public class BaiVietController {
     public String add(Model model, @ModelAttribute(value = "baiviet") @Valid BaiViet baiviet,
             @RequestParam Map<String, String> params,
             Authentication authen, BindingResult rs
-    ) {
+    ) throws UnsupportedEncodingException {
         String errMsg = "";
-        if (!rs.hasErrors()) {
-            if (authen.getName() != null) {
-
-                if (this.baivietService.addBaiViet(baiviet) == true) {
-
-                    return "redirect:/";
-                } else {
-                    errMsg = "?� c� l?i x�y ra";
-                }
+        if (baiviet.getLoaiBaiViet().getId() == 1) {
+            if (baiviet.getTenBaiViet() == null || baiviet.getTenBaiViet().isEmpty()) {
+                errMsg = "Vui lòng nhập tên bài viết";
+                return "redirect:/dangbai?errMsg=" + URLEncoder.encode(errMsg, "UTF-8");
+            } else if (baiviet.getTenBaiViet().length() < 5) {
+                errMsg = "Tên bài viết phải có ít nhất 5 ký tự";
+                return "redirect:/dangbai?errMsg=" + URLEncoder.encode(errMsg, "UTF-8");
             }
 
-        } else {
-            model.addAttribute("errors", rs.getAllErrors());
+            if (baiviet.getPhamViCanTim() == null || baiviet.getPhamViCanTim().isEmpty()) {
+                errMsg = "Vui lòng nhập pham vi";
+                return "redirect:/dangbai?errMsg=" + URLEncoder.encode(errMsg, "UTF-8");
+            } else if (baiviet.getPhamViCanTim().length() < 5) {
+                errMsg = "Pham vi can tim phải có ít nhất 5 ký tự";
+                return "redirect:/dangbai?errMsg=" + URLEncoder.encode(errMsg, "UTF-8");
+            }
+            if (baiviet.getDienTich() == null || baiviet.getDienTich().isEmpty()) {
+                errMsg = "Vui lòng nhap dien tich phong cua ban";
+                return "redirect:/dangbai?errMsg=" + URLEncoder.encode(errMsg, "UTF-8");
+            }else if (baiviet.getDienTich().length() < 2) {
+                errMsg = "Dien tich phải có ít nhất 5 ký tự";
+                return "redirect:/dangbai?errMsg=" + URLEncoder.encode(errMsg, "UTF-8");
+            }
+            if (baiviet.getDiaChiCt() == null || baiviet.getDiaChiCt().isEmpty()) {
+                errMsg = "Vui lòng nhap dia chi chi tiet cua ";
+                return "redirect:/dangbai?errMsg=" + URLEncoder.encode(errMsg, "UTF-8");
+            }else if (baiviet.getDiaChiCt().length() < 10) {
+                errMsg = "Dia chi chi tiet phải có ít nhất 5 ký tự";
+                return "redirect:/dangbai?errMsg=" + URLEncoder.encode(errMsg, "UTF-8");
+            }
+
         }
 
-        return "baiviet";
+        if (baiviet.getLoaiBaiViet().getId() == 2) {
+            if (baiviet.getTenBaiViet() == null || baiviet.getTenBaiViet().isEmpty()) {
+                errMsg = "Vui lòng nhập tên bài viết";
+                return "redirect:/dangbai?errMsg=" + URLEncoder.encode(errMsg, "UTF-8");
+            }
+            if (baiviet.getPhamViCanTim() == null || baiviet.getPhamViCanTim().isEmpty()) {
+                errMsg = "Vui lòng nhập phạm vi cần tìm";
+                return "redirect:/dangbai?errMsg=" + URLEncoder.encode(errMsg, "UTF-8");
+            }
+        }
+
+        if (authen.getName() != null) {
+
+            if (this.baivietService.addBaiViet(baiviet) == true) {
+
+                return "redirect:/";
+            } else {
+                errMsg = "?� c� l?i x�y ra";
+            }
+        }
+
+        return "redirect:/dangbai?errMsg=" + URLEncoder.encode(errMsg, "UTF-8");
     }
 
     @RequestMapping("/capnhat")

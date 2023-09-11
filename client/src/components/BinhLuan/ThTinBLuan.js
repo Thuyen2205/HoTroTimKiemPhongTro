@@ -3,6 +3,7 @@ import { MyUserContext } from "../../App";
 import Apis, { endpoints } from "../../configs/Apis";
 import { Button, Col, Form, Image, InputGroup, Row } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import './BinhLuan.scss';
 
 
 
@@ -151,6 +152,10 @@ const ThTinBLuan = (props, { replyId = 0 }) => {
                                                             type="submit">
                                                             Bình luận
                                                         </Button>
+                                                        
+                                                    </li>
+                                                    <li>
+                                                        
                                                         <Button
                                                             // style={{ display: 'inline' }}
                                                             // style={{ marginRight: 10 }}
@@ -161,7 +166,6 @@ const ThTinBLuan = (props, { replyId = 0 }) => {
                                                         >
                                                             Hủy
                                                         </Button>
-
                                                     </li>
                                                 </ul>
                                             </>
