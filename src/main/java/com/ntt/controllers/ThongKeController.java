@@ -185,7 +185,7 @@ public class ThongKeController {
                 SimpleMailMessage message = new SimpleMailMessage();
                 message.setTo(nguoidung.getEmail());
                 message.setSubject("Tai khoan cua ban da qua kiem duyet");
-                message.setText("Ten tai khoan cua ban la: "+nguoidung.getTenTaiKhoan()+"moi dang nhap vao he thong");
+                message.setText("Ten tai khoan cua ban la: "+nguoidung.getTenTaiKhoan()+"  moi dang nhap vao he thong");
                 emailSender.send(message);
                 return "forward:/adminduyettaikhoan";
             } else {

@@ -98,7 +98,7 @@
         const fileInput = document.getElementById("fileInput");
 
         if (fileInput.files.length === 0) {
-            e.preventDefault(); // Ngăn chặn gửi yêu cầu nếu không có tệp nào được chọn
+            e.preventDefault(); 
             alert("Vui lòng chọn một tệp hình ảnh.");
         }
     });

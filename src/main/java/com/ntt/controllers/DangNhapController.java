@@ -14,6 +14,7 @@ import com.ntt.service.TaiKhoanService;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.Map;
+import java.util.regex.Pattern;
 import javax.persistence.Query;
 import javax.servlet.http.HttpSession;
 import org.hibernate.Session;
@@ -64,7 +65,7 @@ public class DangNhapController {
 
     @RequestMapping("/canhan")
 //    @Transactional
-    public String dangNhapCaNhan(Model model, Authentication authen) {
+    public String dangNhapCaNhan(Model model, Authentication authen,@RequestParam(name = "errMsg", required = false) String errMsg) {
 //        model.addAttribute("taikhoan", new NguoiDung());
 
         if (authen != null) {
@@ -74,6 +75,7 @@ public class DangNhapController {
             model.addAttribute("baiviet", this.baiviet.getBaiVietByIdNgDung(u));
         }
         model.addAttribute("nguoidung", this.taikhoan.getTaiKhoan(authen.getName()).get(0));
+        model.addAttribute("errMsg",errMsg);
 
         return "canhan";
     }
@@ -161,13 +163,29 @@ public class DangNhapController {
             @RequestParam Map<String, String> params,
             @ModelAttribute(value = "taikhoan") NguoiDung taikhoan) throws UnsupportedEncodingException {
         String errMsg = "";
-         if (taikhoan.getTenTaiKhoan()== null || taikhoan.getTenTaiKhoan().isEmpty()) {
+        if (taikhoan.getTenTaiKhoan() == null || taikhoan.getTenTaiKhoan().isEmpty()) {
             errMsg = "Vui lòng nhập tên nguoi dung";
-            return "redirect:/capnhattaikhoan?errMsg=" + URLEncoder.encode(errMsg, "UTF-8");
+            return "redirect:/canhan?errMsg=" + URLEncoder.encode(errMsg, "UTF-8");
+        } else if (taikhoan.getTenTaiKhoan().length() < 5) {
+            errMsg = "Tên tai khoan phải có ít nhất 5 ký tự";
+            return "redirect:/canhan?errMsg=" + URLEncoder.encode(errMsg, "UTF-8");
         }
-           if (taikhoan.getEmail()== null || taikhoan.getEmail().isEmpty()) {
-            errMsg = "Vui lòng nhập tên nguoi dung";
+        if (taikhoan.getEmail() == null || taikhoan.getEmail().isEmpty()) {
+            errMsg = "Vui lòng nhập dia chi email";
             return "redirect:/capnhattaikhoan?errMsg=" + URLEncoder.encode(errMsg, "UTF-8");
+        } else {
+            String emailPattern = "^[A-Za-z0-9+_.-]+@(.+)$";
+            if (!Pattern.matches(emailPattern, taikhoan.getEmail())) {
+                errMsg = "Dia chi email không hợp lệ";
+                return "redirect:/canhan?errMsg=" + URLEncoder.encode(errMsg, "UTF-8");
+            }
+        }
+        if (taikhoan.getSdt() == null || taikhoan.getSdt().isEmpty()) {
+            errMsg = "Vui lòng nhập so dien thoai";
+            return "redirect:/canhan?errMsg=" + URLEncoder.encode(errMsg, "UTF-8");
+        }else if (!taikhoan.getSdt().matches("\\d{10,}")) {
+            errMsg = "Số điện thoại phải chứa ít nhất 10 chữ số";
+            return "redirect:/canhan?errMsg=" + URLEncoder.encode(errMsg, "UTF-8");
         }
         if (authen != null) {
             if (this.taikhoan.updateNguoiDung(taikhoan) == true) {
@@ -176,6 +194,6 @@ public class DangNhapController {
                 errMsg = "ra";
             }
         }
-         return "redirect:/capnhattaikhoan?errMsg=" + URLEncoder.encode(errMsg, "UTF-8");
+        return "redirect:/capnhattaikhoan?errMsg=" + URLEncoder.encode(errMsg, "UTF-8");
     }
 }

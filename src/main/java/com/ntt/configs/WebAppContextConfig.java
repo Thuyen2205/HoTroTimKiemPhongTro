@@ -126,24 +126,24 @@ public class WebAppContextConfig implements WebMvcConfigurer {
         registry.addFormatter(new LoaiTrangThaiFormatter());
     }
 
-    @Bean
-    public MessageSource messageSource() {
-        ResourceBundleMessageSource m = new ResourceBundleMessageSource();
-        m.addBasenames("messages");
-        return m;
-
-    }
-
-    @Bean(name = "validator")
-    public LocalValidatorFactoryBean validator() {
-        LocalValidatorFactoryBean bean
-                = new LocalValidatorFactoryBean();
-        bean.setValidationMessageSource(messageSource());
-        return bean;
-    }
-
-    @Override
-    public Validator getValidator() {
-        return validator();
-    }
+//    @Bean
+//    public MessageSource messageSource() {
+//        ResourceBundleMessageSource m = new ResourceBundleMessageSource();
+//        m.addBasenames("messages");
+//        return m;
+//
+//    }
+//
+//    @Bean(name = "validator")
+//    public LocalValidatorFactoryBean validator() {
+//        LocalValidatorFactoryBean bean
+//                = new LocalValidatorFactoryBean();
+//        bean.setValidationMessageSource(messageSource());
+//        return bean;
+//    }
+//
+//    @Override
+//    public Validator getValidator() {
+//        return validator();
+//    }
 }

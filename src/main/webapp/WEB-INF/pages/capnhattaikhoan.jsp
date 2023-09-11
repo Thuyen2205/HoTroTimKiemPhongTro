@@ -26,6 +26,7 @@
             <form:hidden path="idLoaiTaiKhoan" />
             <form:hidden path="kiemDuyet" />
             <form:hidden path="matKhau" />
+            <form:hidden path="tenNguoiDung" />
             <center><h5 style="padding: 20px">CẬP NHẬT THÔNG TIN</h5></center>
             <div class="wrapper">
                 <c:if test="${not empty errMsg}">
@@ -59,3 +60,13 @@
         </form:form>
     </div>
 </html>
+<script>
+    document.querySelector("form").addEventListener("submit", function (e) {
+        const fileInput = document.getElementById("imageFile");
+
+        if (fileInput.files.length === 0) {
+            e.preventDefault(); 
+            alert("Vui lòng chọn một tệp hình ảnh.");
+        }
+    });
+</script>

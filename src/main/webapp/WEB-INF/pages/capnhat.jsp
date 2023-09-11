@@ -35,10 +35,17 @@ Document   : thtin_bviet
                     <form:hidden path="idNguoiDung.id"/>
 
                     <div class="dangbai-tinnhaplieu">
-                        <div class="input-bigsize">
-                            <p>Loại bài viết </p>
-                            ${BaiViet.loaiBaiViet.id}
+
+
+                        <div style="display: flex">
+                            <p>Loại bài viết:  </p>    
+                            <p style="text-indent: 10px"> ${BaiViet.loaiBaiViet.tenLoaiBaiViet}</p>
                         </div>
+                        <div style="display: flex">
+                            <p>Mã tin:  </p>    
+                            <p style="text-indent: 10px"> #${BaiViet.id}</p>
+                        </div>
+
 
                         <div class="input-bigsize">
                             <p>Tiêu đề bài đăng </p>
@@ -183,6 +190,16 @@ Document   : thtin_bviet
         var formattedDate = currentDate.toISOString().slice(0, 10);
 
         ngayDangField.value = formattedDate;
+    </script>
+    <script>
+        document.querySelector("form").addEventListener("submit", function (e) {
+            const fileInput = document.getElementById("imageFile");
+
+            if (fileInput.files.length === 0) {
+                e.preventDefault();
+                alert("Vui lòng chọn một tệp hình ảnh.");
+            }
+        });
     </script>
 
 

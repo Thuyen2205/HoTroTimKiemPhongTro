@@ -35,7 +35,7 @@
 
             <div class="dangbai-col1">
                 <form:form method="post" action="${action}" var="p" modelAttribute="baiviet" enctype="multipart/form-data" >
-                   <form:errors path="*" element="div" cssClass="alert alert-danger" />
+                   <%--<form:errors path="*" element="div" cssClass="alert alert-danger" />--%>
                     <div class="catngang">
                         <h5 style="color: white; padding: 10px;">THÔNG TIN CƠ BẢN</h5>
                     </div>
@@ -60,7 +60,7 @@
                         <div class="input-bigsize">
                             <p>Tiêu đề bài đăng </p>
                             <form:input type="text" id="tenbv" name="tenbv" path="tenBaiViet" placeholder="Tiêu đề bài đăng"/>
-                            <form:errors path="tenBaiViet" element="div" cssClass="text-danger" />
+                            <%--<form:errors path="tenBaiViet" element="div" cssClass="text-danger" />--%>
                         </div>
 
                         <div class="input-bigsize">
