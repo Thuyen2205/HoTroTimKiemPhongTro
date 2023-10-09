@@ -68,7 +68,9 @@ public class ThongKeController {
             }
 
         }
-
+        UserDetails user = this.taikhoan.loadUserByUsername(authen.getName());
+        NguoiDung u = this.taikhoan.getTaiKhoanbyTenTK(user.getUsername());
+        model.addAttribute("taikhoan", u);
         model.addAttribute("countChuTro", countChuTro);
         model.addAttribute("countKhachHang", countKhachHang);
         model.addAttribute("listNg", ngs);
@@ -106,6 +108,9 @@ public class ThongKeController {
             }
 
         }
+        UserDetails user = this.taikhoan.loadUserByUsername(authen.getName());
+        NguoiDung u = this.taikhoan.getTaiKhoanbyTenTK(user.getUsername());
+        model.addAttribute("taikhoan", u);
         model.addAttribute("countChuTro", countChuTro);
         model.addAttribute("countKhachHang", countKhachHang);
         model.addAttribute("listNg", ngs);

@@ -4,11 +4,14 @@
  */
 package com.ntt.controllers;
 
+import com.ntt.pojo.BaiViet;
 import com.ntt.pojo.NguoiDung;
 import com.ntt.service.BaiVietService;
 import com.ntt.service.LoaiBaiVietService;
 import com.ntt.service.TaiKhoanService;
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Date;
 
 import java.util.HashMap;
 import java.util.List;
@@ -26,8 +29,11 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  *
@@ -55,14 +61,18 @@ public class IndexContext {
             UserDetails user = this.taikhoan.loadUserByUsername(authen.getName());
             NguoiDung u = this.taikhoan.getTaiKhoanbyTenTK(user.getUsername());
             model.addAttribute("taikhoan", u);
+
             model.addAttribute("nguoidung", this.taikhoan.getTaiKhoan(authen.getName()).get(0));
+
         }
         if (params.isEmpty()) {
-            model.addAttribute("baiviet", this.baivietService.getBaiVietAll());
+            List<BaiViet> baiviet = this.baivietService.getBaiVietAll();
+            model.addAttribute("baiviet", this.baivietService.sortBaiVietByNgayDang(baiviet));
 
         }
         if (!params.isEmpty()) {
-            model.addAttribute("baiviet", this.baivietService.getBaiVietTK(address, price, soNguoi, params));
+            List<BaiViet> baiviets = this.baivietService.getBaiVietTK(address, price, soNguoi, params);
+            model.addAttribute("baiviet", this.baivietService.sortBaiVietByNgayDang(baiviets));
         }
 
         int count = this.baivietService.getCountOfBaiViet();
@@ -72,25 +82,35 @@ public class IndexContext {
 
     }
 
-//    @PostMapping("/")
-//    public String index(Model model, Authentication authen, @RequestParam("gia") int gia) {
-//        BigDecimal giaBigDecimal = new BigDecimal(gia);
-//        model.addAttribute("baiviet_1", this.baivietService.getBaiVietByGiaThue(giaBigDecimal));
-//        UserDetails user = this.taikhoan.loadUserByUsername(authen.getName());
-//        NguoiDung u = this.taikhoan.getTaiKhoanbyTenTK(user.getUsername());
-//        model.addAttribute("taikhoan", u);
+//    @RequestMapping(value = "/", method = RequestMethod.POST)
+//    public String capNhatKinhDoViDo(@RequestParam("latitude") Double latitude, @RequestParam("longitude") Double longitude, Model model, Authentication authen) {
+//        if (authen != null) {
+//            UserDetails user = this.taikhoan.loadUserByUsername(authen.getName());
+//            NguoiDung nguoiDung = this.taikhoan.getTaiKhoanbyTenTK(user.getUsername());
+//
+//            nguoiDung.setKinhDo(latitude);
+//            nguoiDung.setViDo(longitude);
+//
+//            this.taikhoan.updateTaiKhoan(nguoiDung);
+//
+//        }
+//
 //        return "index";
 //    }
+
     @RequestMapping("/bando")
     public String bando(Model model, NguoiDung nguoidung, Authentication authen) {
 
-        model.addAttribute("dsBaiViet", this.baivietService.getBaiVietDaDuyet());
+        model.addAttribute("dsBaiViet", this.baivietService.getBaiVietAll());
+
+        List<Map<String, Object>> dsThongTinViTri = new ArrayList<>();
         UserDetails user = this.taikhoan.loadUserByUsername(authen.getName());
         NguoiDung u = this.taikhoan.getTaiKhoanbyTenTK(user.getUsername());
         model.addAttribute("taikhoan", u);
         model.addAttribute("nguoidung", this.taikhoan.getTaiKhoan(authen.getName()).get(0));
-
         return "bando";
     }
+
+    
 
 }

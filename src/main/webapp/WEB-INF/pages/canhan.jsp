@@ -14,7 +14,7 @@
 <!DOCTYPE html>
 
 <html>
-
+  
     <section class="body-trangcanhan">
         <div class="trangcanhan">
             <div class="trangcanhan-col1">
@@ -34,7 +34,6 @@
                         <p>${taikhoan.tenNguoiDung}</p>
                         <p>${taikhoan.sdt}</p>
                         <div class="canhanhoa">
-
                             <button class="btn btn-success"><a style="color:white; text-decoration: none" href="<c:url value ="/capnhattaikhoan"/> ">Cập nhật</a></button>
                             <button class="btn btn-success"><a style="color:white; text-decoration: none" href="<c:url value ="/doimatkhau"/> ">Đổi mật khẩu</a></button>
                         </div>
@@ -183,12 +182,12 @@
 
                                             <tr>
                                                 <th></th>
-<!--                                                <td>   
-                                                    <%--<c:url value="/capnhat" var="bvietAction">--%>
-                                                        <%--<c:param name="baivietId" value="${p.id}" />--%>  
-                                                    <%--</c:url>--%>
-                                                    <a href="${bvietAction}" class="btn btn-success" style="vertical-align:middle"> Cập nhật</a>
-                                                </td>-->
+                                                <!--                                                <td>   
+                                                <%--<c:url value="/capnhat" var="bvietAction">--%>
+                                                <%--<c:param name="baivietId" value="${p.id}" />--%>  
+                                                <%--</c:url>--%>
+                                                <a href="${bvietAction}" class="btn btn-success" style="vertical-align:middle"> Cập nhật</a>
+                                            </td>-->
                                                 <td>   
                                                     <c:url value="/canhan_xoa" var="actionXoa">
                                                         <c:param name="idBaiVietXoa" value="${p.id}" />  
@@ -229,12 +228,12 @@
                                             </tr>
                                             <tr>
                                                 <th></th>
-<!--                                                <td>   
-                                                    <%--<c:url value="/capnhat" var="bvietAction">--%>
-                                                        <%--<c:param name="baivietId" value="${p.id}" />--%>  
-                                                    <%--</c:url>--%>
-                                                    <a href="${bvietAction}" class="btn btn-success" style="vertical-align:middle"> Cập nhật bai viet</a>
-                                                </td>-->
+                                                <!--                                                <td>   
+                                                <%--<c:url value="/capnhat" var="bvietAction">--%>
+                                                <%--<c:param name="baivietId" value="${p.id}" />--%>  
+                                                <%--</c:url>--%>
+                                                <a href="${bvietAction}" class="btn btn-success" style="vertical-align:middle"> Cập nhật bai viet</a>
+                                            </td>-->
                                                 <td>   
                                                     <c:url value="/canhan_xoa" var="actionXoa">
                                                         <c:param name="idBaiVietXoa" value="${p.id}" />  
@@ -289,7 +288,7 @@
                                             </tr>
 
                                             <tr>
-<!--                                                <th></th>-->
+                                                <!--                                                <th></th>-->
 
                                                 <td>   
                                                     <c:url value="/canhan_xoa" var="actionXoa">
@@ -330,12 +329,12 @@
                                             </tr>
                                             <tr>
                                                 <th></th>
-<!--                                                <td>   
-                                                    <%--<c:url value="/capnhat" var="bvietAction">--%>
-                                                        <%--<c:param name="baivietId" value="${p.id}" />--%>  
-                                                    <%--</c:url>--%>
-                                                    <a href="${bvietAction}" class="btn btn-success" style="vertical-align:middle"> Cập nhật</a>
-                                                </td>-->
+                                                <!--                                                <td>   
+                                                <%--<c:url value="/capnhat" var="bvietAction">--%>
+                                                <%--<c:param name="baivietId" value="${p.id}" />--%>  
+                                                <%--</c:url>--%>
+                                                <a href="${bvietAction}" class="btn btn-success" style="vertical-align:middle"> Cập nhật</a>
+                                            </td>-->
                                                 <td>   
                                                     <c:url value="/canhan_xoa" var="actionXoa">
                                                         <c:param name="idBaiVietXoa" value="${p.id}" />  

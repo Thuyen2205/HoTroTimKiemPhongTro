@@ -4,7 +4,6 @@
  */
 package com.ntt.pojo;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
@@ -24,9 +23,6 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
-import javax.validation.constraints.Digits;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -34,7 +30,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
- * @author Admins
+ * @author ThanhThuyen
  */
 @Entity
 @Table(name = "bai_viet")
@@ -53,12 +49,9 @@ import org.springframework.web.multipart.MultipartFile;
     @NamedQuery(name = "BaiViet.findByHinhAnh1", query = "SELECT b FROM BaiViet b WHERE b.hinhAnh1 = :hinhAnh1"),
     @NamedQuery(name = "BaiViet.findByHinhAnh2", query = "SELECT b FROM BaiViet b WHERE b.hinhAnh2 = :hinhAnh2"),
     @NamedQuery(name = "BaiViet.findByHinhAnh3", query = "SELECT b FROM BaiViet b WHERE b.hinhAnh3 = :hinhAnh3")})
-
 public class BaiViet implements Serializable {
 
-    
-    
-    private static long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
@@ -99,15 +92,13 @@ public class BaiViet implements Serializable {
     @Size(max = 500)
     @Column(name = "hinh_anh3")
     private String hinhAnh3;
-
     @OneToMany(mappedBy = "idBaiViet")
-    @JsonIgnore
+    private Set<LuuTin> luuTinSet;
+    @OneToMany(mappedBy = "idBaiViet")
     private Set<BinhLuan> binhLuanSet;
     @OneToMany(mappedBy = "idBaiViet")
-    @JsonIgnore
     private Set<HinhAnh> hinhAnhSet;
     @OneToMany(mappedBy = "idBaiViet")
-    @JsonIgnore
     private Set<ThongBao> thongBaoSet;
     @JoinColumn(name = "loai_bai_viet", referencedColumnName = "id")
     @ManyToOne
@@ -119,7 +110,6 @@ public class BaiViet implements Serializable {
     @ManyToOne
     private TrangThaiBaiViet loaiTrangThai;
 
-    
     @Transient
     private MultipartFile file;
     @Transient
@@ -131,41 +121,12 @@ public class BaiViet implements Serializable {
     @Transient
     private String tenNguoiDangBai;
 
-
     public BaiViet() {
     }
 
     public BaiViet(Integer id) {
         this.id = id;
     }
-
-    public BaiViet(Integer id, String tenBaiViet, String hinhAnh, String noiDung, String phamViCanTim, Date ngayDang, Integer soNguoi, Long giaThue, String dienTich, String diaChiCt, String hinhAnh1, String hinhAnh2, String hinhAnh3, Set<BinhLuan> binhLuanSet, Set<HinhAnh> hinhAnhSet, Set<ThongBao> thongBaoSet, LoaiBaiViet loaiBaiViet, NguoiDung idNguoiDung, TrangThaiBaiViet loaiTrangThai, MultipartFile file, MultipartFile file1, MultipartFile file2, MultipartFile file3, String tenNguoiDangBai) {
-        this.id = id;
-        this.tenBaiViet = tenBaiViet;
-        this.hinhAnh = hinhAnh;
-        this.noiDung = noiDung;
-        this.phamViCanTim = phamViCanTim;
-        this.ngayDang = ngayDang;
-        this.soNguoi = soNguoi;
-        this.giaThue = giaThue;
-        this.dienTich = dienTich;
-        this.diaChiCt = diaChiCt;
-        this.hinhAnh1 = hinhAnh1;
-        this.hinhAnh2 = hinhAnh2;
-        this.hinhAnh3 = hinhAnh3;
-        this.binhLuanSet = binhLuanSet;
-        this.hinhAnhSet = hinhAnhSet;
-        this.thongBaoSet = thongBaoSet;
-        this.loaiBaiViet = loaiBaiViet;
-        this.idNguoiDung = idNguoiDung;
-        this.loaiTrangThai = loaiTrangThai;
-        this.file = file;
-        this.file1 = file1;
-        this.file2 = file2;
-        this.file3 = file3;
-        this.tenNguoiDangBai = tenNguoiDangBai;
-    }
-    
 
     public Integer getId() {
         return id;
@@ -272,6 +233,15 @@ public class BaiViet implements Serializable {
     }
 
     @XmlTransient
+    public Set<LuuTin> getLuuTinSet() {
+        return luuTinSet;
+    }
+
+    public void setLuuTinSet(Set<LuuTin> luuTinSet) {
+        this.luuTinSet = luuTinSet;
+    }
+
+    @XmlTransient
     public Set<BinhLuan> getBinhLuanSet() {
         return binhLuanSet;
     }
@@ -347,6 +317,12 @@ public class BaiViet implements Serializable {
         return "com.ntt.pojo.BaiViet[ id=" + id + " ]";
     }
 
+    /**
+     * @return the file
+     */
+    public MultipartFile getFile() {
+        return file;
+    }
 
     /**
      * @param file the file to set
@@ -411,25 +387,4 @@ public class BaiViet implements Serializable {
         this.tenNguoiDangBai = tenNguoiDangBai;
     }
 
-    /**
-     * @return the serialVersionUID
-     */
-    public static long getSerialVersionUID() {
-        return serialVersionUID;
-    }
-
-    /**
-     * @param aSerialVersionUID the serialVersionUID to set
-     */
-    public static void setSerialVersionUID(long aSerialVersionUID) {
-        serialVersionUID = aSerialVersionUID;
-    }
-
-    /**
-     * @return the file
-     */
-    public MultipartFile getFile() {
-        return file;
-    }
-    
 }

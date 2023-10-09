@@ -8,13 +8,42 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page import="java.util.Date" %>
-<link href="<c:url value="/css/trangchu.css"/>"rel="stylesheet">
-<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 
+<link href="<c:url value="/css/trangchu.css"/>"rel="stylesheet">
+<!--<link href="<c:url value="/css/style.css"/>" rel="stylesheet" />-->
+
+<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 <c:url value="/dangki" var="action"/>
 
+
+<div class="modal fade" id="locationModal" tabindex="-1" role="dialog" aria-labelledby="locationModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="locationModalLabel">Yêu cầu cung cấp vị trí</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Bạn có muốn cung cấp vị trí của mình không?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Không</button>
+                <button type="button" class="btn btn-primary" id="getLocationButton">Có</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 <body>
+
     <div class="wrapper">
         <form:form method="post" action="${action}" modelAttribute="user"  enctype="multipart/form-data">
             <h1>ĐĂNG KÍ TÀI KHOẢN</h1>
@@ -24,6 +53,7 @@
                         ${errMsg}
                     </div>
                 </c:if>
+
                 <div class="input-box">
                     <form:input type="text" placeholder="Họ và tên" path="tenNguoiDung" />
                 </div>
@@ -43,6 +73,7 @@
                 <div class="input-box">
                     <form:input type="password" placeholder="Xác nhận lại mật khẩu" path="xacNhanMatKhau" />           
                 </div>
+                
                 <div class="input-box chonloaiTK">
                     <form:select class="role" name="role" id="role" path="idLoaiTaiKhoan">
                         <c:forEach items="${user_role}" var="c">
@@ -76,6 +107,15 @@
                     var uploadAvatarDiv = document.getElementById('upload-avatar-div');
                     if (selectedValue === '2') {
                         uploadAvatarDiv.style.display = 'block';
+                        document.querySelector("form").addEventListener("submit", function (e) {
+                            const fileInput = document.getElementById("file2");
+
+                            if (fileInput.files.length === 0) {
+                                e.preventDefault();
+                                alert("Vui lòng chọn một tệp hình ảnh tro cua ban.");
+                            }
+                        });
+
                     } else {
                         uploadAvatarDiv.style.display = 'none';
                     }
@@ -88,6 +128,10 @@
                 </p>
 
             </div>
+
+            <form:input type="hidden" path="kinhDo" />
+            <form:input type="hidden" path="viDo" />
+
         </form:form>
 
     </div>
@@ -98,8 +142,32 @@
         const fileInput = document.getElementById("fileInput");
 
         if (fileInput.files.length === 0) {
-            e.preventDefault(); 
-            alert("Vui lòng chọn một tệp hình ảnh.");
+            e.preventDefault();
+            alert("Vui lòng chọn một avatar.");
         }
+    });
+    document.addEventListener("DOMContentLoaded", function () {
+        var locationModal = $("#locationModal");
+
+        locationModal.modal("show");
+
+        $("#getLocationButton").click(function () {
+            if ("geolocation" in navigator) {
+                navigator.geolocation.getCurrentPosition(function (position) {
+                    
+                    var latitude = position.coords.latitude;
+                    var longitude = position.coords.longitude;
+                    
+                    document.querySelector("input[name='kinhDo']").value = latitude;
+                    document.querySelector("input[name='viDo']").value = longitude;
+                    
+                    locationModal.modal("hide");
+                }, function (error) {
+                    console.log("Lỗi khi lấy vị trí: " + error.message);
+                });
+            } else {
+                console.log("Geolocation không được hỗ trợ trong trình duyệt này.");
+            }
+        });
     });
 </script>

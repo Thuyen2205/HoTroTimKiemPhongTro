@@ -7,6 +7,7 @@ package com.ntt.service;
 import com.ntt.pojo.BaiViet;
 import com.ntt.pojo.NguoiDung;
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import org.springframework.web.multipart.MultipartFile;
@@ -46,4 +47,6 @@ public interface BaiVietService  {
     List<BaiViet> getBaiVietTK(String address, BigDecimal price, Integer soNguoi,Map<String, String> params);
 //    List<BaiViet> getBaiVietTK(String address, BigDecimal price, Integer soNguoi);
     List<BaiViet> getBaiVietDaDuyet();
+    List<BaiViet> sortBaiVietByNgayDang(List<BaiViet> baiviet);
+  
 }

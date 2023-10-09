@@ -50,6 +50,19 @@ Click nbfs://nbhost/SystemFileSystem/Templates/XML/XMLDocument.xml to edit this 
                 template="/WEB-INF/pages/dangki.jsp">
     </definition>
     
+    <definition name="quenmatkhau"
+                template="/WEB-INF/pages/quenmatkhau.jsp">
+    </definition>
+     
+    <definition name="xacthucmatkhau"
+                template="/WEB-INF/pages/xacthucmatkhau.jsp">
+    </definition>
+    
+    <definition name="matkhaumoi"
+                template="/WEB-INF/pages/matkhaumoi.jsp">
+    </definition>
+    
+    
     <definition name="dangbai" extends="baseLayout">
         <put-attribute name="title" value="Trang đăng bài" />
         <put-attribute name="content"
@@ -112,20 +125,28 @@ Click nbfs://nbhost/SystemFileSystem/Templates/XML/XMLDocument.xml to edit this 
                        value="/WEB-INF/pages/thtin_taiKhoan.jsp" />
     </definition>
     
+   
+    <definition name="xacnhantaikhoan" extends="baseLayout">
+        <put-attribute name="title" value="Cập nhật thông tin tài khoản"/>
+        <put-attribute name="content"
+                       value="/WEB-INF/pages/xacnhantaikhoan.jsp" />
+    </definition>
     
-<!--    <definition name="doimatkhau" extends="baseLayout"
+    
+    <!--    <definition name="doimatkhau" extends="baseLayout"
                 template="/WEB-INF/pages/doimatkhau.jsp">
     </definition>-->
     
-<!--    <definition name="capnhattaikhoan" extends="baseLayout">
+    <!--    <definition name="capnhattaikhoan" extends="baseLayout">
         <put-attribute name="title" value="Trang cập nhật" />
         <put-attribute name="content"
                        value="/WEB-INF/pages/capnhattaikhoan.jsp" />
     </definition>-->
-<!--    
+    <!--    
     <definition name="capnhattaikhoan" extends="baseLayout"
                 template="/WEB-INF/pages/capnhattaikhoan.jsp">
     </definition>-->
+   
     
 </tiles-definitions>
 

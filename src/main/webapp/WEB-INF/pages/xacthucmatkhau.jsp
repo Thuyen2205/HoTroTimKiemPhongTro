@@ -9,9 +9,10 @@
 
 <link href="<c:url value="/css/trangchu.css"/>"rel="stylesheet">
 <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 
-<c:url value="/dangnhap" var="action"/>
+<c:url value="/quenmatkhau_xacnhan" var="actionXacNhan"/>
 
 
 
@@ -22,29 +23,21 @@
             <div class="alert alert-danger" >ĐANG CÓ MỘT VÀI SỰ CỐ XẢY RA! VUI LÒNG QUAY TRỞ LẠI SAU!!! </div>
         </c:if>
 
-        <form method="post" action="${action}">
-            <h1>ĐĂNG NHẬP</h1>
+       
+
+        <form id="form2" method="post" action="${actionXacNhan}" >
+            <h1>Nhập số xác minh</h1>
             <center>
                 <c:if test="${param.accessDenied != null}">
                     <!--<div>Bạn không có quyền truy cập vào trang này</div>-->
                     <center><div style="margin-top: 15px; color: #45FFCA ">Tài khoản của bạn đang đợi được duyệt!</div></center>
-                    </c:if>
+                </c:if>
                 <div class="input-box">
-                    <input type="text" name="username" placeholder="Tên tài khoản" required>
-                </div>
-                <div class="input-box">
-                    <input type="password" name="password" placeholder="Mật khẩu" required>
+                    <input type="text" name="soxacnhan" placeholder="Số xác nhận" required>
                 </div>
             </center>                
-            <button  class="btn" type="submit" >Đăng nhập</button>
+            <button  class="btn" type="submit" >Xác nhận</button>
 
-            <div  class="register-link">
-                <p class="register-link-p">
-                    Bạn chưa có tài khoản?  <a href="<c:url value ="/dangki"/>">  Đăng kí ngay </a>
-                </p>
-
-            </div>
-            <button class="btn btn-success"><a style="color:black; text-decoration: none" href="<c:url value ="/quenmatkhau"/> ">Quên mật khẩu</a></button>
 
         </form>
 
@@ -52,3 +45,4 @@
     </div>
 
 </body>
+

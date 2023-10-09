@@ -1,6 +1,8 @@
 /*
 Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
 Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css to edit this template
+@import url('https://fonts.googleapis.com/css?family=Open+Sans&display=swap');
+
 */
 /* 
     Created on : Jul 26, 2023, 1:16:46 PM
@@ -124,11 +126,11 @@ body{
     border-radius: 40px;
     box-shadow: 0 0 5px rgba(0,0,0,1);
     border:none;
-    
+
 }
 
 .upload-avatar input{
-    
+
     width: 100%;
     padding: 10px;
     font-size: 13px;
@@ -159,6 +161,18 @@ body{
     margin-top: 50px;
 }
 
-
+#locationModal {
+    font-family: 'Open Sans', sans-serif;
+}
+#getLocationButton {
+    background-color: #ff573; 
+    color: #ffff4; 
+    border: none; 
+    border-radius: 5px; 
+    padding: 10px 20px; 
+}
+#getLocationButton:hover {
+    background-color: #ff7f5; 
+}
 
 

@@ -5,50 +5,47 @@
 package com.ntt.pojo;
 
 import java.io.Serializable;
-import java.util.Set;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
  * @author ThanhThuyen
  */
 @Entity
-@Table(name = "loai_bai_viet")
+@Table(name = "luu_tin")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "LoaiBaiViet.findAll", query = "SELECT l FROM LoaiBaiViet l"),
-    @NamedQuery(name = "LoaiBaiViet.findById", query = "SELECT l FROM LoaiBaiViet l WHERE l.id = :id"),
-    @NamedQuery(name = "LoaiBaiViet.findByTenLoaiBaiViet", query = "SELECT l FROM LoaiBaiViet l WHERE l.tenLoaiBaiViet = :tenLoaiBaiViet")})
-public class LoaiBaiViet implements Serializable {
+    @NamedQuery(name = "LuuTin.findAll", query = "SELECT l FROM LuuTin l"),
+    @NamedQuery(name = "LuuTin.findById", query = "SELECT l FROM LuuTin l WHERE l.id = :id")})
+public class LuuTin implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
+    @NotNull
     @Column(name = "id")
     private Integer id;
-    @Size(max = 45)
-    @Column(name = "ten_loai_bai_viet")
-    private String tenLoaiBaiViet;
-    @OneToMany(mappedBy = "loaiBaiViet")
-    private Set<BaiViet> baiVietSet;
+    @JoinColumn(name = "id_bai_viet", referencedColumnName = "id")
+    @ManyToOne
+    private BaiViet idBaiViet;
+    @JoinColumn(name = "id_nguoi_dung", referencedColumnName = "id")
+    @ManyToOne
+    private NguoiDung idNguoiDung;
 
-    public LoaiBaiViet() {
+    public LuuTin() {
     }
 
-    public LoaiBaiViet(Integer id) {
+    public LuuTin(Integer id) {
         this.id = id;
     }
 
@@ -60,21 +57,20 @@ public class LoaiBaiViet implements Serializable {
         this.id = id;
     }
 
-    public String getTenLoaiBaiViet() {
-        return tenLoaiBaiViet;
+    public BaiViet getIdBaiViet() {
+        return idBaiViet;
     }
 
-    public void setTenLoaiBaiViet(String tenLoaiBaiViet) {
-        this.tenLoaiBaiViet = tenLoaiBaiViet;
+    public void setIdBaiViet(BaiViet idBaiViet) {
+        this.idBaiViet = idBaiViet;
     }
 
-    @XmlTransient
-    public Set<BaiViet> getBaiVietSet() {
-        return baiVietSet;
+    public NguoiDung getIdNguoiDung() {
+        return idNguoiDung;
     }
 
-    public void setBaiVietSet(Set<BaiViet> baiVietSet) {
-        this.baiVietSet = baiVietSet;
+    public void setIdNguoiDung(NguoiDung idNguoiDung) {
+        this.idNguoiDung = idNguoiDung;
     }
 
     @Override
@@ -87,10 +83,10 @@ public class LoaiBaiViet implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof LoaiBaiViet)) {
+        if (!(object instanceof LuuTin)) {
             return false;
         }
-        LoaiBaiViet other = (LoaiBaiViet) object;
+        LuuTin other = (LuuTin) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -99,7 +95,7 @@ public class LoaiBaiViet implements Serializable {
 
     @Override
     public String toString() {
-        return "com.ntt.pojo.LoaiBaiViet[ id=" + id + " ]";
+        return "com.ntt.pojo.LuuTin[ id=" + id + " ]";
     }
     
 }

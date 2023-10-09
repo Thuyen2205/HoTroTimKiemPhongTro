@@ -1,81 +1,113 @@
-<%-- 
-    Document   : bando
-    Created on : Aug 22, 2023, 2:07:58 AM
-    Author     : ThanhThuyen
---%>
-
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<link href="<c:url value="/css/style.css" />" rel="stylesheet" />
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<link href="<c:url value="/css/style.css" />" rel="stylesheet" />
-
-<!DOCTYPE html>
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <!DOCTYPE html>
 <html>
     <head>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Map with Geocoder</title>
-
-        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
-        <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
-
-        <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder@1.13.0/dist/Control.Geocoder.css" />
-        <script src="https://unpkg.com/leaflet-control-geocoder@1.13.0/dist/Control.Geocoder.js"></script>
+        <title>Hi?n th? B?n ??</title>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB-M500zF9hEI3OoOPyK_dVHfWDyZcx5fI&libraries=geometry&callback=initMap" async defer></script>
+        
+        <!--<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB-M500zF9hEI3OoOPyK_dVHfWDyZcx5fI&callback=initMap" async defer></script>-->
     </head>
     <body>
-    <center>
-        <div id="search-bar">
-            <input class="diadiemtim" type="text" id="search-input" placeholder="Nhập địa chỉ hoặc tên địa điểm">
-            <button class="custom-button1" id="search-button">Tìm kiếm ngay</button>
-        </div>
-    </center>
-    <center><div class="map" id="map" style="width: 80%; height: 500px;"></center>
-    <script>
-        var map = L.map('map').setView([10.7769, 106.7009], 12);
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        }).addTo(map);
+        
+        <div id="map" style="width: 100%; height: 1000px;"></div>
 
-        <c:forEach items="${dsBaiViet}" var="baiViet">
-            <%--<c:if test="${baiviet.loaiTrangThai.id.toString() eq '1'}">--%>
-        var diaChiCt = "<c:out value='${baiViet.diaChiCt}' />";
+        <script>
+            var diaChiList = [
+            <c:forEach items="${dsBaiViet}" var="p">
+                "${p.diaChiCt}",
+            </c:forEach>
+            ];
+            var kinhDo = ${nguoidung.kinhDo};
+            var viDo = ${nguoidung.viDo};
+            var redMarker = 'http://maps.google.com/mapfiles/ms/icons/red-dot.png';
+            var greenMarker = 'http://maps.google.com/mapfiles/ms/icons/green-dot.png';
+           var yellowMarker = 'http://maps.google.com/mapfiles/ms/icons/yellow-dot.png'; 
+            function initMap() {
+                var map = new google.maps.Map(document.getElementById('map'), {
+                    center: {lat: kinhDo, lng: viDo},
+                    zoom: 14
+                });
 
-        L.Control.Geocoder.nominatim().geocode(diaChiCt, function (results) {
-            if (results && results.length > 0) {
-                var latlng = results[0].center;
-                var marker = L.marker(latlng).addTo(map);
-                marker.bindPopup("<c:out value='${baiViet.diaChiCt}' />").openPopup();
-            } else {
-                console.log('Không tìm thấy địa chỉ cho: ' + diaChiCt);
+
+                var geocoder = new google.maps.Geocoder();
+
+                var redMarker = 'http://maps.google.com/mapfiles/ms/icons/red-dot.png';
+
+                var marker = new google.maps.Marker({
+                    position: {lat: kinhDo, lng: viDo},
+                    map: map,
+                    title: 'V? tr� c?a ng??i d�ng',
+                    icon: redMarker
+                });
+                marker.setAnimation(google.maps.Animation.BOUNCE);
+
+                var infoWindow = new google.maps.InfoWindow({
+                    content: 'Day la vi tri cua ban'
+                });
+
+                marker.addListener('mouseover', function () {
+                    infoWindow.open(map, marker);
+                });
+
+                marker.addListener('mouseout', function () {
+                    infoWindow.close(map, marker);
+                });
+
+                var circle = new google.maps.Circle({
+                    strokeColor: '#0000FF', 
+                    strokeOpacity: 0.8,
+                    strokeWeight: 2, 
+                    fillColor: 'transparent', 
+                    fillOpacity: 0, 
+                    map: map,
+                    center: {lat: kinhDo, lng: viDo},
+                    radius: 1000 
+                });
+
+                diaChiList.forEach(function (diaChi) {
+                    geocoder.geocode({'address': diaChi}, function (results, status) {
+                        if (status === 'OK') {
+                            var toaDo = results[0].geometry.location;
+
+                            var khoangCach = google.maps.geometry.spherical.computeDistanceBetween(circle.getCenter(), toaDo);
+
+                            if (khoangCach <= circle.getRadius()) {
+                                var marker = new google.maps.Marker({
+                                    position: toaDo,
+                                    map: map,
+                                    title: diaChi,
+                                    icon: redMarker 
+                                });
+
+                                marker.addListener('click', function () {
+                                    var infoWindow = new google.maps.InfoWindow({
+                                        content: diaChi
+                                    });
+                                    infoWindow.open(map, marker);
+                                });
+                            } else {
+                                var marker = new google.maps.Marker({
+                                    position: toaDo,
+                                    map: map,
+                                    title: diaChi,
+                                    icon: yellowMarker 
+                                });
+
+                                marker.addListener('click', function () {
+                                    var infoWindow = new google.maps.InfoWindow({
+                                        content: diaChi
+                                    });
+                                    infoWindow.open(map, marker);
+                                });
+                            }
+                        } else {
+                            console.log('Kh�ng th? t�m th?y t?a ?? cho: ' + diaChi);
+                        }
+                    });
+                });
+
             }
-        });
-            <%--</c:if>--%>
-
-        </c:forEach>
-
-        var searchInput = document.getElementById('search-input');
-        var searchButton = document.getElementById('search-button');
-
-        searchButton.addEventListener('click', function () {
-            var query = searchInput.value;
-
-            L.Control.Geocoder.nominatim().geocode(query, function (results) {
-                if (results && results.length > 0) {
-                    var latlng = results[0].center;
-                    map.setView(latlng, 15);
-                } else {
-                    alert('Không tìm thấy địa điểm.');
-                }
-            });
-        });
-
-        var latlng = results[0].center;
-        map.setView(latlng, 12);
-    </script>
-</div>
-</body>
+        </script>
+    </body>
 </html>

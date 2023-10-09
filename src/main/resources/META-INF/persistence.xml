@@ -17,6 +17,7 @@
     <class>com.ntt.pojo.LoaiTaiKhoan</class>
     <class>com.ntt.pojo.Follow</class>
     <class>com.ntt.pojo.TrangThaiBaiViet</class>
+    <class>com.ntt.pojo.LuuTin</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/phongtro?zeroDateTimeBehavior=CONVERT_TO_NULL"/>

@@ -13,6 +13,9 @@ import com.ntt.repository.BaiVietRepository;
 import com.ntt.repository.TaiKhoanRepository;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import javax.persistence.Query;
@@ -256,7 +259,7 @@ public class BaiVietRepositoryImpl implements BaiVietRepository {
 //    }
     @Override
     public List<BaiViet> getBaiVietByGiaThue(BigDecimal gia) {
-        try (Session session = factory.getObject().getCurrentSession()) {
+        try ( Session session = factory.getObject().getCurrentSession()) {
             String hql = "FROM BaiViet b WHERE b.giaThue <= :gia";
 
             return session.createQuery(hql, BaiViet.class
@@ -269,7 +272,7 @@ public class BaiVietRepositoryImpl implements BaiVietRepository {
     @Override
     public List<BaiViet> getBaiVietAll() {
         Session s = this.factory.getObject().getCurrentSession();
-        Query q = s.createQuery("From BaiViet");
+        Query q = s.createQuery("FROM BaiViet ORDER BY ngayDang DESC");
         return q.getResultList();
     }
 
@@ -472,5 +475,26 @@ public class BaiVietRepositoryImpl implements BaiVietRepository {
         Query q = s.createQuery("FROM BaiViet WHERE loaiTrangThai = 1");
         return q.getResultList();
     }
+
+    @Override
+    public List<BaiViet> sortBaiVietByNgayDang(List<BaiViet> baiviet) {
+        Collections.sort(baiviet, new Comparator<BaiViet>() {
+            @Override
+            public int compare(BaiViet bv1, BaiViet bv2) {
+                return bv2.getNgayDang().compareTo(bv1.getNgayDang()); 
+            }
+        });
+
+        return baiviet;
+    }
+
+//    @Override
+//    public List<BaiViet> getBaiVietHomNay(Date ngayDang) {
+//         Session session = this.factory.getObject().getCurrentSession();
+//    Date homNay = new Date(); 
+//    Query<BaiViet> query = session.createQuery("FROM BaiViet WHERE ngayDang = :homNay");
+//    query.setParameter("homNay", ngayDang);
+//    return query.getResultList();
+//    }
 
 }

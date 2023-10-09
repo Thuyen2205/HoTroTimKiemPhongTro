@@ -248,4 +248,11 @@ public class BaiVietServiceImpl implements BaiVietService {
     public List<BaiViet> getBaiVietDaDuyet() {
         return this.baivietRepo.getBaiVietDaDuyet();
     }
+
+    @Override
+    public List<BaiViet> sortBaiVietByNgayDang(List<BaiViet> baiviet) {
+        return this.baivietRepo.sortBaiVietByNgayDang(baiviet);
+    }
+
+    
 }

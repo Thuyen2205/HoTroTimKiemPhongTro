@@ -28,7 +28,7 @@
         <div class="ct-anh">
 
             <center>
-                <img src="${taikhoanduyet.avatar}"" style="width:100%" > 
+                <img src="${taikhoanduyet.avatar}"" style="width:50%" > 
             </center>
         </div>
         <div class="ndung-chitiet">
@@ -48,11 +48,11 @@
                 </center>
             </div>
             <form:form method="post" action="${actionTaiKhoan}">
-                <button class="btn btn-danger" type="submit">Xác nhận</button>
+                <button class="btn btn-danger custom-button" type="submit">Xác nhận</button>
             </form:form>
 
             <form:form method="post" action="${actionTaiKhoanDele}">
-                <button class="btn btn-danger" type="submit">Xóa</button>
+                <button class="btn btn-danger custom-button" type="submit">Xóa</button>
             </form:form>
 
 

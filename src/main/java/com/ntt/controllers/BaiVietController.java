@@ -9,6 +9,7 @@ import com.cloudinary.utils.ObjectUtils;
 import com.ntt.pojo.BaiViet;
 import com.ntt.pojo.BinhLuan;
 import com.ntt.pojo.Follow;
+import com.ntt.pojo.LuuTin;
 import com.ntt.pojo.NguoiDung;
 import com.ntt.pojo.TrangThaiBaiViet;
 import com.ntt.service.BaiVietService;
@@ -125,9 +126,8 @@ public class BaiVietController {
         String errMsg = "";
         String baivietIdParam = params.get("baivietId");
 
-        
         if (authen.getName() != null) {
-           
+
             if (binhluan.getId() != null) {
                 BinhLuan existingBinhLuan = binhluanService.getBinhLuanById(binhluan.getId());
                 if (existingBinhLuan != null) {
@@ -137,18 +137,15 @@ public class BaiVietController {
                     errMsg = "Không tìm thấy bình luận cần cập nhật.";
                 }
             } else {
-              
+
                 binhluanService.addBinhLuan(binhluan);
             }
 
-           
             redirectAttributes.addAttribute("baivietId", baivietIdParam);
             return "redirect:/thtin_bviet";
         }
 
-
         errMsg = "Bạn cần đăng nhập để thực hiện thao tác này.";
-       
 
         return "thtin_bviet";
     }
@@ -201,6 +198,27 @@ public class BaiVietController {
                 errMsg = "Tên bài viết phải có ít nhất 5 ký tự";
                 return "redirect:/dangbai?errMsg=" + URLEncoder.encode(errMsg, "UTF-8");
             }
+            
+            if (baiviet.getGiaThue() == null) {
+                errMsg = "Vui lòng nhập giá thuê";
+                return "redirect:/dangbai?errMsg=" + URLEncoder.encode(errMsg, "UTF-8");
+            } else {
+                String giaThueStr = baiviet.getGiaThue().toString();
+                if (giaThueStr.length() < 7) {
+                    errMsg = "Giá thuê phải có ít nhất 7 chữ số";
+                    return "redirect:/dangbai?errMsg=" + URLEncoder.encode(errMsg, "UTF-8");
+                } else if (!giaThueStr.matches("\\d+")) {
+                    errMsg = "Giá thuê phải là số nguyên";
+                    return "redirect:/dangbai?errMsg=" + URLEncoder.encode(errMsg, "UTF-8");
+                }
+            }
+            if (baiviet.getSoNguoi() == null) {
+                errMsg = "Vui lòng nhập số người";
+                return "redirect:/dangbai?errMsg=" + URLEncoder.encode(errMsg, "UTF-8");
+            } else if (baiviet.getSoNguoi() <= 1 || baiviet.getSoNguoi() >= 10) {
+                errMsg = "Số người phải lớn hơn 1 và nhỏ hơn 10";
+                return "redirect:/dangbai?errMsg=" + URLEncoder.encode(errMsg, "UTF-8");
+            }
 
             if (baiviet.getPhamViCanTim() == null || baiviet.getPhamViCanTim().isEmpty()) {
                 errMsg = "Vui lòng nhập pham vi";
@@ -209,6 +227,7 @@ public class BaiVietController {
                 errMsg = "Pham vi can tim phải có ít nhất 5 ký tự";
                 return "redirect:/dangbai?errMsg=" + URLEncoder.encode(errMsg, "UTF-8");
             }
+
             if (baiviet.getDienTich() == null || baiviet.getDienTich().isEmpty()) {
                 errMsg = "Vui lòng nhap dien tich phong cua ban";
                 return "redirect:/dangbai?errMsg=" + URLEncoder.encode(errMsg, "UTF-8");
@@ -236,6 +255,9 @@ public class BaiVietController {
             }
             if (baiviet.getPhamViCanTim() == null || baiviet.getPhamViCanTim().isEmpty()) {
                 errMsg = "Vui lòng nhập phạm vi cần tìm";
+                return "redirect:/dangbai?errMsg=" + URLEncoder.encode(errMsg, "UTF-8");
+            } else if (baiviet.getPhamViCanTim().length() < 5) {
+                errMsg = "Pham vi can tim phải có ít nhất 5 ký tự";
                 return "redirect:/dangbai?errMsg=" + URLEncoder.encode(errMsg, "UTF-8");
             }
         }

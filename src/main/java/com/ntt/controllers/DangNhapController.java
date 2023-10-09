@@ -19,6 +19,8 @@ import javax.persistence.Query;
 import javax.servlet.http.HttpSession;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -32,12 +34,15 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import java.util.Random;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 /**
  *
  * @author ThanhThuyen
  */
 @Controller
+//@SessionAttributes("username")
 @Transactional
 public class DangNhapController {
 
@@ -57,6 +62,9 @@ public class DangNhapController {
     private HinhAnhService hinhAnhService;
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
+    @Autowired
+    private JavaMailSender emailSender;
+    private int randomNumber;
 
     @RequestMapping("/dangnhap")
     public String dangNhap() {
@@ -65,7 +73,7 @@ public class DangNhapController {
 
     @RequestMapping("/canhan")
 //    @Transactional
-    public String dangNhapCaNhan(Model model, Authentication authen,@RequestParam(name = "errMsg", required = false) String errMsg) {
+    public String dangNhapCaNhan(Model model, Authentication authen, @RequestParam(name = "errMsg", required = false) String errMsg) {
 //        model.addAttribute("taikhoan", new NguoiDung());
 
         if (authen != null) {
@@ -75,7 +83,7 @@ public class DangNhapController {
             model.addAttribute("baiviet", this.baiviet.getBaiVietByIdNgDung(u));
         }
         model.addAttribute("nguoidung", this.taikhoan.getTaiKhoan(authen.getName()).get(0));
-        model.addAttribute("errMsg",errMsg);
+        model.addAttribute("errMsg", errMsg);
 
         return "canhan";
     }
@@ -183,7 +191,7 @@ public class DangNhapController {
         if (taikhoan.getSdt() == null || taikhoan.getSdt().isEmpty()) {
             errMsg = "Vui lòng nhập so dien thoai";
             return "redirect:/canhan?errMsg=" + URLEncoder.encode(errMsg, "UTF-8");
-        }else if (!taikhoan.getSdt().matches("\\d{10,}")) {
+        } else if (!taikhoan.getSdt().matches("\\d{10,}")) {
             errMsg = "Số điện thoại phải chứa ít nhất 10 chữ số";
             return "redirect:/canhan?errMsg=" + URLEncoder.encode(errMsg, "UTF-8");
         }
@@ -196,4 +204,107 @@ public class DangNhapController {
         }
         return "redirect:/capnhattaikhoan?errMsg=" + URLEncoder.encode(errMsg, "UTF-8");
     }
+
+    @GetMapping("/quenmatkhau")
+    public String quenMatKhau(Model model, @RequestParam Map<String, String> params, Authentication authen,
+            @RequestParam(name = "errMsg", required = false) String errMsg,
+            @RequestParam(name = "TenTaiKhoan", required = false) String TenTaiKhoan) {
+
+        if (authen != null) {
+            UserDetails user = this.taikhoan.loadUserByUsername(authen.getName());
+            NguoiDung u = this.taikhoan.getTaiKhoanbyTenTK(user.getUsername());
+            model.addAttribute("nguoidung", this.taikhoan.getTaiKhoan(authen.getName()).get(0));
+            model.addAttribute("taikhoan", u);
+        }
+
+        return "quenmatkhau";
+    }
+
+//    @GetMapping("/quenmatkhau/{id}")
+//    public String thayDoiMkByIdTK(Model model, @PathVariable("id") int id) {
+//
+//        NguoiDung tk = (NguoiDung) this.nguoidung.getNgDungById(id);
+//        model.addAttribute("user", tk);
+//        return "quenmatkhau";
+//    }
+    @PostMapping("/quenmatkhau")
+    public String quenMatKhau(@RequestParam("username") String username, @RequestParam Map<String, String> params) {
+
+//        Integer id = Integer.parseInt(params.get("user"));
+        NguoiDung nguoidung = this.taikhoan.getTaiKhoanbyTenTK(username);
+
+        if (this.taikhoan.getTaiKhoanbyTenTK(username) != null) {
+            randomNumber = new Random().nextInt(100);
+            SimpleMailMessage message = new SimpleMailMessage();
+            message.setTo(nguoidung.getEmail());
+            message.setSubject("Xác nhận thông tin");
+            message.setText("Số của bạn là: " + randomNumber);
+            emailSender.send(message);
+        }
+        return "redirect:/matkhaumoi/" + nguoidung.getId();
+    }
+
+//    @PostMapping("/quenmatkhau_xacnhan")
+//    public String quenMatKhauXacNhan(@RequestParam("soxacnhan") String soXacNhan) {
+//
+//        int soXacNhanInt = Integer.parseInt(soXacNhan);
+//
+//        if (soXacNhanInt == randomNumber) {
+//
+//            return "matkhaumoi";
+//
+//        }
+//        return "quenmatkhau";
+//    }
+    @GetMapping("/matkhaumoi/{id}")
+    public String matKhauMoi(Model model, @RequestParam Map<String, String> params, Authentication authen,
+            @RequestParam(name = "errMsg", required = false) String errMsg, @PathVariable("id") int id) {
+
+        if (authen != null) {
+            UserDetails user = this.taikhoan.loadUserByUsername(authen.getName());
+            NguoiDung u = this.taikhoan.getTaiKhoanbyTenTK(user.getUsername());
+            model.addAttribute("nguoidung", this.taikhoan.getTaiKhoan(authen.getName()).get(0));
+            model.addAttribute("taikhoan", u);
+        }
+
+        NguoiDung u1 = this.taikhoan.getTaiKhoanId(id);
+        model.addAttribute("tk", u1);
+
+        return "matkhaumoi";
+    }
+
+    @PostMapping("/matkhaumoi/{id}")
+    public String matKhauMot(@RequestParam("matKhauMoi") String matKhauMoi,
+            @RequestParam("soxacnhan") String soXacNhan,
+            @RequestParam("xacNhanMatKhauMoi") String xacNhanMatKhauMoi,
+            @PathVariable("id") int id) {
+        NguoiDung tk = this.taikhoan.getTaiKhoanId(id);
+
+        int soXacNhanInt = Integer.parseInt(soXacNhan);
+
+        if (soXacNhanInt == randomNumber) {
+            if (matKhauMoi.equals(xacNhanMatKhauMoi)) {
+                String hashedPassword = passwordEncoder.encode(matKhauMoi);
+                tk.setMatKhau(hashedPassword);
+                return "dangnhap";
+            }
+        }
+
+        return "matkhaumoi";
+    }
+
+//    @GetMapping("/xacnhantaikhoan")
+//    public String xacNhanTaiKhoan(Model model, @RequestParam Map<String, String> params, Authentication authen,
+//            @RequestParam(name = "errMsg", required = false) String errMsg) {
+//
+//        if (authen != null) {
+//            UserDetails user = this.taikhoan.loadUserByUsername(authen.getName());
+//            NguoiDung u = this.taikhoan.getTaiKhoanbyTenTK(user.getUsername());
+//            model.addAttribute("nguoidung", this.taikhoan.getTaiKhoan(authen.getName()).get(0));
+//            model.addAttribute("taikhoan", u);
+//
+//        }
+//
+//        return "xacnhantaikhoan";
+//    }
 }

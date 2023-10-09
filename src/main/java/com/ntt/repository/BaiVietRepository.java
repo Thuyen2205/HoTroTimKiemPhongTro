@@ -7,6 +7,7 @@ package com.ntt.repository;
 import com.ntt.pojo.BaiViet;
 import com.ntt.pojo.NguoiDung;
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -57,10 +58,8 @@ public interface BaiVietRepository {
     List<BaiViet> getBBByTen(Map<String, String> params);
     
     List<BaiViet> getBaiVietDaDuyet();    
-//    List<BaiViet> getBaiVietChoThue();    
-//    List<BaiViet> getBaiVietChoThue();    
+    List<BaiViet> sortBaiVietByNgayDang(List<BaiViet> baiviet);
+   
 
-//    int getCountOfBaiViet();
-    
 
 }

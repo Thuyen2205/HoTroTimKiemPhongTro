@@ -44,11 +44,11 @@ function deleteTaiKhoanpr(path) {
 }
 let editingId = null;
 
-window.onscroll = function() {
+window.onscroll = function () {
     scrollFunction();
 };
 
-// Hiển thị hoặc ẩn nút "Go to Top" dựa trên vị trí cuộn
+
 function scrollFunction() {
     var goToTopBtn = document.getElementById("goToTopBtn");
     if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
@@ -58,8 +58,28 @@ function scrollFunction() {
     }
 }
 
-// Cuộn trang lên đầu khi nhấp vào nút "Go to Top"
+
 function scrollToTop() {
     document.body.scrollTop = 0;
     document.documentElement.scrollTop = 0;
+}
+function layViTri() {
+    if ("geolocation" in navigator) {
+        navigator.geolocation.getCurrentPosition(function (position) {
+            var kinhDo = position.coords.longitude;
+            var viDo = position.coords.latitude;
+            // Gửi thông tin vị trí lên server thông qua Ajax
+            $.ajax({
+                type: "POST",
+                url: "/", // Đường dẫn đến endpoint trên server để lưu vị trí
+                data: {
+                    kinhDo: kinhDo,
+                    viDo: viDo
+                },
+                success: function (response) {
+                    // Xử lý phản hồi từ server nếu cần
+                }
+            });
+        });
+    }
 }

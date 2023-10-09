@@ -25,7 +25,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author Admins
+ * @author ThanhThuyen
  */
 @Entity
 @Table(name = "binh_luan")
@@ -36,8 +36,49 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "BinhLuan.findByNoiDung", query = "SELECT b FROM BinhLuan b WHERE b.noiDung = :noiDung"),
     @NamedQuery(name = "BinhLuan.findByNgayBinhLuan", query = "SELECT b FROM BinhLuan b WHERE b.ngayBinhLuan = :ngayBinhLuan"),
     @NamedQuery(name = "BinhLuan.findByHoiDap", query = "SELECT b FROM BinhLuan b WHERE b.hoiDap = :hoiDap")})
-
 public class BinhLuan implements Serializable {
+
+    /**
+     * @return the tenBaiVietBinhLuan
+     */
+    public String getTenBaiVietBinhLuan() {
+        return tenBaiVietBinhLuan;
+    }
+
+    /**
+     * @param tenBaiVietBinhLuan the tenBaiVietBinhLuan to set
+     */
+    public void setTenBaiVietBinhLuan(String tenBaiVietBinhLuan) {
+        this.tenBaiVietBinhLuan = tenBaiVietBinhLuan;
+    }
+
+    /**
+     * @return the idBaiVietBinhLuan
+     */
+    public Integer getIdBaiVietBinhLuan() {
+        return idBaiVietBinhLuan;
+    }
+
+    /**
+     * @param idBaiVietBinhLuan the idBaiVietBinhLuan to set
+     */
+    public void setIdBaiVietBinhLuan(Integer idBaiVietBinhLuan) {
+        this.idBaiVietBinhLuan = idBaiVietBinhLuan;
+    }
+
+    /**
+     * @return the tenNguoiDangBai
+     */
+    public String getTenNguoiDangBai() {
+        return tenNguoiDangBai;
+    }
+
+    /**
+     * @param tenNguoiDangBai the tenNguoiDangBai to set
+     */
+    public void setTenNguoiDangBai(String tenNguoiDangBai) {
+        this.tenNguoiDangBai = tenNguoiDangBai;
+    }
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -59,13 +100,13 @@ public class BinhLuan implements Serializable {
     @JoinColumn(name = "id_nguoi_dung", referencedColumnName = "id")
     @ManyToOne
     private NguoiDung idNguoiDung;
+    
      @Transient
     private String tenBaiVietBinhLuan;
     @Transient
     private Integer idBaiVietBinhLuan;
     @Transient
     private String tenNguoiDangBai;
-
     
     public BinhLuan() {
     }
@@ -145,48 +186,6 @@ public class BinhLuan implements Serializable {
     @Override
     public String toString() {
         return "com.ntt.pojo.BinhLuan[ id=" + id + " ]";
-    }
-
-    /**
-     * @return the tenBaiVietBinhLuan
-     */
-    public String getTenBaiVietBinhLuan() {
-        return tenBaiVietBinhLuan;
-    }
-
-    /**
-     * @param tenBaiVietBinhLuan the tenBaiVietBinhLuan to set
-     */
-    public void setTenBaiVietBinhLuan(String tenBaiVietBinhLuan) {
-        this.tenBaiVietBinhLuan = tenBaiVietBinhLuan;
-    }
-
-    /**
-     * @return the idBaiVietBinhLuan
-     */
-    public Integer getIdBaiVietBinhLuan() {
-        return idBaiVietBinhLuan;
-    }
-
-    /**
-     * @param idBaiVietBinhLuan the idBaiVietBinhLuan to set
-     */
-    public void setIdBaiVietBinhLuan(Integer idBaiVietBinhLuan) {
-        this.idBaiVietBinhLuan = idBaiVietBinhLuan;
-    }
-
-    /**
-     * @return the tenNguoiDangBai
-     */
-    public String getTenNguoiDangBai() {
-        return tenNguoiDangBai;
-    }
-
-    /**
-     * @param tenNguoiDangBai the tenNguoiDangBai to set
-     */
-    public void setTenNguoiDangBai(String tenNguoiDangBai) {
-        this.tenNguoiDangBai = tenNguoiDangBai;
     }
     
 }
