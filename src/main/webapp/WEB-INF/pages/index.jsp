@@ -12,7 +12,7 @@
 
 <!DOCTYPE html>
 <html>
- 
+
     <body>
 
         <c:if test="${pageContext.request.userPrincipal.name != null}">
@@ -34,7 +34,7 @@
         </c:if>
 
         <div id="viewed-articles-container">
-            <!-- Đây là nơi để hiển thị danh sách các bài viết đã xem -->
+
         </div>
     <center>
         <c:if test="${pages > 1}">
@@ -54,6 +54,11 @@
         </c:if>
         <h2>Bài viết cho thuê trọ mới nhất</h2>
     </center>
+
+
+    
+  
+
 
 
     <div class="bangtin">
@@ -87,7 +92,6 @@
                                     <th>Diện tích:</th>
                                     <td>${t.dienTich}</td>
                                 </tr>
-
                             </table>
                             <c:url value="/thtin_bviet" var="bvietAction">
                                 <c:param name="baivietId" value="${t.id}" />  
@@ -96,7 +100,6 @@
 
                         </div>
                     </div>
-
                 </c:if>
             </c:if>
         </c:forEach>

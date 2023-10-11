@@ -556,23 +556,23 @@ input{
 }
 
 .forgot-password-button {
-  background-color: #007BFF; /* Màu nền */
-  color: #fff; /* Màu chữ */
-  border: none; /* Bỏ viền */
-  border-radius: 5px; /* Bo tròn góc */
-  padding: 10px 20px; /* Kích thước nút */
-  font-size: 16px; /* Kích thước chữ */
-  cursor: pointer; 
+    background-color: #007BFF; /* Màu nền */
+    color: #fff; /* Màu chữ */
+    border: none; /* Bỏ viền */
+    border-radius: 5px; /* Bo tròn góc */
+    padding: 10px 20px; /* Kích thước nút */
+    font-size: 16px; /* Kích thước chữ */
+    cursor: pointer;
 }
 
 /* Định dạng nút khi hover */
 .forgot-password-button:hover {
-  background-color: #0056b3; /* Màu nền khi hover */
+    background-color: #0056b3; /* Màu nền khi hover */
 }
 
 /* Định dạng nút khi được nhấn */
 .forgot-password-button:active {
-  background-color: #004296; /* Màu nền khi được nhấn */
+    background-color: #004296; /* Màu nền khi được nhấn */
 }
 
 #pac-input {
@@ -583,6 +583,12 @@ input{
     font-size: 15px;
     font-weight: 300;
     text-overflow: ellipsis;
+}
+.center-form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 10vh;
 }
 
 

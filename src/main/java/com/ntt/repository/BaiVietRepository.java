@@ -59,6 +59,7 @@ public interface BaiVietRepository {
     
     List<BaiViet> getBaiVietDaDuyet();    
     List<BaiViet> sortBaiVietByNgayDang(List<BaiViet> baiviet);
+     List<BaiViet> getBaiVietXungQuanh(NguoiDung nd);    
    
 
 

@@ -109,7 +109,9 @@ public class BaiVietController {
             model.addAttribute("follows", this.followService.getFollowsKhachHang(nd).get(0));
             model.addAttribute("followlist", this.followService.getFollowsKhachHang(nd));
             model.addAttribute("nguoidung", this.taikhoan.getTaiKhoan(authen.getName()).get(0));
+            model.addAttribute("dsBaiViet", this.baivietService.getBaiVietAll());
         }
+
         model.addAttribute("BaiViet", this.baivietService.getBaiVietById(id));
         model.addAttribute("binhluan", new BinhLuan());
         model.addAttribute("binhluans", this.binhluanService.getBinhLuan(id));
@@ -198,7 +200,7 @@ public class BaiVietController {
                 errMsg = "Tên bài viết phải có ít nhất 5 ký tự";
                 return "redirect:/dangbai?errMsg=" + URLEncoder.encode(errMsg, "UTF-8");
             }
-            
+
             if (baiviet.getGiaThue() == null) {
                 errMsg = "Vui lòng nhập giá thuê";
                 return "redirect:/dangbai?errMsg=" + URLEncoder.encode(errMsg, "UTF-8");

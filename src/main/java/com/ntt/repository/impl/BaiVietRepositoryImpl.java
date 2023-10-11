@@ -481,7 +481,7 @@ public class BaiVietRepositoryImpl implements BaiVietRepository {
         Collections.sort(baiviet, new Comparator<BaiViet>() {
             @Override
             public int compare(BaiViet bv1, BaiViet bv2) {
-                return bv2.getNgayDang().compareTo(bv1.getNgayDang()); 
+                return bv2.getNgayDang().compareTo(bv1.getNgayDang());
             }
         });
 
@@ -496,5 +496,17 @@ public class BaiVietRepositoryImpl implements BaiVietRepository {
 //    query.setParameter("homNay", ngayDang);
 //    return query.getResultList();
 //    }
+    @Override
+    public List<BaiViet> getBaiVietXungQuanh(NguoiDung nd) {
+        Session s = this.factory.getObject().getCurrentSession();
+        Double kinhDo=nd.getKinhDo();
+        Double viDo=nd.getViDo();
+        
+        BaiViet bv=(BaiViet) this.baivietRepo.getBaiVietByIdNgDung(nd);
+        
+        String diachi=bv.getDiaChiCt();
+        Query q = s.createQuery("FROM BaiViet");
+        return q.getResultList();
+    }
 
 }

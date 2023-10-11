@@ -4,11 +4,16 @@
  */
 package com.ntt.controllers;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.common.reflect.TypeToken;
+import com.nimbusds.jose.shaded.gson.Gson;
 import com.ntt.pojo.BaiViet;
 import com.ntt.pojo.NguoiDung;
 import com.ntt.service.BaiVietService;
 import com.ntt.service.LoaiBaiVietService;
 import com.ntt.service.TaiKhoanService;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
@@ -27,6 +32,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -34,6 +40,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.client.RestTemplate;
 
 /**
  *
@@ -82,24 +89,41 @@ public class IndexContext {
 
     }
 
-//    @RequestMapping(value = "/", method = RequestMethod.POST)
-//    public String capNhatKinhDoViDo(@RequestParam("latitude") Double latitude, @RequestParam("longitude") Double longitude, Model model, Authentication authen) {
-//        if (authen != null) {
-//            UserDetails user = this.taikhoan.loadUserByUsername(authen.getName());
-//            NguoiDung nguoiDung = this.taikhoan.getTaiKhoanbyTenTK(user.getUsername());
-//
-//            nguoiDung.setKinhDo(latitude);
-//            nguoiDung.setViDo(longitude);
-//
-//            this.taikhoan.updateTaiKhoan(nguoiDung);
-//
-//        }
-//
-//        return "index";
-//    }
+    @RequestMapping("/baivietxungquanh")
+    public String baivietxungquanh(Model model, Authentication authen, @RequestParam Map<String, String> params) {
+        UserDetails user = this.taikhoan.loadUserByUsername(authen.getName());
+        NguoiDung nguoidung = this.taikhoan.getTaiKhoanbyTenTK(user.getUsername());
+        if (authen != null) {
 
-    @RequestMapping("/bando")
+            model.addAttribute("taikhoan", nguoidung);
+            model.addAttribute("nguoidung", nguoidung);
+        }
+
+        List<BaiViet> baiviets = this.baivietService.getBaiVietAll();
+        model.addAttribute("baiviet", baiviets);
+        return "baivietxungquanh";
+    }
+
+    @GetMapping("/bando")
     public String bando(Model model, NguoiDung nguoidung, Authentication authen) {
+
+        model.addAttribute("dsBaiViet", this.baivietService.getBaiVietAll());
+        List<Map<String, Object>> dsThongTinViTri = new ArrayList<>();
+        UserDetails user = this.taikhoan.loadUserByUsername(authen.getName());
+        NguoiDung u = this.taikhoan.getTaiKhoanbyTenTK(user.getUsername());
+        model.addAttribute("taikhoan", u);
+        model.addAttribute("nguoidung", this.taikhoan.getTaiKhoan(authen.getName()).get(0));
+        return "bando";
+
+    }
+
+    @PostMapping("/bando")
+    public String bando(Model model, NguoiDung nguoidung, Authentication authen, @RequestParam("diaChiList") String diaChiListParam) {
+        Gson gson = new Gson();
+        List<String> diaChiList = gson.fromJson(diaChiListParam, new TypeToken<List<String>>() {
+        }.getType());
+
+        model.addAttribute("diaChi", diaChiList);
 
         model.addAttribute("dsBaiViet", this.baivietService.getBaiVietAll());
 
@@ -110,7 +134,5 @@ public class IndexContext {
         model.addAttribute("nguoidung", this.taikhoan.getTaiKhoan(authen.getName()).get(0));
         return "bando";
     }
-
-    
 
 }

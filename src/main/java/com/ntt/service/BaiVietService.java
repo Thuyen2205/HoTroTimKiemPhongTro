@@ -48,5 +48,6 @@ public interface BaiVietService  {
 //    List<BaiViet> getBaiVietTK(String address, BigDecimal price, Integer soNguoi);
     List<BaiViet> getBaiVietDaDuyet();
     List<BaiViet> sortBaiVietByNgayDang(List<BaiViet> baiviet);
+    List<BaiViet> getBaiVietXungQuanh(NguoiDung nd);
   
 }

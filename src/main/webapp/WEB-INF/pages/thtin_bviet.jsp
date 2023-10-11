@@ -8,8 +8,9 @@
 <%@page import="com.ntt.pojo.BaiViet"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.34/moment-timezone-with-data.min.js"></script>
+<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.34/moment-timezone-with-data.min.js"></script>-->
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB-M500zF9hEI3OoOPyK_dVHfWDyZcx5fI&libraries=geometry&callback=initMap" async defer></script>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ page import="java.util.Objects" %>
@@ -329,49 +330,49 @@
     </div>
 
     <br></br>   
-    <div id="search-bar">
-
-        <input type="text" id="search-input" class="custom-input7" placeholder="Nhập địa chỉ hoặc tên địa điểm">
-        <button class="btn-info btn" id="search-button">Tìm kiếm</button>
-    </div>
+    <!--    <div id="search-bar">
+    
+            <input type="text" id="search-input" class="custom-input7" placeholder="Nhập địa chỉ hoặc tên địa điểm">
+            <button class="btn-info btn" id="search-button">Tìm kiếm</button>
+        </div>-->
     <div id="map" style="width: 120%; height: 40%;"></div>
     <script>
-        var map = L.map('map').setView([10.7769, 106.7009], 12);
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        }).addTo(map);
+        var diaChiCt = "${BaiViet.diaChiCt}";
 
-        var diaChiCt = "<c:out value='${BaiViet.diaChiCt}' />";
+        function initMap() {
+            var map = new google.maps.Map(document.getElementById('map'), {
+                center: {lat: 10.7769, lng: 106.7009}, 
+                zoom: 14
+            });
 
-        L.Control.Geocoder.nominatim().geocode(diaChiCt, function (results) {
-            if (results && results.length > 0) {
-                var latlng = results[0].center;
-                var marker = L.marker(latlng).addTo(map);
-                marker.bindPopup("<c:out value='${BaiViet.diaChiCt}' />").openPopup();
-            }
-        });
+            var geocoder = new google.maps.Geocoder();
 
-        var searchInput = document.getElementById('search-input');
-        var searchButton = document.getElementById('search-button');
+            geocoder.geocode({'address': diaChiCt}, function (results, status) {
+                if (status === 'OK') {
+                    var toaDo = results[0].geometry.location;
 
-        searchButton.addEventListener('click', function () {
-            var query = searchInput.value;
+                    var marker = new google.maps.Marker({
+                        position: toaDo,
+                        map: map,
+                        title: diaChiCt,
+                        icon: 'http://maps.google.com/mapfiles/ms/icons/red-dot.png' 
+                    });
 
-            L.Control.Geocoder.nominatim().geocode(query, function (results) {
-                if (results && results.length > 0) {
-                    var latlng = results[0].center;
-                    map.setView(latlng, 25);
+                    marker.addListener('click', function () {
+                        var infoWindow = new google.maps.InfoWindow({
+                            content: diaChiCt
+                        });
+                        infoWindow.open(map, marker);
+                    });
+                      map.setCenter(toaDo);
                 } else {
-                    alert('Không tìm thấy địa điểm.');
+                    console.log('Không thể tìm thấy tọa độ cho: ' + diaChiCt);
                 }
             });
-        });
+        }
     </script>
 
-
 </div>
-
-
 
 <script>
     moment.tz.setDefault("Asia/Ho_Chi_Minh");

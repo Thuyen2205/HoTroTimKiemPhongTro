@@ -254,5 +254,10 @@ public class BaiVietServiceImpl implements BaiVietService {
         return this.baivietRepo.sortBaiVietByNgayDang(baiviet);
     }
 
+    @Override
+    public List<BaiViet> getBaiVietXungQuanh(NguoiDung nd) {
+        return this.baivietRepo.getBaiVietXungQuanh(nd);
+    }
+
     
 }
