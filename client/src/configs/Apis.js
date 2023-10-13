@@ -3,7 +3,7 @@ import cookie from "react-cookies";
 
 
 const SERVER_CONTEXT  = "/NhaTro";
-const SERVER = "http://localhost:8080"
+const SERVER = "http://localhost:8080/";
 
 export const endpoints ={
     "baiviet": `${SERVER_CONTEXT}/api/baiviet/`,
@@ -37,7 +37,6 @@ export const authApi = () => {
         }
     })
 }
-
 
 export default axios.create({
     baseURL: SERVER

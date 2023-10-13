@@ -18,9 +18,7 @@ Document   : thtin_bviet
 <c:url value="/capnhat" var="updateAction">
 </c:url>
 <html>
-    <center><h3 style="margin: 20px 0; color: #005555;">CẬP NHẬT BÀI VIẾT</h3></center>
-
-
+    <center><h3 style="margin: 20px 0; color: orange;">CẬP NHẬT BÀI VIẾT</h3></center>
     <section class="chitiettin" >
         <div class="chitiettin-col1">
             <div class="ct-anh">
@@ -35,8 +33,6 @@ Document   : thtin_bviet
                     <form:hidden path="idNguoiDung.id"/>
 
                     <div class="dangbai-tinnhaplieu">
-
-
                         <div style="display: flex">
                             <p>Loại bài viết:  </p>    
                             <p style="text-indent: 10px"> ${BaiViet.loaiBaiViet.tenLoaiBaiViet}</p>
@@ -45,8 +41,6 @@ Document   : thtin_bviet
                             <p>Mã tin:  </p>    
                             <p style="text-indent: 10px"> #${BaiViet.id}</p>
                         </div>
-
-
                         <div class="input-bigsize">
                             <p>Tiêu đề bài đăng </p>
                             <form:input type="text" id="tenbv" name="tenbv" path="tenBaiViet" placeholder="Tiêu đề bài đăng"/>
@@ -97,10 +91,9 @@ Document   : thtin_bviet
                                     }
                                 }
                             </script>
-
-                            <div>
+                            <div >
                                 <p for="file">Hình ảnh phòng trọ: </p>
-                                <form:input path="file" type="file" id="imageFile" name="imageFile" onchange="chooseFile(this)"  accept="image/jpg, image/jpeg, image/png"/>
+                                <form:input style="border: none !important" path="file" type="file" id="imageFile" name="imageFile" onchange="chooseFile(this)"  accept="image/jpg, image/jpeg, image/png"/>
                             </div>
 
                         </c:if>
@@ -119,50 +112,10 @@ Document   : thtin_bviet
                         </c:if>
 
                     </div>
-                    <button class="btn btn-info " type="sumit">Cập nhật</button>
+                        <button class="btn btn-info custom-button2 " style="padding: 15px 0;" type="sumit">Cập nhật thông tin bài viết</button>
 
                 </form:form>
 
-<!--                <h4 style="color: tomato; font-weight: bold">${BaiViet.tenBaiViet}</h4>
-                <%--<c:if test="${BaiViet.loaiBaiViet.id==1}">--%>
-                    <p>Địa chỉ:<h ${BaiViet.diaChiCt}</p>
-                    <div class="chitiet-3tt">
-                        <p>Giá: ${BaiViet.giaThue}</p>
-                        <p>Diện tích: ${BaiViet.dienTich}</p>
-                        <p> #${BaiViet.id}</p>
-                    </div>
-                <%--</c:if>--%>
-                <h4>Thông tin mô tả:</h4>
-                <p>${BaiViet.noiDung}</p>
-
-                DAC DIEM TIN DANG
-                <h4>Đặc điểm tin đăng:</h4>
-                <div class="dacdiemtin">
-                    <table style="width:100%">
-                        <tr>
-                            <th>Mã tin:</th>
-                            <td>#${BaiViet.id}</td>
-                        </tr>
-                        <tr>-->
-                <%--<c:if test="${BaiViet.loaiBaiViet.id==1}">--%>
-                <!--<th>Khu vực cho thuê trọ:</th>-->
-
-                <%--</c:if>--%>
-                <%--<c:if test="${BaiViet.loaiBaiViet.id==2}">--%>
-                <!--<th>Khu vực cần tìm trọ:</th>-->
-                <%--</c:if>--%>
-            <!--<td>${BaiViet.phamViCanTim}</td>-->
-                <!--                        </tr>
-                                        <tr>
-                                            <th>Ngày đăng:</th>
-                                            <td>${BaiViet.ngayDang}</td>
-                                        </tr>
-                                        <tr>
-                                            <th>Ngày hết hạn:</th>
-                                            <td>${BaiViet.ngayDang}</td>
-                                        </tr>
-                                    </table>
-                                </div>-->
 
             </div>
         </div>
@@ -170,6 +123,7 @@ Document   : thtin_bviet
         <div class="chitiettin-col2">
             <div class="ct-thtinngdung">
                 <center>
+                    <h5 class="text-danger">TÁC GIẢ BÀI VIẾT</h5>
                     <img src="${BaiViet.idNguoiDung.avatar}" class="rounded-circle" style="width: 100px; height: 100px; border-radius: 50px" alt="${pageContext.request.userPrincipal.name}" />
                     <p>${BaiViet.idNguoiDung.tenNguoiDung}</p>
                     <p>${BaiViet.idNguoiDung.sdt}</p>
@@ -201,10 +155,4 @@ Document   : thtin_bviet
             }
         });
     </script>
-
-
-
-
-
-
 </html>

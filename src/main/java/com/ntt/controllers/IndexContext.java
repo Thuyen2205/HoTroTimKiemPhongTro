@@ -118,7 +118,27 @@ public class IndexContext {
     }
 
     @PostMapping("/bando")
-    public String bando(Model model, NguoiDung nguoidung, Authentication authen, @RequestParam("diaChiList") String diaChiListParam) {
+    public String bando(Model model, NguoiDung nguoidung, Authentication authen,
+//            @RequestParam("diaChiList") String diaChiListParam,
+            @ModelAttribute(value = "taikhoan") NguoiDung taikhoan) {
+
+        String errMSg="";
+        UserDetails user = this.taikhoan.loadUserByUsername(authen.getName());
+        NguoiDung u = this.taikhoan.getTaiKhoanbyTenTK(user.getUsername());
+        model.addAttribute("taikhoan", u);
+        model.addAttribute("nguoidung", this.taikhoan.getTaiKhoan(authen.getName()).get(0));
+        if(authen !=null){
+            if(this.taikhoan.updateNguoiDung(taikhoan)==true){
+                return "redirect:/";
+            }else{
+                errMSg="ra";
+            }
+        }
+        return "bando";
+    }
+
+    @PostMapping("/bando_map")
+    public String bando_map(Model model, @RequestParam("diaChiList") String diaChiListParam, Authentication authen) {
         Gson gson = new Gson();
         List<String> diaChiList = gson.fromJson(diaChiListParam, new TypeToken<List<String>>() {
         }.getType());
@@ -126,12 +146,12 @@ public class IndexContext {
         model.addAttribute("diaChi", diaChiList);
 
         model.addAttribute("dsBaiViet", this.baivietService.getBaiVietAll());
-
-        List<Map<String, Object>> dsThongTinViTri = new ArrayList<>();
         UserDetails user = this.taikhoan.loadUserByUsername(authen.getName());
         NguoiDung u = this.taikhoan.getTaiKhoanbyTenTK(user.getUsername());
         model.addAttribute("taikhoan", u);
         model.addAttribute("nguoidung", this.taikhoan.getTaiKhoan(authen.getName()).get(0));
+
+        List<Map<String, Object>> dsThongTinViTri = new ArrayList<>();
         return "bando";
     }
 

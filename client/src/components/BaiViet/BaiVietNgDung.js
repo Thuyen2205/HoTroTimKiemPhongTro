@@ -4,6 +4,8 @@ import Apis, { endpoints } from "../../configs/Apis";
 import { Image, Table } from "react-bootstrap";
 import MySpinner from "../../layout/MySpinner";
 import { MyUserContext } from "../../App";
+import "../TrangCaNhan/TrangCaNhan.scss";
+
 
 const BaiVietNgDung = ({ idNgdung }) => {
     const [bvietngdung, setBvietngdung] = useState(null);
@@ -41,7 +43,7 @@ const BaiVietNgDung = ({ idNgdung }) => {
                     return <>
                         <div className="tin">
                             <div className="tin-anh">
-                                <Image src={c.hinhAnh} style={{ width: '100%' }}></Image>
+                                <Image src={c.hinhAnh} style={{ width: '100%', margin:'auto 0' }}></Image>
                             </div>
                             <div className="tin-thongtin">
                                 <h5><Link style={{ textDecoration: 'none' }} className='text-danger' to={`/thtin_bviet/${c.id}`}>{c.tenBaiViet}</Link></h5>
@@ -64,11 +66,11 @@ const BaiVietNgDung = ({ idNgdung }) => {
                                     </tr>
                                 </Table>
                                 <div className="">
-                                    <button><Link style={{ textDecoration: 'none' }} className='text-danger' to={`/capnhatbv/${c.id}`}>Cập nhật</Link></button>
-                                    <button onClick={() => deleteBaiViet(c.id)}>Delete</button>
+
+                                    <button className="btn btn-success" style={{margin: '5px', padding:'5px', borderRadius:'5px', width:'50%'}}><Link style={{ textDecoration: 'none' , color:'white'}} to={`/capnhatbv/${c.id}`}>Cập nhật bài viết</Link></button>
+                                    <button className="btn btn-danger" style={{margin: '5px', padding:'5px', borderRadius:'5px', width:'20%', color:'white'}} onClick={() => deleteBaiViet(c.id)}>Xóa</button>
                                 </div>
                             </div>
-
                         </div>
                     </>
                 })}

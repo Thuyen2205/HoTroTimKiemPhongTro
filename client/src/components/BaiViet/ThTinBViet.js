@@ -80,10 +80,11 @@ const ThTinBViet = ({ baivietId }) => {
                             {user !== null ?
                                 <BinhLuan idBaiViet={thtinbviet.id} />
                                 : <>
-                                    <div style={{ fontSize: 50 }}>
-                                        Bình luận
+                                    <div style={{ textIndent:'25px' }}>
+                                        <h3>Bình luận</h3>
                                     </div>
-                                    <div>Vui lòng <Link to="/"> Đăng nhập</Link> để xem bình luận và bình luận
+                                    <div style={{padding:'25px' }}>
+                                        <p >Vui lòng <Link style={{textDecoration:'none'}} to="/dangnhap"> Đăng nhập</Link> để xem bình luận và bình luận</p>
                                     </div>
                                 </>
                             }
@@ -95,15 +96,15 @@ const ThTinBViet = ({ baivietId }) => {
                     <div className="thtin-col2"></div>
                     <div className="thtin-col3">
                         <div className="thtin-tacgia">
+                            <center><h5 style={{marginTop: '15px'}} className="text-danger">TÁC GIẢ BÀI VIẾT</h5></center>
                             <div className="tacgia-anh">
                                 <center><Image roundedCircle src={thtinbviet.idNguoiDung.avatar} />  </center>
-
                             </div>
                             <div className="tacgia-thongtin">
                                 <center>
-                                    <h4>{thtinbviet.idNguoiDung.tenNguoiDung}</h4>
+                                    <h5>{thtinbviet.idNguoiDung.tenNguoiDung}</h5>
 
-                                    <h5>{thtinbviet.idNguoiDung.sdt}</h5>
+                                    <p style={{fontSize:'17px'}}>{thtinbviet.idNguoiDung.sdt}</p>
                                 </center>
                             </div>
 

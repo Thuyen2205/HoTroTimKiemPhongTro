@@ -14,44 +14,57 @@
         <c:url value="/doimatkhau" var="actionDoiMatKhau">
             <c:param name="idNguoiDung" value="${taikhoan.id}" />
         </c:url>
-        <center><h5 style="padding: 20px">THAY ĐỔI MẬT KHẨU</h5></center>
-        <div class="wrapper">
+        <center><h4 style="color:#005555; font-weight: bold; padding: 25px">ĐỔI MẬT KHẨU TÀI KHOẢN</h4></center>
+        <div class="wrapper" style="text-align: center; ">
             <c:if test="${not empty errMsg}">
                 <div class="error-message">
                     ${errMsg}
                 </div>
             </c:if>
             <c:if test="${not empty error}">
-                <p style="color: red">${error}</p>
+                <p style="color: red; font-size: 20px; font-weight: bold">${error}</p>
             </c:if>
 
             <c:if test="${not empty success}">
-                <p style="color: green">${success}</p>
+                <p style="color: green; font-size: 20px; font-weight: 400">${success}</p>
             </c:if>
-            <div class="change-password">
-
-
-                <form action="${actionDoiMatKhau}" method="post">
-                    <div class="input-box1">
-                        <label for="matKhauCu">Mật khẩu cũ:</label>
-                        <input type="password" id="matKhauCu" name="matKhauCu" required><br><br>
-                    </div>
-
-                    <div class="input-box1">
-                        <label for="matKhauMoi">Mật khẩu mới:</label>
-                        <input type="password" id="matKhauMoi" name="matKhauMoi" required><br><br>
-                    </div>
-
-                    <div class="input-box1">
-                        <label for="xacNhanMatKhauMoi">Xác nhận mật khẩu mới :</label>
-                        <input type="password" id="xacNhanMatKhauMoi" name="xacNhanMatKhauMoi" required><br><br>
-                    </div>
-                    <center>
-                        <input type="submit" class="btn custom-button3" value="Đổi Mật Khẩu">
-                    </center>
-                </form>
-
-            </div>
         </div>
+
+        <div class="change-password">
+            <form action="${actionDoiMatKhau}" method="post">
+                <div class="input-box">
+                    <div class="input-bot-p">               
+                        <label for="matKhauCu">Mật khẩu cũ:</label>
+                    </div>
+                    <div class="input-box-form">
+                        <input type="password" id="matKhauCu" name="matKhauCu" required>
+                    </div>
+                </div>
+
+                <div class="input-box">
+                    <div class="input-bot-p">
+                        <label for="matKhauMoi">Mật khẩu mới:</label>
+                    </div>
+                    <div class="input-box-form">
+                        <input type="password" id="matKhauMoi" name="matKhauMoi" required>
+                    </div>
+                </div>
+
+                <div class="input-box">
+                    <div class="input-bot-p">
+                        <label for="xacNhanMatKhauMoi">Xác nhận mật khẩu mới :</label>
+                    </div>
+                    <div class="input-box-form">
+                        <input type="password" id="xacNhanMatKhauMoi" name="xacNhanMatKhauMoi" required>
+                    </div>
+                    
+                </div>
+                <center>
+                    <input type="submit" class="btn custom-button3" value="ĐỔI MẬT KHẨU">
+                </center>
+            </form>
+
+        </div>
+
     </div>
 </html>

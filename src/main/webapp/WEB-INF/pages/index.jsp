@@ -12,11 +12,8 @@
 
 <!DOCTYPE html>
 <html>
-
     <body>
-
         <c:if test="${pageContext.request.userPrincipal.name != null}">
-
             <div class="input-timkiem" style="text-align: center">
                 <c:url value="/" var="action"/>
                 <c:if test="${not empty error}">
@@ -29,13 +26,11 @@
 
                     <button class="find custom-button" type="submit">Tìm kiếm</button>
                 </form>
-
             </div>
         </c:if>
 
-        <div id="viewed-articles-container">
+        <div id="viewed-articles-container"></div>
 
-        </div>
     <center>
         <c:if test="${pages > 1}">
             <ul class="pagination mt-1">
@@ -52,17 +47,11 @@
 
             </ul>
         </c:if>
-        <h2>Bài viết cho thuê trọ mới nhất</h2>
     </center>
-
-
     
-  
-
-
-
+    
+    <center> <h3 class="text-danger">TIN CHO THUÊ TRỌ <strong>MỚI NHẤT</strong></h3></center>   
     <div class="bangtin">
-
         <c:forEach items="${baiviet}" var="t">
             <c:if test="${t.loaiTrangThai.id==1}">
                 <c:if test="${t.loaiBaiViet.id==1}">
@@ -78,7 +67,7 @@
                                     <c:param name="baivietId" value="${t.id}" />  
                                 </c:url>
 
-                                <a  href="${bvietAction}"><h5 class="text-danger">TIN CHO THUÊ</h5>${t.tenBaiViet}</a>
+                                <a style="text-transform: uppercase;" href="${bvietAction}">${t.tenBaiViet}</a>
 
                                 <tr>
                                     <th>Khu vực:</th>
@@ -103,16 +92,11 @@
                 </c:if>
             </c:if>
         </c:forEach>
-
-
     </div>
-
-    <center>
-        <h2>Bài viết tìm trọ mới nhất</h2>
-    </center>
-
+    
+    
+    <center><h3 class="text-danger">TIN TÌM THUÊ TRỌ <strong>MỚI NHẤT</strong></h3></center>
     <div class="bangtin">
-
         <c:forEach items="${baiviet}" var="t">
             <c:if test="${t.loaiTrangThai.id==1}">
                 <c:if test="${t.loaiBaiViet.id==2}">
@@ -120,25 +104,22 @@
                         <div class="bviet_anh">
                             <img src="https://res.cloudinary.com/dpp5kyfae/image/upload/v1694280790/timtro2_k6dbqd.jpg"/>
                         </div>
-                        <div class="bviet_ndung">
+                        <div class="bviet_ndung ">
                             <table class="table_bv" style="width:100%">
                                 <c:url value="/thtin_bviet" var="bvietAction">
                                     <c:param name="baivietId" value="${t.id}" />  
                                 </c:url>
-                                <a  href="${bvietAction}"><h5 class="text-danger">Tin Tìm Trọ</h5>${t.tenBaiViet}</a>
+                                <a style="text-transform: uppercase" href="${bvietAction}">${t.tenBaiViet}</a>
 
                                 <tr>
                                     <th>Khu vực:</th>
                                     <td>${t.phamViCanTim}</td>
                                 </tr>
                                 <tr>
-                                    <th>Giá thuê:</th>
-                                    <td>${t.giaThue}/tháng</td>
+                                    <th>Ngày đăng:</th>
+                                    <td>${t.ngayDang}</td>
                                 </tr>
-                                <tr>
-                                    <th>Diện tích:</th>
-                                    <td>${t.dienTich}</td>
-                                </tr>
+
 
                             </table>
                             <c:url value="/thtin_bviet" var="bvietAction">
@@ -153,11 +134,6 @@
         </c:forEach>
 
     </div>
-
-
-
-
-
 
     <button id="goToTopBtn" class="go-to-top-button" onclick="scrollToTop()">
         <i class="fa-solid fa-up-long">

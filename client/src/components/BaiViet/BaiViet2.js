@@ -35,48 +35,33 @@ const BaiViet2 = () => {
     return (
         <body className="body">
             <>
-                <h1 className="text-center text-info">TIN TÌM TRỌ</h1>
-
-                <Container className="container-bv">
+                <h3 className="text-center text-danger">DANH MỤC TIN TÌM TRỌ <strong>MỚI NHẤT</strong></h3>
+                <Container style={{ marginTop: '15px' }} className="container-bv">
 
                     {baiviet2.slice(start, start + PAGE_SIZE).map(p => {
                         return <>
                             <div className="itembv">
                                 <div className="itembv-anh">
-                                    <Image src={p.hinhAnh}></Image>
+                                    <Image src='https://res.cloudinary.com/dpp5kyfae/image/upload/v1694280790/timtro2_k6dbqd.jpg'></Image>
                                 </div>
                                 <div className="itembv-thtin">
+                                    <h5 style={{ textTransform: 'uppercase' }}><Link style={{ textDecoration: 'none', color: '#005555' }} to={`/thtin_bviet/${p.id}`}>{p.tenBaiViet}</Link></h5>
+
                                     <Table >
-                                        <h5><Link style={{ textDecoration: 'none' }} className='text-info' to={`/thtin_bviet/${p.id}`}>{p.tenBaiViet}</Link></h5>
                                         <tr>
                                             <th>Khu vực:</th>
                                             <td>{p.phamViCanTim}</td>
                                         </tr>
-                                        <tr>
-                                            <th>Giá thuê:</th>
-                                            <td>{p.giaThue}/tháng</td>
-                                        </tr>
-                                        <tr>
-                                            <th>Diện tích:</th>
-                                            <td>{p.dienTich}m2</td>
-                                        </tr>
+
                                     </Table>
                                     <div className="btn-docthem">
-                                        <button><Link style={{ textDecoration: 'none', color: 'black' }} to={`/thtin_bviet/${p.id}`}>Đọc thêm</Link></button>
+                                        <button style={{ width: '60%', padding: '5px', borderRadius: '8px', backgroundColor: '#005555', fontSize: '17px' }}><Link style={{ textDecoration: 'none', color: 'white' }} to={`/thtin_bviet/${p.id}`}>Đọc thêm</Link></button>
                                     </div>
                                 </div>
                             </div>
 
                         </>
-                        // return <Col xs={12} md={3} className="mt-1">
-                        //     <Card style={{ width: '18rem' }}>
-                        //         <Card.Img variant="top" src={p.hinhAnh} />
-                        //         <Card.Body>
-                        //             <Card.Title><Link className='text-danger' to={`/thtin_bviet/${p.id}`}>{p.tenBaiViet}</Link></Card.Title>
-                        //             <Button className="mr-1" variant="primary">Xem chi tiết</Button>
-                        //         </Card.Body>
-                        //     </Card>
-                        // </Col>
+
 
                     })}
                     <div className="ChangePage">

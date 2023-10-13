@@ -12,37 +12,37 @@
 <link href="<c:url value="/css/style.css"/>" rel="stylesheet" />
 <!DOCTYPE html>
 <html>
-    <c:forEach items="${tkChuaDuyet}" var="t" >
-        <c:if test="${t.kiemDuyet == 'KIEM_DUYET_1'}">
-            <div class="bviet">
-                <div class="bviet_anh">
-                    <img src="${t.avatar}"/>
-                </div>
-                <div class="bviet_ndung">
-                    <table style="width:100%">
-                        
-                     
-                        <tr>
-                            <th>Tên tài khoản:</th>
-                            <td>${t.tenTaiKhoan}</td>
-                        </tr>
-                        <tr>
-                            <th>Email:</th>
-                            <td>${t.email}</td>
-                        </tr>
-                          <tr>
-                            <th></th>
-                            <td>   
-                                <c:url value="/thtin_taiKhoan" var="taiKhoanAction">
-                                    <c:param name="taiKhoanId" value="${t.id}" />  
-                                </c:url>
-                                <a href="${taiKhoanAction}" class="bt-docthem" style="vertical-align:middle"> <span>Xem thêm </span></a>
-                            </td>
-                        </tr>
-                      
-                    </table>
-                </div>
-            </div>
-        </c:if>
-    </c:forEach>
+    <center><h3 style="margin: 20px 0; color: red;">DANH SÁCH TÀI KHOẢN CHỦ TRỌ CHƯA DUYỆT</h3></center>
+
+    <div class="body-duyettk">
+
+        <c:forEach items="${tkChuaDuyet}" var="t" >
+            <c:if test="${t.kiemDuyet == 'KIEM_DUYET_1'}">
+                <c:if test="${t.idLoaiTaiKhoan.id==2}">
+
+                    <c:url value="/thtin_taiKhoan" var="taiKhoanAction">
+                        <c:param name="taiKhoanId" value="${t.id}" />  
+                    </c:url>
+                    <div class="item-tkchuaduyet">
+                        <a href="${taiKhoanAction}" class="bt-docthem" style="text-decoration: none;">
+                            <div class="tkchuaduyet-anh">
+                                <img src="${t.avatar}"/>
+                            </div>
+                            <div class="tkchauduyet-thtin">
+                                <center>
+                                    <h5 style="color:black" href="${taiKhoanAction}">CHỦ TRỌ</h5>
+                                    <p style="color: #005555; font-size: 17px">${t.tenNguoiDung}</p>
+
+
+                                </center>
+                            </div>
+                        </a>
+                    </div>
+                </c:if>
+            </c:if>
+        </c:forEach>
+
+
+    </div>
+
 </html>

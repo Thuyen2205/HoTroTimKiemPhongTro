@@ -73,7 +73,7 @@
                 <div class="input-box">
                     <form:input type="password" placeholder="Xác nhận lại mật khẩu" path="xacNhanMatKhau" />           
                 </div>
-                
+
                 <div class="input-box chonloaiTK">
                     <form:select class="role" name="role" id="role" path="idLoaiTaiKhoan">
                         <c:forEach items="${user_role}" var="c">
@@ -83,14 +83,14 @@
                 </div> 
 
                 <div class="upload-avatar" id="upload-avatar-div" style="display: none; margin: 0 auto;">
-                    <h4>Ảnh trọ</h4>                   
+                    <h5 style="width: 30%; padding: 10px; border-radius:40px; margin-right: 10px;">Ảnh trọ</h5>                   
                     <div class="upload-avatar-input" style=" margin: 0 auto; width: 100%; padding: 10px;">
                         <form:input type="file" id="file2" path="file2" placeholder="Upload ảnh phòng trọ"/> 
                     </div>
                 </div>
 
                 <div class="upload-avatar">
-                    <h4>Avatar</h4>                   
+                    <h5 style="width: 30%; padding: 10px; border-radius:40px; margin-right: 10px;">Avatar</h5>                   
 
                     <div class="upload-avatar-input">
                         <form:input type="file" id="fileInput" path="file" placeholder="Upload Avatar"/>
@@ -112,7 +112,7 @@
 
                             if (fileInput.files.length === 0) {
                                 e.preventDefault();
-                                alert("Vui lòng chọn một tệp hình ảnh tro cua ban.");
+                                alert("Vui lòng chọn một tệp hình ảnh trọ của bạn.");
                             }
                         });
 
@@ -126,9 +126,12 @@
                 <p class="register-link-p">
                     Bạn đã có tài khoản?  <a href="<c:url value ="/dangnhap"/>">  Đăng nhập ngay </a>
                 </p>
-
             </div>
-
+            <div  class="register-link">
+                <p class="register-link-p">
+                    Quay trở về  <a href="<c:url value ="/"/>">  Trang chủ </a>
+                </p>
+            </div>
             <form:input type="hidden" path="kinhDo" />
             <form:input type="hidden" path="viDo" />
 
@@ -154,13 +157,13 @@
         $("#getLocationButton").click(function () {
             if ("geolocation" in navigator) {
                 navigator.geolocation.getCurrentPosition(function (position) {
-                    
+
                     var latitude = position.coords.latitude;
                     var longitude = position.coords.longitude;
-                    
+
                     document.querySelector("input[name='kinhDo']").value = latitude;
                     document.querySelector("input[name='viDo']").value = longitude;
-                    
+
                     locationModal.modal("hide");
                 }, function (error) {
                     console.log("Lỗi khi lấy vị trí: " + error.message);

@@ -38,28 +38,26 @@
 </c:url>
 
 
-<div style="display: flex; justify-content: start; margin-top:  20px; margin-left: 100px" >
+<div style="display: flex; justify-content: start; margin-top:  20px; margin-left: 90px" >
     <c:if test="${BaiViet.loaiTrangThai.id==2}">
-        <div style="margin-right: 30px">
-            <form:form method="post" action="${actionTrangThai}">
-                <button style="padding: 15px; width: 100%; margin-right: 20%; font-size: 18px;" class="btn btn-danger" type="submit">Xác nhận bài viết</button>
-            </form:form>
-        </div>
-        <div>
-            <form:form method="post" action="${actionTrangThaiTuChoi}">
-                <button style="padding: 15px; width: 100%; margin-right: 20%; font-size: 18px;" class="btn btn-danger" type="submit">Từ chối bài viết</button>
-            </form:form>    
-        </div>
-
-
+        <c:if test="${nguoidung.idLoaiTaiKhoan.id==1}">
+            <div style="margin-right: 30px">
+                <form:form method="post" action="${actionTrangThai}">
+                    <button style="padding: 15px; width: 100%; margin-right: 20%; font-size: 18px;" class="btn btn-danger" type="submit">XÁC NHẬN BÀI VIẾT</button>
+                </form:form>
+            </div>
+            <div>
+                <form:form method="post" action="${actionTrangThaiTuChoi}">
+                    <button style="padding: 15px; width: 100%; margin-right: 20%; font-size: 18px;" class="btn btn-danger" type="submit">TỪ CHỐI BÀI VIẾT</button>
+                </form:form>    
+            </div>
+        </c:if>
     </c:if>
 </div>
 
 <section class="chitiettin" >
     <div class="chitiettin-col1">
-
         <div class="ct-anh">
-
             <center>
                 <img src="${BaiViet.hinhAnh}"" style="width:100%" > 
             </center>
@@ -78,10 +76,9 @@
             <c:if test="${BaiViet.loaiBaiViet.id==1}">
                 <p>Địa chỉ: ${BaiViet.diaChiCt}</p>
                 <div class="chitiet-3tt">
-                    <p>Giá: ${BaiViet.giaThue}</p>
-                    <p>Diện tích: ${BaiViet.dienTich}</p>
-                    <p>Số người ở: ${BaiViet.soNguoi}</p>
-                    <p> #${BaiViet.id}</p>
+                    <p>Giá: ${BaiViet.giaThue} VNĐ</p>
+                    <p>Diện tích: ${BaiViet.dienTich} m2</p>
+                    <p>Số người tối đa: ${BaiViet.soNguoi}</p>
                 </div>
             </c:if>
             <h4>Thông tin mô tả:</h4>
@@ -98,12 +95,11 @@
                     <tr>
                         <c:if test="${BaiViet.loaiBaiViet.id==1}">
                             <th>Khu vực cho thuê trọ:</th>
-
-                        </c:if>
-                        <c:if test="${BaiViet.loaiBaiViet.id==2}">
+                            </c:if>
+                            <c:if test="${BaiViet.loaiBaiViet.id==2}">
                             <th>Khu vực cần tìm trọ:</th>
                             </c:if>
-                        <td>${BaiViet.diaChiCt}</td>
+                        <td>${BaiViet.phamViCanTim}</td>
                     </tr>
                     <tr>
                         <th>Ngày đăng:</th>
@@ -113,6 +109,44 @@
                 </table>
             </div>
         </div>
+        <c:if test="${BaiViet.loaiBaiViet.id==1}">
+            <div id="map" style="margin: 5px 0px; width: 100%; height: 300px; background-color: wwhite; border: 1px solid black;"></div>
+        </c:if>
+        <script>
+            var diaChiCt = "${BaiViet.diaChiCt}";
+
+            function initMap() {
+                var map = new google.maps.Map(document.getElementById('map'), {
+                    center: {lat: 10.7769, lng: 106.7009},
+                    zoom: 14
+                });
+
+                var geocoder = new google.maps.Geocoder();
+
+                geocoder.geocode({'address': diaChiCt}, function (results, status) {
+                    if (status === 'OK') {
+                        var toaDo = results[0].geometry.location;
+
+                        var marker = new google.maps.Marker({
+                            position: toaDo,
+                            map: map,
+                            title: diaChiCt,
+                            icon: 'http://maps.google.com/mapfiles/ms/icons/red-dot.png'
+                        });
+
+                        marker.addListener('click', function () {
+                            var infoWindow = new google.maps.InfoWindow({
+                                content: diaChiCt
+                            });
+                            infoWindow.open(map, marker);
+                        });
+                        map.setCenter(toaDo);
+                    } else {
+                        console.log('Không thể tìm thấy tọa độ cho: ' + diaChiCt);
+                    }
+                });
+            }
+        </script>
 
         <div class="ndung-binhluan">
             <c:if test="${BaiViet.loaiTrangThai.id==1}">
@@ -257,186 +291,186 @@
                                                     <form:input class="custom-input6" type="text" path="noiDung"/>
                                                     <input type="submit" value="Gửi phản hồi" class="btn btn-success"/>
                                                 </form:form>
-                                            </div>
+                                            </c:if>
+                                        </c:forEach>
+                                    </div>
 
-                                        </c:if>
-                                    </c:forEach>
-                                </div>
-
-                            </c:if> 
-                        </c:forEach>
-
+                                </c:if> 
+                            </c:forEach>
+                        </div>
                     </div>
-                </div>
-            </c:if>
-
-        </c:forEach>
-
-    </div>
-</div>
-
-
-<div class="chitiettin-col2">
-    <div class="ct-thtinngdung">
-        <center>
-            <h5 class="text-danger">TÁC GIẢ BÀI VIẾT</h5>
-            <img src="${BaiViet.idNguoiDung.avatar}" class="rounded-circle" alt="${pageContext.request.userPrincipal.name}" />
-            <p>${BaiViet.idNguoiDung.tenNguoiDung}</p>
-            <p>${BaiViet.idNguoiDung.sdt}</p>
-            <c:forEach items="${followlist}" var="list">
-                <c:if test="${list.idChuTro.id.toString() eq BaiViet.idNguoiDung.id.toString()}">
-                    <c:url value="/api/thtin_bviet/${list.id}" var="apiDelete"/>
-                    <button class="btn btn-danger text-center" onclick="deleteFollowpr('${apiDelete}')">Hủy Follow</button>
-                    <button class="btn btn-danger" disabled="">Follow</button>
                 </c:if>
             </c:forEach>
+        </div>
+    </div>
 
-            <form:form method="post" action="${actionfl}" var="p" modelAttribute="follow" >
-                <c:if test="${nguoidung.idLoaiTaiKhoan.id==3}">
-                    <c:choose>
-                        <c:when test="${empty flChuTro}">
-                            <button class="btn btn-danger">Follow</button>
-                        </c:when>
-                        <c:otherwise>
-                            <c:choose>
-                                <c:when test="${empty followlist}">
-                                    <button class="btn btn-danger">Follow</button>
-                                </c:when>
-                                <c:otherwise>
-                                    <c:set var="shouldShowFollowButton" value="true" />
-                                    <c:forEach items="${flChuTro}" var="chuTro">
-                                        <c:if test="${shouldShowFollowButton && followlist.contains(chuTro)}">
-                                            <c:set var="shouldShowFollowButton" value="false" />
-                                        </c:if>
-                                    </c:forEach>
-                                    <c:if test="${shouldShowFollowButton}">
+
+    <div class="chitiettin-col2">
+        <div class="ct-thtinngdung">
+            <center>
+                <h5 class="text-danger">TÁC GIẢ BÀI VIẾT</h5>
+                <img src="${BaiViet.idNguoiDung.avatar}" class="rounded-circle" alt="${pageContext.request.userPrincipal.name}" />
+                <p style="margin-bottom: 5px">${BaiViet.idNguoiDung.tenNguoiDung}</p>
+                <p style="margin-bottom: 5px">${BaiViet.idNguoiDung.sdt}</p>
+                <c:forEach items="${followlist}" var="list">
+                    <c:if test="${list.idChuTro.id.toString() eq BaiViet.idNguoiDung.id.toString()}">
+                        <c:url value="/api/thtin_bviet/${list.id}" var="apiDelete"/>
+                        <button class="btn btn-danger text-center" onclick="deleteFollowpr('${apiDelete}')">Hủy Follow</button>
+                        <button class="btn btn-danger" disabled="">Follow</button>
+                    </c:if>
+                </c:forEach>
+
+                <form:form method="post" action="${actionfl}" var="p" modelAttribute="follow" >
+                    <c:if test="${nguoidung.idLoaiTaiKhoan.id==3}">
+                        <c:choose>
+                            <c:when test="${empty flChuTro}">
+                                <button class="btn btn-danger">Follow</button>
+                            </c:when>
+                            <c:otherwise>
+                                <c:choose>
+                                    <c:when test="${empty followlist}">
                                         <button class="btn btn-danger">Follow</button>
-                                    </c:if>
-                                </c:otherwise>
-                            </c:choose>
-                        </c:otherwise>
-                    </c:choose>
-                </c:if>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <c:set var="shouldShowFollowButton" value="true" />
+                                        <c:forEach items="${flChuTro}" var="chuTro">
+                                            <c:if test="${shouldShowFollowButton && followlist.contains(chuTro)}">
+                                                <c:set var="shouldShowFollowButton" value="false" />
+                                            </c:if>
+                                        </c:forEach>
+                                        <c:if test="${shouldShowFollowButton}">
+                                            <button class="btn btn-danger">Follow</button>
+                                        </c:if>
+                                    </c:otherwise>
+                                </c:choose>
+                            </c:otherwise>
+                        </c:choose>
+                    </c:if>
 
-                <form:input type="hidden" id="file" path="tenNguoiDangBai" value="${pageContext.request.userPrincipal.name}"  readonly="true"  cssClass="form -control"/>
-                <form:input type="hidden" id="file" path="idChuBaiViet" value="${BaiViet.idNguoiDung.id}"  readonly="true"   cssClass="form -control"/>
-            </form:form>
-        </center>
-    </div>
-    <div class="ct-thtinngdung ct-tinnoibat">
-        <center>                
-            <h5 class="text-danger">TIN NỔI BẬT</h5>
-        </center>
+                    <form:input type="hidden" id="file" path="tenNguoiDangBai" value="${pageContext.request.userPrincipal.name}"  readonly="true"  cssClass="form -control"/>
+                    <form:input type="hidden" id="file" path="idChuBaiViet" value="${BaiViet.idNguoiDung.id}"  readonly="true"   cssClass="form -control"/>
+                </form:form>
+            </center>
+        </div>
+        <div class="ct-thtinngdung">
+            <center>                
+                <h5 class="text-danger">CÁC TIN CỦA TÁC GIẢ</h5>
+            </center>
+            <div class="tinkhac">
+                <c:forEach items="${dsBaiViet}" var="t">
+                    <c:if test="${BaiViet.idNguoiDung.id == t.idNguoiDung.id}">
+                        <c:if test="${t.loaiTrangThai.id==1}">
+                            <c:if test="${BaiViet.id != t.id}">
+                                <div class="tinkhac-item" style="display: flex; margin: auto 0">
+                                    <c:url value="/thtin_bviet" var="bvietAction">
+                                        <c:param name="baivietId" value="${t.id}" />  
+                                    </c:url>
+                                    <div style="display: flex;">
+                                        <i class="fa-brands fa-google-play"></i>
+                                        <a style="text-decoration: none; margin-left: 5px" href="${bvietAction}">Tin số: #${t.id} (Khu vực: ${t.phamViCanTim})</a>
+                                    </div>
+
+                                </div>
+                            </c:if>
+
+
+                        </c:if>
+                    </c:if>
+
+                </c:forEach>
+            </div>
+        </div>
+        <div class="ct-thtinngdung">
+            <center>                
+                <h5 class="text-danger">CÁC TIN TRỌ CÙNG KHU VỰC</h5>
+            </center>
+            <div class="tinkhac">
+                <c:forEach items="${dsBaiViet}" var="t">
+                    <c:if test="${BaiViet.phamViCanTim == t.phamViCanTim}">
+                        <c:if test="${t.loaiTrangThai.id==1}">
+                            <c:if test="${BaiViet.id != t.id}">
+                                <div class="tinkhac-item" style="display: flex; margin: auto 0">
+                                    <c:url value="/thtin_bviet" var="bvietAction">
+                                        <c:param name="baivietId" value="${t.id}" />  
+                                    </c:url>
+                                    <div style="display: flex;">
+                                        <i class="fa-brands fa-google-play"></i>
+                                        <a style="text-decoration: none; margin-left: 5px" href="${bvietAction}">Tin số: #${t.id} (Khu vực: ${t.phamViCanTim})</a>
+                                    </div>
+
+                                </div>
+                            </c:if>
+
+
+                        </c:if>
+                    </c:if>
+
+                </c:forEach>
+            </div>
+        </div>
+
     </div>
 
-    <br></br>   
-    <!--    <div id="search-bar">
-    
-            <input type="text" id="search-input" class="custom-input7" placeholder="Nhập địa chỉ hoặc tên địa điểm">
-            <button class="btn-info btn" id="search-button">Tìm kiếm</button>
-        </div>-->
-    <div id="map" style="width: 120%; height: 40%;"></div>
     <script>
-        var diaChiCt = "${BaiViet.diaChiCt}";
+        moment.tz.setDefault("Asia/Ho_Chi_Minh");
 
-        function initMap() {
-            var map = new google.maps.Map(document.getElementById('map'), {
-                center: {lat: 10.7769, lng: 106.7009}, 
-                zoom: 14
+        window.onload = function () {
+            let dates = document.getElementsByClassName("commentDate");
+            for (let i = 0; i < dates.length; i++) {
+                dates[i].innerText = moment(dates[i].innerText).fromNow();
+            }
+        }
+    </script>
+    <script>
+        var replyButtons = document.querySelectorAll('.reply-button');
+        var replyForms = document.querySelectorAll('.reply-form');
+
+        replyButtons.forEach(function (button, index) {
+            button.addEventListener('click', function () {
+
+                replyForms.forEach(function (form) {
+                    form.style.display = 'none';
+                });
+
+
+                replyForms[index].style.display = 'block';
             });
+        });
+    </script>
 
-            var geocoder = new google.maps.Geocoder();
+    <script>
+        function showReplyForm(commentId) {
+            // Tìm form trả lời dựa trên commentId
+            var replyForm = document.getElementById("replyForm_" + commentId);
 
-            geocoder.geocode({'address': diaChiCt}, function (results, status) {
-                if (status === 'OK') {
-                    var toaDo = results[0].geometry.location;
-
-                    var marker = new google.maps.Marker({
-                        position: toaDo,
-                        map: map,
-                        title: diaChiCt,
-                        icon: 'http://maps.google.com/mapfiles/ms/icons/red-dot.png' 
-                    });
-
-                    marker.addListener('click', function () {
-                        var infoWindow = new google.maps.InfoWindow({
-                            content: diaChiCt
-                        });
-                        infoWindow.open(map, marker);
-                    });
-                      map.setCenter(toaDo);
-                } else {
-                    console.log('Không thể tìm thấy tọa độ cho: ' + diaChiCt);
-                }
-            });
+            // Bật/tắt form trả lời
+            if (replyForm.style.display === "none" || replyForm.style.display === "") {
+                replyForm.style.display = "block";
+            } else {
+                replyForm.style.display = "none";
+            }
         }
     </script>
 
-</div>
+    <script>
+        function enableEditModeUpdate(commentId) {
+            // Tìm form trả lời dựa trên commentId
+            var replyForm = document.getElementById("updateForm_" + commentId);
 
-<script>
-    moment.tz.setDefault("Asia/Ho_Chi_Minh");
-
-    window.onload = function () {
-        let dates = document.getElementsByClassName("commentDate");
-        for (let i = 0; i < dates.length; i++) {
-            dates[i].innerText = moment(dates[i].innerText).fromNow();
+            // Bật/tắt form trả lời
+            if (replyForm.style.display === "none" || replyForm.style.display === "") {
+                replyForm.style.display = "block";
+            } else {
+                replyForm.style.display = "none";
+            }
         }
-    }
-</script>
-<script>
-    var replyButtons = document.querySelectorAll('.reply-button');
-    var replyForms = document.querySelectorAll('.reply-form');
-
-    replyButtons.forEach(function (button, index) {
-        button.addEventListener('click', function () {
-
-            replyForms.forEach(function (form) {
-                form.style.display = 'none';
-            });
-
-
-            replyForms[index].style.display = 'block';
-        });
-    });
-</script>
-
-<script>
-    function showReplyForm(commentId) {
-        // Tìm form trả lời dựa trên commentId
-        var replyForm = document.getElementById("replyForm_" + commentId);
-
-        // Bật/tắt form trả lời
-        if (replyForm.style.display === "none" || replyForm.style.display === "") {
-            replyForm.style.display = "block";
-        } else {
-            replyForm.style.display = "none";
-        }
-    }
-</script>
-
-<script>
-    function enableEditModeUpdate(commentId) {
-        // Tìm form trả lời dựa trên commentId
-        var replyForm = document.getElementById("updateForm_" + commentId);
-
-        // Bật/tắt form trả lời
-        if (replyForm.style.display === "none" || replyForm.style.display === "") {
-            replyForm.style.display = "block";
-        } else {
-            replyForm.style.display = "none";
-        }
-    }
-</script>
+    </script>
 
 
 
-<script src="<c:url value="/js/main.js"/>"></script>
+    <script src="<c:url value="/js/main.js"/>"></script>
 
 
 
 </section>
 
-<%--<c:if test="${BaiViet.loaiTrangThai.id==1}">--%>
-<!--<input class="btn btn-info  custom-button"  placeholder="Đã xác nhận" readonly="true"/>-->
-<%--</c:if>--%>

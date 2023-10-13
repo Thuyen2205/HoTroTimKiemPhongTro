@@ -76,7 +76,7 @@ public class Follow implements Serializable {
     @JoinColumn(name = "id_khach_hang", referencedColumnName = "id")
     @ManyToOne
     private NguoiDung idKhachHang;
-     @Transient
+    @Transient
     private String tenNguoiDangBai;
     @Transient
     private Integer idChuBaiViet;

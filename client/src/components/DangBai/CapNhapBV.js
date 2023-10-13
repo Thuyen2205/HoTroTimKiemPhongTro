@@ -102,7 +102,7 @@ const CapNhatBV = ({ baivietId }) => {
     return (
         <>
             <Container>
-                <h1>CẬP NHẬT BÀI VIẾT</h1>
+                <center><h3 className="text-danger" style={{padding: '20px'}}>CẬP NHẬT BÀI VIẾT</h3></center>
                 <div className="thtinbviet">
                     <div className="thtin-col1">
                         <div className="thtin-anh">
@@ -184,7 +184,7 @@ const CapNhatBV = ({ baivietId }) => {
                                             placeholder="Mô tả chi tiết"
                                             required />
                                     </Form.Group>
-                                    <Button variant="info" type="submit">Cập nhật bài</Button>
+                                    <center><Button className="btn btn-success" style={{width:'65%', fontSize:'18px'}} type="submit">Cập nhật bài viết</Button></center>
                                 </Form>
                             </> : <>
                                 <Form onSubmit={(e) => capnhatbv(e, thtinbviet.id)}>
@@ -220,7 +220,7 @@ const CapNhatBV = ({ baivietId }) => {
                                             placeholder="Mô tả chi tiết"
                                             required />
                                     </Form.Group>
-                                    <Button variant="info" type="submit">Cập nhật bài</Button>
+                                    <center><Button className="btn btn-success" style={{width:'65%', fontSize:'18px'}} type="submit">Cập nhật bài viết</Button></center>
                                 </Form>
                             </>}
                         </div>

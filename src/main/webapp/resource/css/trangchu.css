@@ -130,17 +130,11 @@ body{
 }
 
 .upload-avatar input{
-
     width: 100%;
     padding: 10px;
-    font-size: 13px;
+    /*font-size: 13px;*/
 }
-.upload-avatar h4{
-    width: 30%;
-    padding: 10px;
-    border-radius:40px;
-    margin-right: 10px;
-}
+
 .role{
     width: 100%;
     padding: 10px;

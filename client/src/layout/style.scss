@@ -27,22 +27,26 @@
     width: 45%;
     justify-content: space-around;
 }
-
+.nav-link {
+    color: white;
+    text-decoration: none; 
+    transition: color 0.1s; 
+  }
+  
+.nav-link:hover {
+    color: red;
+  }
 .nav-user{
     display: flex;
     justify-content: flex-end;
     display: flex;
     width: 35%;
 }
-.nav-links link{
-    color: white;
-}
+
 .hellouser{
     display: flex;
 }
-.links{
 
-}
 
 .header-search{
     margin: 0 auto;
@@ -55,21 +59,26 @@
 .text-dark{
     text-decoration: none;
 }
-//ĐĂNG NHẬP
+//ĐĂNG NHẬP ĐĂNG KÝ
 
 .form-dangnhap{
     width: 50%;
     border: 1px solid gray;
-    padding: 50px 15px;
-
-    // margin-bottom: 26.5%;
+    border-radius: 8px;
+    padding: 25px;
 }
 .container-dangnhap{
-    padding: 50px 15px;
     display: flex;
     justify-content: space-around;
+    margin-top: 50px;
 }
-
+.formDangKy{
+    padding: 10px 80px;
+}
+.formDangKy label{
+    font-size: 17px;
+    font-weight: bold;
+}
 //TRANG CHỦ
 .trangchu-baiviet{
     display: flex;

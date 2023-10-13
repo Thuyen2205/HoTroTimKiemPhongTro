@@ -6,6 +6,9 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     Created on : Aug 12, 2023, 2:31:26 PM
     Author     : Admins
 */
+* a , p {
+    font-size: 17px;
+}
 body{
     /*background-color: #F5F5F5;*/
     background-color: white;
@@ -20,26 +23,28 @@ body{
     margin: 20px 80px;
     flex-wrap: wrap;
     display: flex;
-
+    justify-content: space-around;
 }
 
 .bviet{
-    width: 45%;
-    margin: 2%;
+    width: 48%;
     background-color: white;
     display: flex;
     transition: transform 0.2s ease-in-out;
     border: none;
     box-shadow: 0px 1px 3px 0px black;
     border-radius: 10px;
+    margin-bottom: 15px;
+    padding: 10px;
 }
 .bviet:hover {
-    transform: scale(1.05);
+    transform: scale(1.02);
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
 }
 .bviet_anh{
-    margin: 10px;
-    width: 40%;
+    margin: auto 0px;
+    width: 48%;
+    padding-right: 15px;
 }
 .bviet_anh img{
     border-radius: 8px;
@@ -47,12 +52,10 @@ body{
 }
 .bviet_anh img:hover {
     transform: scale(1.1);
-    transition: transform 0.2s ease-in-out;
+    transition: transform 0.5s ease-in-out;
 }
 .bviet_ndung{
-    margin: 10px;
-    width: 55%;
-    padding-right: 10px;
+    width: 50%;
 }
 
 .bviet_anh2{
@@ -62,50 +65,52 @@ body{
 .bviet_anh2 img{
     width: 100%;
     border-radius: 8px;
-
 }
 .bviet_ndung > a:first-child{
     text-decoration: none;
     text-align: center;
     color:  #005555;
-    /*    text-underline-offset: 0.25em;
-        text-decoration: underline;*/
-    font-size: 18px;
+
+    font-size: 17px;
     font-weight: bold;
 }
 /*CHI TIẾT TIN*/
 .chitiettin{
-    margin: 30px 100px;
+    padding: 20px 80px;
     flex-wrap: wrap;
     display: flex;
+    justify-content: space-between;
+    width: 100%;
 }
 .chitiettin-col1{
-    width: 63%;
+    width: 65%;
+    height: 100%;
     background-color: white;
 }
 .chitiettin-col2{
-    width: 35%;
-    margin-left: 20px;
+    width: 30%;
     display: block;
-}
-.ct-thtinngdung{
-    border: 1px solid black;
-    background-color: white;
-    border-radius: 8px;
-    padding: 10px;
-    margin:  0 30px;
+    font-size: 17px;
 }
 .rounded-circle{
     width: 120px;
     height: 120px;
     border-radius: 60px;
+    /*border: 1px solid black;*/
 }
-.ct-tinnoibat{
-    padding: 10px;
+.ct-thtinngdung{
+    width: 100%;
+    border: 1px solid black;
     background-color: white;
-    margin-top: 25px;
-    height: 250px;
     border-radius: 8px;
+    padding: 10px;
+    margin-bottom: 15px;
+}
+.ct-thtinngdung a{
+    color: #005555;
+}
+.tinkhac-item{
+    padding: 5px;
 }
 .chitiettin-col2 img{
     margin-top: 5px;
@@ -119,8 +124,9 @@ body{
     background-color: black;
 }
 .ndung-chitiet{
+    /*width: 100%;*/
     padding: 30px;
-    font-size: 16px;
+    font-size: 17px;
     border: 1px solid black;
     /*border-radius: 8px;*/
 }
@@ -177,7 +183,7 @@ body{
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
-    font-size: 16px;
+    font-size: 17px;
     margin: 10px;
 }
 .custom-input6{
@@ -186,7 +192,7 @@ body{
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
-    font-size: 16px;
+    font-size: 17px;
     margin: 10px;
 }
 .custom-input7{
@@ -195,7 +201,7 @@ body{
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
-    font-size: 16px;
+    font-size: 17px;
     margin-left: 30px;
 }
 .chitiet-3tt{
@@ -231,30 +237,41 @@ body{
 .tincanhan{
     width: 95%;
     display: flex;
-    border-radius: 8px;
+    border-radius: 5px;
     border: none;
     padding: 5px;
     box-shadow: 0px 1px 3px 0px black;
     margin: 10px auto;
-
+}
+.tincanhan-noidung > a:first-child{
+    color: #005555;
+    font-weight: bold;
 }
 .tincanhan-anh{
     width: 30%;
 }
 .tincanhan-anh img{
     width: 100%;
-    border-radius: 8px;
-
+    border-radius: 5px;
 }
 .tincanhan-noidung{
     width: 70%;
-    margin: 0px 15px;
-
+    margin: 5px 15px;
 }
 .tincanhan-noidung th{
     width:30%;
 }
 .tincanhan-noidung td{
+    width: 70%;
+}
+.tincanhan-noidung2{
+    width: 100%;
+    margin: 5px 15px;
+}
+.tincanhan-noidung2 th{
+    width:30%;
+}
+.tincanhan-noidung2 td{
     width: 70%;
 }
 .thongtincanhan{
@@ -272,7 +289,7 @@ body{
     width: 100%;
     margin: 0 2px;
     padding: 5px 10px;
-    font-size: 16px;
+    font-size: 17px;
     background-color: #005555;
     color: white;
     border: none;
@@ -280,11 +297,38 @@ body{
     transition: all 0.5s;
 }
 
-
 /*HEADER VÀ TRANG CHỦ*/
 .navbar{
     color: white;
     background-color: #005555;
+    padding-left: 50px;
+    padding-right: 50px;
+}
+.link0:hover{
+    color: orange !important;
+}
+.link1:hover{
+    color: red !important;
+}
+.navbar-nav{
+    width: 100%;
+    display: flex;
+}
+.nav-signlog{
+    display: flex;
+    width: 100%;
+    justify-content: end;
+}
+.nav-page{
+    display: flex;
+    width: 70%;
+    justify-content: flex-start;
+}
+
+.nav-ngdung{
+    display: flex;
+    width: 30%;
+    justify-content: end;
 }
 .custom-input {
     width: 200px;
@@ -292,12 +336,12 @@ body{
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
-    font-size: 16px;
+    font-size: 17px;
     margin: 10px;
 }
 .custom-button {
     padding: 10px 20px;
-    font-size: 16px;
+    font-size: 17px;
     background-color: #005555;
     color: white;
     border: none;
@@ -339,7 +383,7 @@ body{
     background-color: #005555;
     border: none;
     text-align: center;
-    font-size: 16px;
+    font-size: 17px;
     padding: 6px 10px;
     margin-top: 5px;
 }
@@ -354,37 +398,46 @@ body{
 
 /*CẬP NHẬT THÔNG TIN - MẬT KHẨU*/
 .formcapnhat{
-    margin: 50px 400px;
+    width: 50%;
+    margin: 50px auto;
     border: 1px solid black;
     border-radius: 8px;
 }
 .formdoimatkhau{
-    margin: 50px 350px;
+    width: 50%;
+    margin: 50px auto;
     border: 1px solid black;
     border-radius: 8px;
 }
 .input-box{
-    padding: 10px 40px;
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
+    padding: 10px 25px;
 }
-.input-box1{
-    padding-top: 10px;
-    padding-bottom: 10px;
-    padding-left: 30px;
-    padding-right: 10px;
-    display: flex;
-    justify-content: space-between;
+.input-bot-p{
+    width: 40%;
 
 }
-.input-file{
-    margin-left: 95px
+.input-bot-p p {
+    margin:  auto 0;
+}
+.input-box-form{
+    width: 55%;
+    text-align: end;
+}
+.input-box-form input{
+    padding: 5px;
+}
+
+#imageFile{
+    /*width: 100%;*/
+    /*order: 2;*/
 }
 
 .custom-button3{
     width: 40%;
     padding: 10px 20px;
-    font-size: 16px;
+    font-size: 17px;
     background-color: #005555;
     color: white;
     border: none;
@@ -396,37 +449,36 @@ body{
 
 /*-----ĐĂNG BÀI-----*/
 .body-dangbai{
-    background-color: #F5F5F5;
-    padding: 30px 100px;
+    background-color: white;
+    padding: 20px 80px;
 }
 .dangbai{
     display: flex;
+    justify-content: space-around;
 }
 
 .dangbai-col1{
-    width: 60%;
-    margin-right: 20px;
-    background-color: white;
+    width: 65%;
+    border: 0.5px solid gray;
+    font-size: 17px;
+
 }
 .dangbai-col1 p{
-    font-size: 18px;
-    font-weight: 500;
+    font-size: 17px;
 }
 .dangbai-col2{
-    width: 35%;
-    background-color: white;
+    width: 30%;
     height: 100%;
+    border: 0.5px solid gray;
+
 }
-.dangbai-tincodinh{
-    padding-top:20px;
-    padding-left: 20px;
-}
+
 .dangbai-tincodinh input{
     border: hidden;
     background-color: white;
 }
 .dangbai-tinnhaplieu{
-    padding: 20px;
+    margin: 20px 0;
 }
 .dangbai-tinnhaplieu input{
     height: 40px;
@@ -437,13 +489,20 @@ body{
 input{
     text-indent: 10px;
 }
+textarea{
+    text-indent: 10px;
+}
 .catngang{
     /*background-color: #1450A3  ;*/
     background-color: #005555 ;
 
+
 }
 .catngang h5{
     margin-left: 5px;
+}
+.input-bigsize p{
+    font-weight: bold;
 }
 .input-bigsize input{
     width: 100%;
@@ -452,21 +511,26 @@ input{
     width: 100%;
 }
 .input-smallsize {
-    display: inline-block;
+    display: flex;
+    justify-content: space-between;
 }
 .input-smallsize1{
-    margin-right: 50px;
+    width: 50%;
+}
+.input-smallsize2{
+    width: 45%;
 }
 .input-smallsize input{
     width: 100%;
 }
+
 .dangbai-anhphongtro input{
     border: none;
 }
 .custom-button4{
     width: 35%;
     padding: 10px 20px;
-    font-size: 16px;
+    font-size: 17px;
     background-color: #005555;
     color: white;
     border: none;
@@ -493,7 +557,7 @@ input{
 .custom-button1{
     width: 20%;
     padding: 20px;
-    font-size: 16px;
+    font-size: 17px;
     background-color: #005555;
     color: white;
     border: none;
@@ -516,7 +580,7 @@ input{
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 16px;
+    font-size: 17px;
     cursor: pointer;
     z-index: 1000;
     transition: all 0.5s;
@@ -529,12 +593,14 @@ input{
 }
 
 .error-message {
-    background-color: #45FFCA;
-    color: #333;
+    width: 50%;
+    margin: 0 auto;
+    background-color: #FBD5D9;
+    color: #963C47;
     padding: 10px;
     border: 1px solid #ff0000;
     border-radius: 5px;
-    font-size: 16px;
+    font-size: 17px;
 }
 
 /*TRANG ADMIN*/
@@ -548,7 +614,7 @@ input{
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
-    font-size: 16px;
+    font-size: 17px;
     margin: 10px;
 }
 .tablethongke{
@@ -556,12 +622,12 @@ input{
 }
 
 .forgot-password-button {
-    background-color: #007BFF; /* Màu nền */
-    color: #fff; /* Màu chữ */
-    border: none; /* Bỏ viền */
-    border-radius: 5px; /* Bo tròn góc */
-    padding: 10px 20px; /* Kích thước nút */
-    font-size: 16px; /* Kích thước chữ */
+    background-color: #007BFF;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 17px;
     cursor: pointer;
 }
 
@@ -591,11 +657,151 @@ input{
     height: 10vh;
 }
 
+/*DUYỆT BÀI*/
+.body-duyetbai{
+    padding: 20px 80px;
+    display: flex;
+    justify-content: space-around;
+}
+.duyetbaichothue{
+    width: 45%;
+}
+.duyetbaitimtro{
+    width: 45%;
+}
 
+.bviet2{
+    width: 100%;
+    background-color: white;
+    display: flex;
+    transition: transform 0.2s ease-in-out;
+    border: none;
+    box-shadow: 0px 1px 3px 0px black;
+    border-radius: 10px;
+    margin-bottom: 15px;
+    padding: 10px;
+}
+.bviet2:hover {
+    transform: scale(1.02);
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+}
+.bviet2_anh{
+    margin: auto 0px;
+    width: 48%;
+    padding-right: 15px;
+}
+.bviet2_anh img{
+    border-radius: 8px;
+    width: 100%;
+}
+.bviet2_anh img:hover {
+    transform: scale(1.1);
+    transition: transform 0.5s ease-in-out;
+}
+.bviet2_ndung{
+    width: 50%;
+}
 
+.bviet2_ndung > a:first-child{
+    text-decoration: none;
+    text-align: center;
+    color:  #005555;
+    font-size: 17px;
+    font-weight: bold;
+}
 
+.bviet2_anh2{
+    margin: auto 0px;
+    width: 35%;
+    padding-right: 15px;
+}
+.bviet2_anh2 img{
+    border-radius: 8px;
+    width: 100%;
+}
+.bviet2_anh2 img:hover {
+    transform: scale(1.1);
+    transition: transform 0.5s ease-in-out;
+}
+.bviet2_ndung2{
+    width: 60%;
+}
 
+.bviet2_ndung2 > a:first-child{
+    text-decoration: none;
+    text-align: center;
+    color:  #005555;
+    font-size: 17px;
+    font-weight: bold;
+}
+/*DUYỆT TÀI KHOẢN*/
+.body-duyettk{
+    padding: 20px 80px;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+.item-tkchuaduyet{
+    width: 23%;
+    margin: 10px;
+    border: 0.5px solid gray;
+    border-radius: 8px;
+}
+.tkchuaduyet-anh{
+    width: 100%;
+    padding-bottom: 35px;
+    padding-top: 10px;
+    padding-right: 35px;
+    padding-left: 35px;
+}
+.tkchuaduyet-anh img{
+    width: 100%;
+}
 
+/*THÔNG TIN TÀI KHOẢN ĐANG KIỂM DUYỆT*/
+.duyettk-nguoi{
+    width: 35%;
+    border-radius: 8px;
+    border: 1px solid black;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+.duyettk-phong{
+    width: 55%;
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-bottom: 30px;
+    border-radius: 8px;
+    border: 1px solid black;
+    background-color: #005555;
+}
+.nguoi-anh {
+    width: 60%;
+    padding: 10px 30px;
+}
+.thtinflex{
+    display: flex;
+    justify-content: space-around;
+}
+.thtinflex1{
+    width: 40%;
+}
+.thtinflex1 p {
+    font-weight: bold; 
+}
+.thtinflex2{
+    width: 55%;
+}
+.nguoi-anh img{
+    width: 100%;
+}
+.phong-anh-name{
+   padding: 10px 0;
+   color: white;
+   font-weight: bold;
+}
+.phong-anh-img img{
+    width: 100%;
+        border-radius: 8px;
 
-
-
+}

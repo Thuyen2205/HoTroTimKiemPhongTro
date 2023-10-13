@@ -29,7 +29,7 @@
         </c:if>
 
         <form id="form1" method="post" action="${action}">
-            <h1>Xác nhận tài khoản</h1>
+            <h1>QUÊN MẬT KHẨU</h1>
 
             <center>
                 <c:if test="${param.accessDenied != null}">
@@ -41,7 +41,7 @@
                 </div>
 
             </center>                
-            <button  class="btn" type="submit" >Xác thực</button>
+            <button  class="btn" type="submit" >Xác thực với email</button>
 
 
         </form>

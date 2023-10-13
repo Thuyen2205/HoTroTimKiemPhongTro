@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import {Link, useParams } from "react-router-dom";
 import Apis, { endpoints } from "../../configs/Apis";
-import { Container, Image } from "react-bootstrap";
+import { Button, Container, Image } from "react-bootstrap";
 import MySpinner from "../../layout/MySpinner";
 import "./TrangCaNhan.scss";
 import { MyUserContext } from "../../App";
@@ -32,25 +32,25 @@ const ThTinNgDung = () => {
             <Container>
                 <div className="trangcanhan">
                     <div className="col11">
-                        <div className="phanngang">THÔNG TIN CÁ NHÂN </div>
+                        <center><div className="phanngang"><strong>THÔNG TIN CÁ NHÂN</strong></div></center>
                         <div className="thtincanhan">
                             <div className="thtincanhan-anh">
-                                <center><Image roundedCircle src={thtinngdung.avatar} />  </center>
+                                <center><Image style={{height:'90px', width:'90px', borderRadius:'45px'}}  src={thtinngdung.avatar} />  </center>
                             </div>
                             <center>
-                                <h5>{thtinngdung.idLoaiTaiKhoan.tenLoaiTaiKhoan}</h5>
+                                <h5 style={{marginTop:'10px'}}>{thtinngdung.idLoaiTaiKhoan.tenLoaiTaiKhoan}</h5>
                                 <p>{thtinngdung.tenNguoiDung}</p>
                                 <p>{thtinngdung.sdt}</p>
                                 <div className="buttoncanhan">
-                                    <button>Cập nhật</button>
-                                    <button><Link style={{textDecoration:'none'}} to="/doimatkhau">Đổi mật khẩu</Link></button>
+                                    <Button style={{width:'40%', fontSize:'17px'}} >Cập nhật</Button>
+                                    <button style={{backgroundColor:"#005555"}}><Link style={{textDecoration:'none', color:'white'}} to="/doimatkhau">Đổi mật khẩu</Link></button>
                                 </div>
                             </center>
                         </div>
                     </div>
                     <div className="col12"></div>
                     <div className="col13">
-                        <div className="phanngang">TIN ĐĂNG CÁ NHÂN</div>                        
+                        <div className="phanngang"><strong>TIN ĐĂNG CÁ NHÂN</strong></div>                        
                         <BaiVietNgDung idNgdung={user.id}/>
                     </div>
                 </div>

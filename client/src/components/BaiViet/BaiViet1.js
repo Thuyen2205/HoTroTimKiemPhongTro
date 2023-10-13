@@ -40,8 +40,8 @@ const BaiViet1 = () => {
     return (
         <body className="body">
             <>
-                <h1 className="text-center text-info">TIN CHO THUÊ</h1>
-                <Container className="container-bv">
+                <h3 className="text-center text-danger">DANH MỤC TIN CHO THUÊ <strong>MỚI NHẤT</strong></h3>
+                <Container style={{ marginTop: '15px' }} className="container-bv">
                     {(user !== null && user.idLoaiTaiKhoan.id === 3) ? <>
                         {baiviet1.slice(start, start + PAGE_SIZE).map(p => {
                             return <>
@@ -50,7 +50,7 @@ const BaiViet1 = () => {
                                         <Image src={p.hinhAnh}></Image>
                                     </div>
                                     <div className="itembv-thtin">
-                                        <h5><Link style={{ textDecoration: 'none' }} className='bv-ten' to={`/thtin_bviet/${p.id}`}>{p.tenBaiViet}</Link></h5>
+                                        <h5 style={{ textTransform: 'uppercase' }}><Link style={{ textDecoration: 'none' }} className='bv-ten' to={`/thtin_bviet/${p.id}`}>{p.tenBaiViet}</Link></h5>
                                         <Table >
                                             <tr>
                                                 <th>Khu vực:</th>
@@ -66,8 +66,8 @@ const BaiViet1 = () => {
                                             </tr>
                                         </Table>
                                         <div className="groupbtn">
-                                            <Link style={{ textDecoration: 'none'}} to={`/thtin_bviet/${p.id}`} className="docthem">Đọc thêm</Link>
-                                            <Link style={{ textDecoration: 'none'}} to={`/thtin_bviet/${p.id}`} className="luutin">Lưu tin</Link>
+                                            <Link style={{ textDecoration: 'none' }} to={`/thtin_bviet/${p.id}`} className="docthem">Đọc thêm</Link>
+                                            <Link style={{ textDecoration: 'none' }} to={`/thtin_bviet/${p.id}`} className="luutin">Lưu tin</Link>
                                         </div>
                                     </div>
                                 </div>
@@ -90,8 +90,9 @@ const BaiViet1 = () => {
                                         <Image src={p.hinhAnh}></Image>
                                     </div>
                                     <div className="itembv-thtin">
+                                        <h5 style={{textTransform:'uppercase'}}><Link style={{ textDecoration: 'none' ,color: '#005555'}} to={`/thtin_bviet/${p.id}`}>{p.tenBaiViet}</Link></h5>
+
                                         <Table >
-                                            <h5><Link style={{ textDecoration: 'none' }} className='text-info' to={`/thtin_bviet/${p.id}`}>{p.tenBaiViet}</Link></h5>
                                             <tr>
                                                 <th>Khu vực:</th>
                                                 <td>{p.phamViCanTim}</td>
@@ -106,7 +107,7 @@ const BaiViet1 = () => {
                                             </tr>
                                         </Table>
                                         <div className="btn-docthem">
-                                            <button><Link style={{ textDecoration: 'none'}} to={`/thtin_bviet/${p.id}`}>Đọc thêm</Link></button>
+                                            <button style={{width:'60%', padding:'5px', borderRadius:'8px', backgroundColor:'#005555', fontSize:'17px'}}><Link style={{ textDecoration: 'none', color:'white' }} to={`/thtin_bviet/${p.id}`}>Đọc thêm</Link></button>
                                         </div>
                                     </div>
                                 </div>

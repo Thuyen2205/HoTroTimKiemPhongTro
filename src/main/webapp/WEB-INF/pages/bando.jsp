@@ -1,7 +1,11 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <link href="<c:url value="/css/style.css"/>" rel="stylesheet" />
-<c:url value="/bando" var="action"/>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+
+<c:url value="/bando_map" var="action"/>
 
 
 <title>Hien thi Ban Do</title>
@@ -11,10 +15,18 @@
 
 <div class="center-form">
     <form method="post" action="${action}">
-        <button class="btn btn-danger" id="submitButton" type="submit">Tìm tro xung quanh</button>
+        <button class="btn btn-danger" id="submitButton" type="submit">TÃ¬m tro xung quanh</button>
         <input type="hidden" name="diaChiList" id="diaChiListField">
     </form>
 </div>
+<c:url value="/bando" var="actionUpdate"/>
+<form:form action="${actionUpdate}" method="POST" modelAttribute="taikhoan">
+    <form:hidden path="id"/>
+    <form:hidden path="kiemDuyet"/>
+    <form:hidden path="tenTaiKhoan"/>
+    <form:input type="text" id="email" name="email" path="email" placeholder="email"/>
+    <button class="btn custom-button3" type="sumit">Cáº­p nháº­t</button>
+</form:form>
 
 
 <div class="bangtin">
@@ -35,24 +47,24 @@
                                 <c:param name="baivietId" value="${b.id}" />  
                             </c:url>
 
-                            <a  href="${bvietAction}"><h5 class="text-danger">TIN CHO THUÊ</h5>${b.tenBaiViet}</a>
+                            <a  href="${bvietAction}"><h5 class="text-danger">TIN CHO THUÃŠ</h5>${b.tenBaiViet}</a>
                             <tr>
                                 <th>Khu vuc:</th>
                                 <td>${b.phamViCanTim}</td>
                             </tr>
                             <tr>
-                                <th>Giá thuê:</th>
-                                <td>${b.giaThue}/tháng</td>
+                                <th>GiÃ¡ thuÃª:</th>
+                                <td>${b.giaThue}/thÃ¡ng</td>
                             </tr>
                             <tr>
-                                <th>Dien tích:</th>
+                                <th>Dien tÃ­ch:</th>
                                 <td>${b.dienTich}</td>
                             </tr>
                         </table>
                         <c:url value="/thtin_bviet" var="bvietAction">
                             <c:param name="baivietId" value="${b.id}" />  
                         </c:url>
-                        <div class="groupbtn"><a href="${bvietAction}"> Doc thêm</a></div>
+                        <div class="groupbtn"><a href="${bvietAction}"> Doc thÃªm</a></div>
                     </div>
                 </div>
 
@@ -101,13 +113,13 @@
         var marker = new google.maps.Marker({
             position: {lat: kinhDo, lng: viDo},
             map: map,
-            title: 'Vi trí cua ban',
+            title: 'Vi trÃ­ cua ban',
             icon: redMarker
         });
         marker.setAnimation(google.maps.Animation.BOUNCE);
 
         var infoWindow = new google.maps.InfoWindow({
-            content: 'Dây là vi tri cua ban'
+            content: 'DÃ¢y lÃ  vi tri cua ban'
         });
 
         marker.addListener('mouseover', function () {
@@ -186,11 +198,6 @@
             });
         });
     }
-
-
-
-
-
 
 
 </script>

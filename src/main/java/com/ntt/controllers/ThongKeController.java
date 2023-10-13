@@ -140,7 +140,6 @@ public class ThongKeController {
             } else if (ng.getIdLoaiTaiKhoan().getId() == 3) {
                 countKhachHang++;
             }
-
         }
         model.addAttribute("countChuTro", countChuTro);
         model.addAttribute("countKhachHang", countKhachHang);
@@ -189,12 +188,12 @@ public class ThongKeController {
             if (this.taikhoan.updateTrangThaiTaiKhoan(nguoidung) == true) {
                 SimpleMailMessage message = new SimpleMailMessage();
                 message.setTo(nguoidung.getEmail());
-                message.setSubject("Tai khoan cua ban da qua kiem duyet");
-                message.setText("Ten tai khoan cua ban la: "+nguoidung.getTenTaiKhoan()+"  moi dang nhap vao he thong");
+                message.setSubject("DUYET TAI KHOAN!!!");
+                message.setText("Tai khoan cua ban da qua kiem duyet. Ten tai khoan cua ban la: "+nguoidung.getTenTaiKhoan()+", moi dang nhap vao he thong");
                 emailSender.send(message);
                 return "forward:/adminduyettaikhoan";
             } else {
-                ms = "?� c� l?i x�y ra";
+                ms = "ĐÃ CÓ LỖI XẢY RA";
             }
         }
         return "index";

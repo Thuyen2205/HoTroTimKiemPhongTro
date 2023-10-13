@@ -14,17 +14,17 @@
 <html>
 
     <div class="thongketheonam">
-        <center><h3 style="margin: 20px 0; color: #005555;">THỐNG KẾ SỐ LƯỢNG NGƯỜI DÙNG THEO NĂM</h3>
+        <center><h3 style="margin: 20px 0; color: red;">THỐNG KẾ SỐ LƯỢNG NGƯỜI DÙNG THEO NĂM</h3>
             <form action="${pageContext.request.contextPath}/admin" method="post">
-
+                <div>
                 <label for="year">Chọn năm:</label>
                 <select style="padding: 6px" id="year" name="year" class="year-select">
-                    <c:forEach var="y" begin="2018" end="2024">
+                    <c:forEach var="y" begin="2020" end="2030">
                         <option value="${y}"  class="year-option">${y}</option>
                     </c:forEach>
                 </select>
-                
-                <button type="submit" style="font-size: 18px" class="btn btn-danger custom-button5">Thực hiện thống kê</button>
+                </div>
+                <button type="submit" style="font-size: 18px; margin-top: 15px" class="btn btn-danger custom-button">Thực hiện thống kê</button>
                 <div class="ketquathongkenam">
                     <h4 style="margin-top: 10px">Kết quả thống kê:</h4>
                     <c:if test="${countChuTro==0}">
@@ -43,33 +43,7 @@
             </form>
         </center>
     </div>
-    <!--    <div id="bieuDoContainer">
-            <canvas id="myChart"></canvas>
-        </div>
-            <script>
-            var countKhachHang = ${countKhachHang};
-            var countChuTro = ${countChuTro};
     
-            var ctx = document.getElementById('myChart').getContext('2d');
-            var myChart = new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: ['Khách hàng', 'Chủ trọ'],
-                    datasets: [{
-                            label: 'Số lượng',
-                            data: [countKhachHang, countChuTro],
-                            backgroundColor: ['blue', 'green']
-                        }]
-                },
-                options: {
-                    scales: {
-                        y: {
-                            beginAtZero: true
-                        }
-                    }
-                }
-            });
-        </script>-->
 
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript">

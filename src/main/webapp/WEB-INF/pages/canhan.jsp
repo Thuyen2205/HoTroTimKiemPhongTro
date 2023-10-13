@@ -24,7 +24,7 @@
                     </div>
                 </c:if>
                 <div class="catngang">
-                    <h5 style="color: white; padding: 10px;">THÔNG TIN CÁ NHÂN</h5>
+                    <h5 style="color: white; padding: 10px; text-align: center">THÔNG TIN CÁ NHÂN</h5>
                 </div>
                 <div class="thongtincanhan">
                     <center>
@@ -35,12 +35,12 @@
                         <p>${taikhoan.sdt}</p>
                         <div class="canhanhoa">
                             <button class="btn btn-success"><a style="color:white; text-decoration: none" href="<c:url value ="/capnhattaikhoan"/> ">Cập nhật</a></button>
-                            <button class="btn btn-success"><a style="color:white; text-decoration: none" href="<c:url value ="/doimatkhau"/> ">Đổi mật khẩu</a></button>
+                            <a class="btn btn-success" style="color:white; text-decoration: none" href="<c:url value ="/doimatkhau"/> ">Đổi mật khẩu</a>
                         </div>
                     </center>
                 </div>
             </div>
-            <div class="trangcanhan-col2">
+                        <div style="font-size: 17px" class="trangcanhan-col2">
                 <div class="catngang">
                     <h5 style="color: white; padding: 10px;">TIN ĐĂNG</h5>
                 </div>
@@ -60,7 +60,7 @@
                                                 <c:param name="baivietId" value="${p.id}" />  
                                             </c:url>
 
-                                            <a style="text-decoration: none; font-size: 18px" href="${bvietAction}" >${p.tenBaiViet}</a>
+                                            <a style="text-decoration: none; font-size: 18px; text-transform: uppercase" href="${bvietAction}" >${p.tenBaiViet}</a>
                                             <tr>
                                                 <th>Khu vực:</th>
                                                 <td>${p.phamViCanTim}</td>
@@ -80,7 +80,7 @@
                                                     <c:url value="/capnhat" var="bvietAction">
                                                         <c:param name="baivietId" value="${p.id}" />  
                                                     </c:url>
-                                                    <a href="${bvietAction}" class="btn btn-success" style="vertical-align:middle"> Cập nhật bài viết</a>
+                                                    <a href="${bvietAction}" class="btn btn-success" style="margin: 10px 0; vertical-align:middle"> Cập nhật bài viết</a>
                                                 </td>
                                                 <td>   
                                                     <c:url value="/canhan_xoa" var="actionXoa">
@@ -99,13 +99,15 @@
                                 <c:url value="/canhan/${p.id}" var="apiDe"/>
                                 <div class="tincanhan">
 
-                                    <div class="tincanhan-noidung">
+                                    <div class="tincanhan-noidung2">
                                         <table style="width:100%">
                                             <c:url value="/thtin_bviet" var="bvietAction">
                                                 <c:param name="baivietId" value="${p.id}" />  
                                             </c:url>
-
-                                            <a style="text-decoration: none" href="${bvietAction}" >${p.tenBaiViet}</a>
+                                            <tr>
+                                                <th></th>
+                                                <td><h5><a  style="text-decoration: none; color: #005555; font-weight: bold; text-transform: uppercase" href="${bvietAction}" >${p.tenBaiViet}</a></h5></td>
+                                            </tr>
                                             <tr>
                                                 <th>Khu vực:</th>
                                                 <td>${p.phamViCanTim}</td>
@@ -115,24 +117,21 @@
                                                 <th>Ngày đăng:</th>
                                                 <td>${p.ngayDang}</td>
                                             </tr>
-                                            <tr>
-                                                <th>Mô tả:</th>
-                                                <td>${p.noiDung}</td>
-                                            </tr>
-                                            <tr>
+
+                                            <tr >
                                                 <th></th>
                                                 <td>   
                                                     <c:url value="/capnhat" var="bvietAction">
                                                         <c:param name="baivietId" value="${p.id}" />  
                                                     </c:url>
-                                                    <a href="${bvietAction}" class="btn btn-success" style="vertical-align:middle"> Cập nhật bài viet</a>
+                                                    <a href="${bvietAction}" class="btn btn-success" style="margin: 10px 0; vertical-align:middle"> Cập nhật bài viết</a>
                                                 </td>
                                                 <td>   
                                                     <c:url value="/canhan_xoa" var="actionXoa">
                                                         <c:param name="idBaiVietXoa" value="${p.id}" />  
                                                     </c:url>
                                                     <form:form method="post" action="${actionXoa}">
-                                                        <button class="btn btn-danger" type="submit">Xóa</button>
+                                                        <button  class="btn btn-danger" type="submit">Xóa</button>
                                                     </form:form>
                                                 </td>
                                             </tr>
@@ -166,7 +165,7 @@
                                                 <c:param name="baivietId" value="${p.id}" />  
                                             </c:url>
 
-                                            <a href="${bvietAction}" >${p.tenBaiViet}</a>
+                                            <a style=" text-transform: uppercase" href="${bvietAction}" >${p.tenBaiViet}</a>
                                             <tr>
                                                 <th>Khu vực:</th>
                                                 <td>${p.phamViCanTim}</td>
@@ -182,18 +181,13 @@
 
                                             <tr>
                                                 <th></th>
-                                                <!--                                                <td>   
-                                                <%--<c:url value="/capnhat" var="bvietAction">--%>
-                                                <%--<c:param name="baivietId" value="${p.id}" />--%>  
-                                                <%--</c:url>--%>
-                                                <a href="${bvietAction}" class="btn btn-success" style="vertical-align:middle"> Cập nhật</a>
-                                            </td>-->
+                                                
                                                 <td>   
                                                     <c:url value="/canhan_xoa" var="actionXoa">
                                                         <c:param name="idBaiVietXoa" value="${p.id}" />  
                                                     </c:url>
                                                     <form:form method="post" action="${actionXoa}">
-                                                        <button class="btn btn-danger" type="submit">Xóa</button>
+                                                        <button style="margin: 10px 0;" class="btn btn-danger" type="submit">Xóa</button>
                                                     </form:form>
 
                                                 </td>
@@ -212,7 +206,7 @@
                                                 <c:param name="baivietId" value="${p.id}" />  
                                             </c:url>
 
-                                            <a href="${bvietAction}" >${p.tenBaiViet}</a>
+                                            <a style="text-transform: uppercase" href="${bvietAction}" >${p.tenBaiViet}</a>
                                             <tr>
                                                 <th>Khu vực:</th>
                                                 <td>${p.phamViCanTim}</td>
@@ -239,7 +233,7 @@
                                                         <c:param name="idBaiVietXoa" value="${p.id}" />  
                                                     </c:url>
                                                     <form:form method="post" action="${actionXoa}">
-                                                        <button class="btn btn-danger" type="submit">Xóa</button>
+                                                        <button style="margin: 10px 0;"class="btn btn-danger" type="submit">Xóa</button>
                                                     </form:form>
                                                 </td>
                                             </tr>
@@ -273,7 +267,7 @@
                                                 <c:param name="baivietId" value="${p.id}" />  
                                             </c:url>
 
-                                            <a href="${bvietAction}" >${p.tenBaiViet}</a>
+                                            <a style=" text-transform: uppercase" href="${bvietAction}" >${p.tenBaiViet}</a>
                                             <tr>
                                                 <th>Khu vực:</th>
                                                 <td>${p.phamViCanTim}</td>
@@ -295,7 +289,7 @@
                                                         <c:param name="idBaiVietXoa" value="${p.id}" />  
                                                     </c:url>
                                                     <form:form method="post" action="${actionXoa}">
-                                                        <button class="btn btn-danger" type="submit">Xóa</button>
+                                                        <button style="margin: 10px 0;"class="btn btn-danger" type="submit">Xóa</button>
                                                     </form:form>
                                                 </td>
                                             </tr>
@@ -313,7 +307,7 @@
                                                 <c:param name="baivietId" value="${p.id}" />  
                                             </c:url>
 
-                                            <a href="${bvietAction}" >${p.tenBaiViet}</a>
+                                            <a style="text-transform: uppercase" href="${bvietAction}" >${p.tenBaiViet}</a>
                                             <tr>
                                                 <th>Khu vực:</th>
                                                 <td>${p.phamViCanTim}</td>
@@ -329,18 +323,15 @@
                                             </tr>
                                             <tr>
                                                 <th></th>
-                                                <!--                                                <td>   
-                                                <%--<c:url value="/capnhat" var="bvietAction">--%>
-                                                <%--<c:param name="baivietId" value="${p.id}" />--%>  
-                                                <%--</c:url>--%>
-                                                <a href="${bvietAction}" class="btn btn-success" style="vertical-align:middle"> Cập nhật</a>
+                                                
+                                                <a  href="${bvietAction}" class="btn btn-success" style="margin: 10px 0; vertical-align:middle"> Cập nhật</a>
                                             </td>-->
                                                 <td>   
                                                     <c:url value="/canhan_xoa" var="actionXoa">
                                                         <c:param name="idBaiVietXoa" value="${p.id}" />  
                                                     </c:url>
                                                     <form:form method="post" action="${actionXoa}">
-                                                        <button class="btn btn-danger" type="submit">Xóa</button>
+                                                        <button style="margin: 10px 0;"class="btn btn-danger" type="submit">Xóa</button>
                                                     </form:form>
                                                 </td>
                                             </tr>

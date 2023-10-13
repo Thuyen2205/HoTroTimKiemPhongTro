@@ -56,7 +56,7 @@ public class TaiKhoanServiceImpl implements TaiKhoanService {
             Date current = new Date();
             nguoidung.setNgayTao(current);
             if (nguoidung.getIdLoaiTaiKhoan().getId() == 2) {
-                Map res2 = this.cloudinary.uploader().upload(nguoidung.getFile().getBytes(),
+                Map res2 = this.cloudinary.uploader().upload(nguoidung.getFile2().getBytes(),
                         ObjectUtils.asMap("resource_type", "auto"));
                 nguoidung.setHinhAnh(res2.get("secure_url").toString());
                 nguoidung.setKiemDuyet("KIEM_DUYET_1");

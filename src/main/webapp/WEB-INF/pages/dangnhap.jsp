@@ -44,6 +44,11 @@
                 </p>
 
             </div>
+            <div  class="register-link">
+                <p class="register-link-p">
+                    Quay trở về  <a href="<c:url value ="/"/>">  Trang chủ </a>
+                </p>
+            </div>
             <button class="btn btn-success"><a style="color:black; text-decoration: none" href="<c:url value ="/quenmatkhau"/> ">Quên mật khẩu</a></button>
 
         </form>

@@ -37,23 +37,23 @@
                     </c:if>
 
                 <!--                <form id="form2" method="post" action="{actionXacNhan}" >-->
-                <h1>Nhập số xác minh</h1>
+                <h1>QUÊN MẬT KHẨU</h1>
                 <center>
                     <c:if test="${param.accessDenied != null}">
                         <!--<div>Bạn không có quyền truy cập vào trang này</div>-->
                         <center><div style="margin-top: 15px; color: #45FFCA ">Tài khoản của bạn đang đợi được duyệt!</div></center>
                         </c:if>
                     <div class="input-box">
-                        <input type="text" name="soxacnhan" placeholder="Số xác nhận" required>
+                        <input type="text" name="soxacnhan" placeholder="Nhập số xác nhận" required>
                     </div>
                 </center>      
                 <div class="input-box">
-                    <input type="text" name="matKhauMoi" placeholder="Mat khau moi" required>
+                    <input type="text" name="matKhauMoi" placeholder="Đặt lại mật khẩu mới" required>
                 </div>
                 <div class="input-box">
-                    <input type="text" name="xacNhanMatKhauMoi" placeholder="Xac nhan lai mat khau" required>
+                    <input type="text" name="xacNhanMatKhauMoi" placeholder="Xác nhận lại mật khẩu mới" required>
                 </div>
-                <button  class="btn" type="submit" >Xác nhận</button>
+                <button  class="btn" type="submit" >Hoàn tất</button>
 
 
         </form>

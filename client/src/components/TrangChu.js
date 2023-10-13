@@ -31,7 +31,7 @@ const TrangChu = () => {
                                 />
                             </Col>
                             <Col xs="auto">
-                                <Button variant="info" className='buttonTim' type='submit'> Tìm </Button>
+                                <Button variant="info" className='buttonTim' type='submit'> Tìm Kiếm</Button>
                             </Col>
                         </Row>
                     </Form>

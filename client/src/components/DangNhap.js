@@ -57,7 +57,7 @@ const DangNhap = () => {
     return <>
         <Container className="container-dangnhap">
             <div className="form-dangnhap">
-                <h1 className="text-center text-info">ĐĂNG NHẬP NGƯỜI DÙNG</h1>
+                <h2 className="text-center text-info">ĐĂNG NHẬP</h2>
                 <Form noValidate validated={validated} onSubmit={dangnhap}>
                     <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
                         <Form.Label>Tên đăng nhập</Form.Label>
@@ -85,7 +85,7 @@ const DangNhap = () => {
                     </Form.Group>
 
                     <Form.Group className="mb-3" controlId="exampleForm.ControlInput3">
-                        <Button variant="info" type="submit">Đăng nhập</Button>
+                        <center><Button style={{width:'60%', fontSize:'17px'}} variant="info" type="submit">Đăng nhập</Button></center>
                     </Form.Group>
 
 

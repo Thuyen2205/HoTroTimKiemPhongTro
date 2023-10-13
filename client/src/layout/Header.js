@@ -23,7 +23,7 @@ const Header = () => {
     return (
         <>
             <div className='header'>
-                <Navbar style={{ color: 'white' }} expand="lg" className="header">
+                <Navbar style={{ color: 'white'}} expand="lg" className="header">
                     <div className="nav-title">
                         {/* <div><Navbar.Brand href="#home" className="brand">
                             <img
@@ -35,7 +35,7 @@ const Header = () => {
                             />
                         </Navbar.Brand>
                         </div> */}
-                        <div>  <Nav style={{ color: 'white', alignItems: 'center' }} className="mx-auto" href="/">MY WEBSITE</Nav></div>
+                        <div>  <Nav style={{ color: 'white', alignItems: 'center'}} className="mx-auto" href="/"><strong style={{fontSize:'20px'}}>ALO NHÀ TRỌ</strong></Nav></div>
                     </div>
                     <div className="nav-links">
                         <Nav style={{ display: 'flex' }} className="me-auto">
@@ -46,6 +46,7 @@ const Header = () => {
                             </> : <>
                                 <Link style={{ color: 'white' }} className="nav-link" to={`/thtin-ngdung/${user.id}`}>TRANG CÁ NHÂN</Link>
                                 <Link style={{ color: 'white' }} className="nav-link" to="/dangbai/">ĐĂNG BÀI</Link>
+                                <Link style={{ color: 'white' }} className="nav-link" >BẢN ĐỒ</Link>
                                 <Link style={{ color: 'white' }} className="nav-link" to="/chat">CHAT</Link>
                                 {/* <Link to="/bando">BAN DO</Link> */}
                             </>
@@ -56,13 +57,13 @@ const Header = () => {
                         {(user === null) ? <>
                         </> : <>
                             <div className="hellouser mx-auto">
-                                <Link style={{ color: 'white', margin:'auto 0', marginRight:'20px' }} className="nav-link mx-auto" to="/">Chào {user.tenTaiKhoan} </Link>
+                                <Link style={{ color: 'white', margin: 'auto 0', marginRight: '20px' }} className="nav-link mx-auto" to="/">Xin chào , {user.tenTaiKhoan} </Link>
                                 <Image roundedCircle style={{ width: 40, height: 40, borderRadius: 40 / 2 }} src={user.avatar}></Image>
-                            </div>                            
-                                <Button style={{ color: 'white', height: '50%' }} variant="secondary" onClick={logout}>
-                                    <Link className="logout" to="/">Đăng xuất</Link>
-                                </Button>
-                            
+                            </div>
+                            <Button style={{ color: 'white', height: '50%' }} variant="secondary" onClick={logout}>
+                                <Link className="logout" to="/">Đăng xuất</Link>
+                            </Button>
+
                         </>
                         }
                     </div>

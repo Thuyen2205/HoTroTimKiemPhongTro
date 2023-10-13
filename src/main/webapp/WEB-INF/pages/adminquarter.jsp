@@ -19,7 +19,7 @@
                 <div style="display: flex; justify-content: center" >
                     <div style="margin-right: 30px; font-size: 17px">
                         <label for="year">Chọn năm:</label>
-                        <select id="year" name="year" class="year-select">
+                        <select  style="padding: 6px" id="year" name="year" class="year-select">
                             <c:forEach var="year" begin="2020" end="2030">
                                 <option value="${year}">${year}</option>
                             </c:forEach>
@@ -27,7 +27,7 @@
                     </div>
                     <div style="margin-right: 30px; font-size: 17px">
                         <label for="quarter">Chọn quý:</label>
-                        <select id="quarter" name="quarter" class="year-select">
+                        <select style="padding: 6px" id="quarter" name="quarter" class="year-select">
                             <option value="1">Quý 1</option>
                             <option value="2">Quý 2</option>
                             <option value="3">Quý 3</option>

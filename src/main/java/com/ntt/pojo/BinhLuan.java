@@ -101,7 +101,7 @@ public class BinhLuan implements Serializable {
     @ManyToOne
     private NguoiDung idNguoiDung;
     
-     @Transient
+    @Transient
     private String tenBaiVietBinhLuan;
     @Transient
     private Integer idBaiVietBinhLuan;
