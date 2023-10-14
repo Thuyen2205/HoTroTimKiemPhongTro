@@ -67,10 +67,11 @@ const AllChatBox = () => {
                         let url = `/chat/admin/${c.tenTaiKhoan}`
 
                         return <MDBCol className="mb-4 mb-md-0">
-                            <div className="p-3">
+                            <div style={{fontSize:'17px'}} className="p-3">
                                 <MDBTypography listUnStyled className="mb-0">
-                                    <li className="p-2 border-bottom w-100">
+                                    <li style={{border:'1.5px solid gray', borderRadius:'8px'}} className="p-2 border-bottom w-200">
                                         <Link
+                                        style={{textDecoration:'none'}}
                                             to={url}
                                             className="d-flex justify-content-between"
                                         >
@@ -78,11 +79,11 @@ const AllChatBox = () => {
                                                 <div>
                                                     <Image src={c.avatar} roundedCircle style={{ width: 50, height: 50, borderRadius: 50 / 2 }} />
                                                 </div>
-                                                <div className="pt-1 pl-3">
-                                                    <p className="text-monospace ">
+                                                <div style={{paddingLeft:'10px'}}>
+                                                    <p style={{color: 'black', fontWeight:'bold'}}>
                                                         {c.tenTaiKhoan}
                                                     </p>
-                                                    <p className="text-monospace ">
+                                                    <p style={{color: 'black', marginTop:'-15px'}}>
                                                         {c.lastMessage}
                                                     </p>
                                                 </div>

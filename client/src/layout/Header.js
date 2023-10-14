@@ -57,7 +57,7 @@ const Header = () => {
                         {(user === null) ? <>
                         </> : <>
                             <div className="hellouser mx-auto">
-                                <Link style={{ color: 'white', margin: 'auto 0', marginRight: '20px' }} className="nav-link mx-auto" to="/">Xin chào , {user.tenTaiKhoan} </Link>
+                                <Link style={{ color: 'orange', margin: 'auto 0', paddingRight:'20px'}} className="nav-link mx-auto" to="/">Xin chào , {user.tenTaiKhoan} </Link>
                                 <Image roundedCircle style={{ width: 40, height: 40, borderRadius: 40 / 2 }} src={user.avatar}></Image>
                             </div>
                             <Button style={{ color: 'white', height: '50%' }} variant="secondary" onClick={logout}>

@@ -81,14 +81,23 @@ const ChatRoom = () => {
                             </div>
                             :
                             <div className="mt-3 d-flex align-items-center justify-content-center">
-                                <Button onClick={handleCreateDoc}>Tạo đoạn hội thoại mới</Button>
+                                <Button style={{padding:'5px'}} onClick={handleCreateDoc}>Tạo đoạn hội thoại mới</Button>
                             </div>}
                     </div>
                 </>
             );
-        } else {
+        } else if (user.idLoaiTaiKhoan.tenLoaiTaiKhoan === "ROLE_CHUTRO") {
             return (<>
-                
+                <div>
+                    <center><h3 className="text-danger" style={{ padding: '20px' }}>XIN LỖI</h3></center>                    <center>
+                        <h4 className="text-danger" style={{ padding: '20px' }}>CHÚNG TÔI ĐANG CẬP NHẬT TÍNH NĂNG PHÙ HỢP VỚI QUYỀN CỦA BẠN!</h4>
+                    </center>
+                </div>
+            </>)
+
+        }
+        else {
+            return (<>
                 <div>
                     <AllChatBox />
                 </div>
