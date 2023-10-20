@@ -5,28 +5,36 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
-<c:url value="/bando_map" var="action"/>
+
 
 
 <title>Hien thi Ban Do</title>
+
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB-M500zF9hEI3OoOPyK_dVHfWDyZcx5fI&libraries=geometry&callback=initMap" async defer></script>
 
-<div id="map" style="width: 100%; height: 1000px;"></div>
+<c:if test="${nguoidung.kinhDo==null}">
+    <div id="map" style="width: 100%; height: 1000px;"></div>
+    <div class="center-form">
+        <p class="register-link-p">
+            Chúng tôi chưa có tọa độ của bạn vui lòng cập nhật để tiếp tục?<button  class="btn btn-danger"><a href="<c:url value ="/capnhattaikhoan"/>">  Cập nhật </a> </button>  
+        </p>
 
-<div class="center-form">
-    <form method="post" action="${action}">
-        <button class="btn btn-danger" id="submitButton" type="submit">Tìm tro xung quanh</button>
-        <input type="hidden" name="diaChiList" id="diaChiListField">
-    </form>
-</div>
-<c:url value="/bando" var="actionUpdate"/>
-<form:form action="${actionUpdate}" method="POST" modelAttribute="taikhoan">
-    <form:hidden path="id"/>
-    <form:hidden path="kiemDuyet"/>
-    <form:hidden path="tenTaiKhoan"/>
-    <form:input type="text" id="email" name="email" path="email" placeholder="email"/>
-    <button class="btn custom-button3" type="sumit">Cập nhật</button>
-</form:form>
+    </div>
+
+</c:if>
+
+
+<c:if test="${nguoidung.kinhDo!=null}">
+    <div id="map" style="width: 100%; height: 1000px;"></div>
+    <c:url value="/bando_map" var="action"/>
+    <div class="center-form">
+        <form method="post" action="${action}">
+            <button class="btn btn-danger" id="submitButton" type="submit">Tìm tro xung quanh</button>
+            <input type="hidden" name="diaChiList" id="diaChiListField">
+        </form>
+    </div>
+
+</c:if>
 
 
 <div class="bangtin">
@@ -67,10 +75,6 @@
                         <div class="groupbtn"><a href="${bvietAction}"> Doc thêm</a></div>
                     </div>
                 </div>
-
-
-
-
 
             </c:if>
         </c:forEach>
@@ -138,7 +142,7 @@
             fillOpacity: 0,
             map: map,
             center: {lat: kinhDo, lng: viDo},
-            radius: 1000
+            radius: 3000
         });
 
         diaChiList.forEach(function (diaChi) {

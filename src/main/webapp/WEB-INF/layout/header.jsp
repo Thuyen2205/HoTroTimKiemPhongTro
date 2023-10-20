@@ -84,8 +84,6 @@ Author     : ThanhThuyen
                     </div>
                 </c:if>
 
-
-
             </ul>
 
         </div>

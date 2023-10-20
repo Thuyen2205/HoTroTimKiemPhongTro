@@ -118,23 +118,15 @@ public class IndexContext {
     }
 
     @PostMapping("/bando")
-    public String bando(Model model, NguoiDung nguoidung, Authentication authen,
-//            @RequestParam("diaChiList") String diaChiListParam,
-            @ModelAttribute(value = "taikhoan") NguoiDung taikhoan) {
+    public String bando_capnhat(Model model, NguoiDung nguoidung, Authentication authen) {
 
         String errMSg="";
         UserDetails user = this.taikhoan.loadUserByUsername(authen.getName());
         NguoiDung u = this.taikhoan.getTaiKhoanbyTenTK(user.getUsername());
         model.addAttribute("taikhoan", u);
         model.addAttribute("nguoidung", this.taikhoan.getTaiKhoan(authen.getName()).get(0));
-        if(authen !=null){
-            if(this.taikhoan.updateNguoiDung(taikhoan)==true){
-                return "redirect:/";
-            }else{
-                errMSg="ra";
-            }
-        }
-        return "bando";
+        
+        return "capnhattaikhoan";
     }
 
     @PostMapping("/bando_map")
