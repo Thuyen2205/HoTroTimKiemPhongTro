@@ -15,5 +15,5 @@ import com.ntt.pojo.NguoiDung;
  */
 public interface LuuTinService {
 
-    boolean addLuuTin(LuuTin luutin, NguoiDung tk, BaiViet bv);
+    boolean addLuuTin(LuuTin luutin);
 }

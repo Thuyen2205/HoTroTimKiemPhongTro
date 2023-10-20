@@ -17,6 +17,7 @@ import com.ntt.service.BinhLuanService;
 import com.ntt.service.FollowService;
 import com.ntt.service.LoaiBaiVietService;
 import com.ntt.service.LoaiTrangThaiService;
+import com.ntt.service.LuuTinService;
 import com.ntt.service.NguoiDungService;
 import com.ntt.service.TaiKhoanService;
 import com.ntt.service.impl.LoaiTrangThaiServiceImpl;
@@ -75,6 +76,8 @@ public class BaiVietController {
     private JavaMailSender emailSender;
     @Autowired
     private LoaiTrangThaiService loaiTrangThaiService;
+    @Autowired
+    private LuuTinService LuuTinService;
 
     @GetMapping("/dangbai")
     public String list(Model model, Authentication authen, @RequestParam Map<String, String> params,
@@ -117,6 +120,7 @@ public class BaiVietController {
         model.addAttribute("binhluans", this.binhluanService.getBinhLuan(id));
         model.addAttribute("flChuTro", this.followService.getFollowsChuTro(bv.getIdNguoiDung()));
         model.addAttribute("follow", new Follow());
+        
         return "thtin_bviet";
     }
 
@@ -167,6 +171,26 @@ public class BaiVietController {
         }
         return "index";
     }
+
+//    @PostMapping("/thtin_bviet_lt")
+//    public String addLuuTin(Model model, @ModelAttribute(value = "luutin") LuuTin luutin, Authentication authen,
+//            @RequestParam Map<String, String> params
+//    ) {
+//
+//        String ms = "";
+//        int id = Integer.parseInt(params.get("baivietId"));
+//        BaiViet idBaiViet = (BaiViet) this.baivietService.getBaiVietById(id);
+//        NguoiDung nd = this.taikhoan.getTaiKhoan(authen.getName()).get(0);
+//        if (authen != null) {
+//            if (this.LuuTinService.addLuuTin(luutin) == true) {
+//
+//                return "redirect:canhan";
+//            } else {
+//                ms = "?� c� l?i x�y ra";
+//            }
+//        }
+//        return "index";
+//    }
 
     @PostMapping("/thtin_bviet_xn")
     public String xacNhan(Model model, Authentication authen,

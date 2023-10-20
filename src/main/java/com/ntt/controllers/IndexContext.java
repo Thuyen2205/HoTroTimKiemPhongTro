@@ -118,15 +118,18 @@ public class IndexContext {
     }
 
     @PostMapping("/bando")
-    public String bando_capnhat(Model model, NguoiDung nguoidung, Authentication authen) {
+    public String bando_capnhat(Model model, @ModelAttribute(value = "taikhoan") NguoiDung taikhoan, Authentication authen) {
 
-        String errMSg="";
-        UserDetails user = this.taikhoan.loadUserByUsername(authen.getName());
-        NguoiDung u = this.taikhoan.getTaiKhoanbyTenTK(user.getUsername());
-        model.addAttribute("taikhoan", u);
-        model.addAttribute("nguoidung", this.taikhoan.getTaiKhoan(authen.getName()).get(0));
-        
-        return "capnhattaikhoan";
+        String errMsg = "";
+        if (authen != null) {
+            if (this.taikhoan.updateNguoiDung(taikhoan) == true) {
+                return "redirect:/bando";
+            } else {
+                errMsg = "ra";
+            }
+        }
+
+        return "bando";
     }
 
     @PostMapping("/bando_map")

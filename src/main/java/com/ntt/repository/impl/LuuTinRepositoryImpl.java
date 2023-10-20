@@ -31,12 +31,10 @@ public class LuuTinRepositoryImpl implements LuuTinRepository {
     private BaiVietRepository baiViet;
 
     @Override
-    public boolean addLuuTin(LuuTin luutin, NguoiDung tk, BaiViet bv) {
+    public boolean addLuuTin(LuuTin luutin) {
         Session s = this.factory.getObject().getCurrentSession();
         LuuTin lt = new LuuTin();
         try {
-            lt.setIdNguoiDung(tk);
-            lt.setIdBaiViet(bv);
             s.save(luutin);
             return true;
         } catch (HibernateException ex) {

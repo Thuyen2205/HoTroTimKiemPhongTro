@@ -15,5 +15,5 @@ import java.util.List;
  * @author ThanhThuyen
  */
 public interface LuuTinRepository {
-     boolean addLuuTin(LuuTin luutin, NguoiDung tk, BaiViet bv);
+     boolean addLuuTin(LuuTin luutin);
 }

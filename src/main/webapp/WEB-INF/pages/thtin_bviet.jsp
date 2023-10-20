@@ -32,7 +32,6 @@
 <c:url value="/thtin_bviet_tuchoi" var="actionTrangThaiTuChoi">
     <c:param name="baivietId" value="${BaiViet.id}" />  
 </c:url>
-
 <c:url value="/tao_binhluan" var="actionTao">
     <c:param name="baivietId" value="${BaiViet.id}" />  
 </c:url>
@@ -54,6 +53,8 @@
         </c:if>
     </c:if>
 </div>
+
+
 
 <section class="chitiettin" >
     <div class="chitiettin-col1">
@@ -201,7 +202,10 @@
 
                                 </div>
                             </c:if>
-                            <button class="btn btn-primary" onclick="showReplyForm('${b.id}')">Phản hồi</button>
+                            <c:if test="${pageContext.request.userPrincipal.name != null}">
+                                <button class="btn btn-primary" onclick="showReplyForm('${b.id}')">Phản hồi</button>
+
+                            </c:if>
 
                             <form:form id="replyForm_${b.id}" style="display: none;" method="post" action="${action}" var="p" modelAttribute="binhluan" enctype="multipart/form-data" >
 
@@ -241,8 +245,10 @@
 
                                             </div>
                                         </c:if>
+                                        <c:if test="${pageContext.request.userPrincipal.name != null}">
+                                            <button class="btn btn-primary" onclick="showReplyForm('${reply.id}')">Phản hồi</button>
 
-                                        <button class="btn btn-primary" onclick="showReplyForm('${reply.id}')">Phản hồi</button>
+                                        </c:if>
 
                                         <form:form id="replyForm_${reply.id}" style="display: none;" method="post" action="${action}" var="p" modelAttribute="binhluan" enctype="multipart/form-data" >
                                             <form:input  type="hidden" id="file" path="tenNguoiDangBai" value="${pageContext.request.userPrincipal.name}"  readonly="true"  cssClass="form -control"/>
@@ -283,7 +289,9 @@
 
                                                     </div>
                                                 </c:if>
-                                                <button class="btn btn-primary" onclick="showReplyForm('${grandreply.id}')">Phản hồi</button>
+                                                <c:if test="${pageContext.request.userPrincipal.name != null}">
+                                                    <button class="btn btn-primary" onclick="showReplyForm('${grandreply.id}')">Phản hồi</button>
+                                                </c:if>
                                                 <form:form id="replyForm_${grandreply.id}" style="display: none;" method="post" action="${action}" var="p" modelAttribute="binhluan" enctype="multipart/form-data" >
                                                     <form:input  type="hidden" id="file" path="tenNguoiDangBai" value="${pageContext.request.userPrincipal.name}"  readonly="true"  cssClass="form -control"/>
                                                     <form:input type="hidden" id="file" path="idBaiVietBinhLuan" value="${BaiViet.id}"  readonly="true"  cssClass="form -control"/>

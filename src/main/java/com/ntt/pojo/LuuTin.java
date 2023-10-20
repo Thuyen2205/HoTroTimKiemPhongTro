@@ -14,6 +14,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -29,6 +30,34 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "LuuTin.findById", query = "SELECT l FROM LuuTin l WHERE l.id = :id")})
 public class LuuTin implements Serializable {
 
+    /**
+     * @return the tenNguoiDangBai
+     */
+    public String getTenNguoiDangBai() {
+        return tenNguoiDangBai;
+    }
+
+    /**
+     * @param tenNguoiDangBai the tenNguoiDangBai to set
+     */
+    public void setTenNguoiDangBai(String tenNguoiDangBai) {
+        this.tenNguoiDangBai = tenNguoiDangBai;
+    }
+
+    /**
+     * @return the idChuBaiViet
+     */
+    public Integer getIdChuBaiViet() {
+        return idChuBaiViet;
+    }
+
+    /**
+     * @param idChuBaiViet the idChuBaiViet to set
+     */
+    public void setIdChuBaiViet(Integer idChuBaiViet) {
+        this.idChuBaiViet = idChuBaiViet;
+    }
+
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -41,6 +70,10 @@ public class LuuTin implements Serializable {
     @JoinColumn(name = "id_nguoi_dung", referencedColumnName = "id")
     @ManyToOne
     private NguoiDung idNguoiDung;
+    @Transient
+    private String tenNguoiDangBai;
+    @Transient
+    private Integer idChuBaiViet;
 
     public LuuTin() {
     }
@@ -97,5 +130,5 @@ public class LuuTin implements Serializable {
     public String toString() {
         return "com.ntt.pojo.LuuTin[ id=" + id + " ]";
     }
-    
+
 }
