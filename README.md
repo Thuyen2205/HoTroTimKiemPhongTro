@@ -1,4 +1,4 @@
-# HoTroTimKiemPhongTro
+# Hỗ Trợ Tìm Kiếm Nhà Trọ 
 
 ## Tóm tắt
 Dự án này là một website xây dựng để hỗ trợ tìm kiếm nhà trọ bằng sử dụng ngôn ngữ Java và framework Spring MVC cho phía máy chủ và React cho phía giao diện người dùng. Website cho phép người dùng thực hiện tìm kiếm theo nhiều tiêu chí khác nhau, đăng bài viết tìm kiếm thông tin... Hệ thống website bao gồm 3 vai trò chính là khách hàng, chủ trọ và Admin. Mỗi vai trò khi đăng nhập sử dụng hệ thống sẽ có những chức năng khác nhau dành riêng cho người sử dụng đó. Đối với khách hàng có thể tìm kiếm được những nhà trọ bằng cách xem những bài viết mà chủ trọ đã đăng ngoài ra khách hàng cũng có thể đăng bài riêng cho chính bản thân phù hợp với từng mục đích nhu cầu đề ra, khách hàng cũng có thể sử dụng bản đồ được tích hợp sẵn trong hệ thống để có thể tìm kiếm một cách dễ dàng và sinh động hơn. Với vai trò là chủ trọ, chủ trọ có thể tiếp cận được với số lượng lớn khách hàng tiềm năng, có nhu cầu tìm kiếm nhà trò bằng cách đăng những bài viết giới thiệu về phòng trọ của mình để khách hàng có thể xem và đánh giá. Admin chính là một vai trò quan trọng trong việc đảm bảo được những tài khoản, những nguồn thông tin đáng tin cậy ra vào hệ thống, nâng cao chất lượng dịch vụ đến với người dùng.
@@ -11,10 +11,10 @@ Dự án này bao gồm các chức năng sau:
 - Đăng bài viết cho thuê trọ
 - Đăng bài viết tìm trọ
 - Bình luận
-- Tìm kiếm
+- Tìm kiếm (theo địa chỉ, giá, số lượng)
 - Xem chi tiết bài viết
-- Xem bản đồ
-- Thống kê
+- Xem bản đồ (google map)
+- Thống kê (theo tháng, quý, năm)
 - Duyệt bài viết
 - Duyệt tài khoản
 
@@ -22,13 +22,15 @@ Dự án này bao gồm các chức năng sau:
 
 ### Yêu cầu
 
-- JDK 11: Đảm bảo bạn đã cài đặt JDK phiên bản 11. Bạn có thể tải JDK từ trang chính của Oracle hoặc sử dụng một phiên bản OpenJDK.
+- JDK: Bạn có thể tải JDK từ trang chính của Oracle hoặc sử dụng một phiên bản OpenJDK. Đảm bảo tương thích với NetBeans IDE mà bạn đang sử dụng
 - NetBeans IDE: Dự án được phát triển bằng NetBeans, vì vậy bạn nên cài đặt NetBeans IDE để mở và quản lý mã nguồn của dự án.
 - MySQL: Để sử dụng cơ sở dữ liệu, bạn cần cài đặt và cấu hình MySQL Server trên máy tính của bạn.
 
 ### Cài đặt
 
-1. **Sao chép mã nguồn**: Sao chép mã nguồn từ kho lưu trữ GitHub của dự án.
+1. **Sao chép mã nguồn**: 
+   - Trong cửa sổ dòng lệnh, di chuyển đến thư mục mà bạn muốn sao chép mã nguồn vào bằng lệnh cd (change directory). Ví dụ: cd /đường-dẫn-đến-thư-mục-đích.
+   - Sau đó, sử dụng lệnh sau để sao chép mã nguồn từ kho lưu trữ GitHub: git clone <URL-kho-lưu-trữ-GitHub>. Trong đó, <URL-kho-lưu-trữ-GitHub> là đường dẫn của kho lưu trữ GitHub
 
 2. **Mở dự án trên NetBeans**:
    - Mở NetBeans IDE.
@@ -62,13 +64,13 @@ Dự án này bao gồm các chức năng sau:
 ### Ghi chú
 - Dự án này sử dụng JDK 11, vui lòng đảm bảo rằng NetBeans đang sử dụng JDK này để chạy ứng dụng.
 - Để thực hiện kiểm duyệt dữ liệu bởi Admin, bạn cần thực hiện đăng nhập với vai trò "Quản trị viên" bằng tài khoản quản trị viên.
-
+- Bạn cần kết nối cơ sở dữ liệu trước khi bắt đầu chạy dự án.
 
 ## Đóng góp
 Chúng tôi rất hoan nghênh đóng góp từ cộng đồng. Nếu bạn muốn đóng góp vào dự án này, vui lòng tạo một yêu cầu kéo (pull request) hoặc báo cáo sự cố (issue).
 
 ## Liên hệ
-Nếu bạn cần hỗ trợ hoặc có bất kỳ câu hỏi nào liên quan đến dự án này, vui lòng liên hệ qua email: 2051050343phat@ou.edu.vn hoắc thông qua số điện thoại: 0965667795
+Nếu bạn cần hỗ trợ hoặc có bất kỳ câu hỏi nào liên quan đến dự án này, vui lòng liên hệ qua email: 2051050343phat@ou.edu.vn hoặc thông qua số điện thoại: 0965667795
 
 
 
