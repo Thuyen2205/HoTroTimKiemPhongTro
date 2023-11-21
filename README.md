@@ -65,6 +65,16 @@ Dự án này bao gồm các chức năng sau:
 - Dự án này sử dụng JDK 11, vui lòng đảm bảo rằng NetBeans đang sử dụng JDK này để chạy ứng dụng.
 - Để thực hiện kiểm duyệt dữ liệu bởi Admin, bạn cần thực hiện đăng nhập với vai trò "Quản trị viên" bằng tài khoản quản trị viên.
 - Bạn cần kết nối cơ sở dữ liệu trước khi bắt đầu chạy dự án.
+- Các tài khoản test hệ thống:
+   - Tài khoản Admin:
+      - Username: admin
+      - Password: 123456
+   - Tài khoản khách hàng:
+      - Username: user1
+      - Password: 123
+   - Tài khoản chủ trọ:
+      - Username: phat
+      - Password: 123
 
 ## Đóng góp
 Chúng tôi rất hoan nghênh đóng góp từ cộng đồng. Nếu bạn muốn đóng góp vào dự án này, vui lòng tạo một yêu cầu kéo (pull request) hoặc báo cáo sự cố (issue).
